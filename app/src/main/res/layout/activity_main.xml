@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.alphabox.MainActivity"
-    android:gravity="center">
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="pl.alphabox.Scenes.MainActivity">
+
+    <TextView
+        android:id="@+id/tv_pick_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/activity_main_apk_not_loaded" />
 
     <Button
         android:id="@+id/btn_load_apk"
-        android:text="Load APK"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="Load APK" />
 </LinearLayout>
