@@ -3,4 +3,6 @@
 
     <string name="activity_main_apk_not_loaded">Apk file not loaded</string>
     <string name="activity_main_apk_loaded">Apk file loaded</string>
+    <string name="activity_main_apk_size_label">File size:</string>
+    <string name="activity_main_apk_size"> %1$s Mb</string>
 </resources>

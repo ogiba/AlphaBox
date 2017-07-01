@@ -3,12 +3,12 @@ package pl.alphabox.Scenes;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,12 +17,15 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import pl.alphabox.Models.AppModel;
 import pl.alphabox.R;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
     private static final int REQUEST_STORAGE_READ_ACCESS = 0;
     private static final int REQUEST_PICK_APK = 1;
 
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
     @BindView(R.id.btn_load_apk)
     protected View pickApkBtn;
     @BindView(R.id.tv_pick_status)
@@ -31,6 +34,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     protected TextView apkNameTextView;
     @BindView(R.id.iv_apk_icon)
     protected ImageView apkIconView;
+    @BindView(R.id.ll_app_size_container)
+    protected View appSizeContainer;
+    @BindView(R.id.tv_app_size)
+    protected TextView apkSizeTextView;
 
     private IMainPresenter presenter;
 
@@ -129,15 +136,20 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     }
 
     @Override
-    public void onDataProvided(Drawable appIcon, String appName) {
-        if (appIcon == null || appName == null)
+    public void onDataProvided(AppModel appModel) {
+        if (appModel == null)
             return;
 
         this.pickMessageTextView.setText(R.string.activity_main_apk_loaded);
 
-        this.apkNameTextView.setText(appName);
+        this.apkNameTextView.setText(appModel.getName());
         this.apkNameTextView.setVisibility(View.VISIBLE);
-        this.apkIconView.setImageDrawable(appIcon);
+
+        this.apkIconView.setImageDrawable(appModel.getIcon());
         this.apkIconView.setVisibility(View.VISIBLE);
+
+        this.appSizeContainer.setVisibility(View.VISIBLE);
+        this.apkSizeTextView.setText(String.format(getResources().getString(R.string.activity_main_apk_size),
+                "" + appModel.getSize()));
     }
 }

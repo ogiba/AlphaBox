@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import java.io.File;
+
 import pl.alphabox.Models.AppModel;
 
 /**
@@ -50,9 +52,9 @@ public class MainPresenter implements IMainPresenter {
         AppModel receivedModel = extractAppInformation();
 
         if (receivedModel != null)
-            this.mainView.onDataProvided(receivedModel.getIcon(), receivedModel.getName());
+            this.mainView.onDataProvided(receivedModel);
         else
-            this.mainView.onDataProvided(null, null);
+            this.mainView.onDataProvided(null);
     }
 
     @Override
@@ -91,6 +93,15 @@ public class MainPresenter implements IMainPresenter {
         Drawable icon = packageInfo.applicationInfo.loadIcon(packageManager);
         String appName = (String) packageInfo.applicationInfo.loadLabel(packageManager);
 
-        return new AppModel(appName, icon);
+
+        try {
+            File tmpFile = new File(apkUri.getPath());
+            double appSizeInMB = (tmpFile.length() / 1024) / 1024;
+
+            return new AppModel(appName, icon, appSizeInMB);
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 }

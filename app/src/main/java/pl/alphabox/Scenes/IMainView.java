@@ -1,6 +1,6 @@
 package pl.alphabox.Scenes;
 
-import android.graphics.drawable.Drawable;
+import pl.alphabox.Models.AppModel;
 
 /**
  * Created by ogiba on 29.06.2017.
@@ -11,5 +11,5 @@ public interface IMainView {
 
     void onRequestData();
 
-    void onDataProvided(Drawable appIcon, String appName);
+    void onDataProvided(AppModel appModel);
 }
