@@ -1,8 +1,14 @@
 package pl.alphabox.Scenes;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+
+import pl.alphabox.Models.AppModel;
 
 /**
  * Created by ogiba on 29.06.2017.
@@ -14,12 +20,14 @@ public class MainPresenter implements IMainPresenter {
     private static final String ARGS_APK_URI = "appApkUri";
 
     private IMainView mainView;
+    private PackageManager packageManager;
 
     private boolean isReadGranted = false;
     private Uri apkUri;
 
-    public MainPresenter(IMainView mainView) {
+    public MainPresenter(IMainView mainView, PackageManager manager) {
         this.mainView = mainView;
+        this.packageManager = manager;
     }
 
     @Override
@@ -39,7 +47,12 @@ public class MainPresenter implements IMainPresenter {
     @Override
     public void provideData(Uri dataUri) {
         this.apkUri = dataUri;
-        this.mainView.onDataProvided();
+        AppModel receivedModel = extractAppInformation();
+
+        if (receivedModel != null)
+            this.mainView.onDataProvided(receivedModel.getIcon(), receivedModel.getName());
+        else
+            this.mainView.onDataProvided(null, null);
     }
 
     @Override
@@ -63,5 +76,21 @@ public class MainPresenter implements IMainPresenter {
             this.mainView.onPermissionRequired();
         else
             this.mainView.onRequestData();
+    }
+
+    @Nullable
+    private AppModel extractAppInformation() {
+        if (apkUri == null)
+            return null;
+
+        PackageInfo packageInfo = packageManager.getPackageArchiveInfo(apkUri.getPath(), PackageManager.GET_META_DATA);
+
+        packageInfo.applicationInfo.sourceDir = apkUri.getPath();
+        packageInfo.applicationInfo.publicSourceDir = apkUri.getPath();
+
+        Drawable icon = packageInfo.applicationInfo.loadIcon(packageManager);
+        String appName = (String) packageInfo.applicationInfo.loadLabel(packageManager);
+
+        return new AppModel(appName, icon);
     }
 }
