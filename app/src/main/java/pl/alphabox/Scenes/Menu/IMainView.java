@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes;
+package pl.alphabox.Scenes.Menu;
 
 import pl.alphabox.Models.AppModel;
 
