@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     android:background="@color/colorPrimaryDark"
     tools:context="pl.alphabox.Scenes.Login.LoginActivity">
 
@@ -58,8 +59,8 @@
             android:textColor="@color/white" />
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/btn_login_user"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/et_password_repeat_input_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -67,9 +68,31 @@
         android:layout_below="@id/et_password_input_layout"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:textColorHint="@color/white"
+        android:visibility="gone">
+
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/et_password_repeat_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/activity_login_password_repeat_hint"
+            android:inputType="textPassword"
+            android:textColor="@color/white" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_login_user"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/et_password_repeat_input_layout"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_rounded_background"
-        android:text="@string/activity_login_button_label"
+        android:text="@string/activity_login_button_login_label"
         android:textColor="@color/white" />
 
     <TextView
@@ -79,8 +102,22 @@
         android:layout_below="@+id/btn_login_user"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:padding="10dp"
         android:text="@string/activity_login_register_label"
         android:textColor="@color/colorAccent"
         tools:text="@string/activity_login_register_label" />
+
+    <TextView
+        android:text="Back"
+        android:id="@+id/tv_cancel_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_login_user"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:padding="10dp"
+        android:textColor="@color/colorAccent"
+        tools:text="Mocked value" />
 
 </RelativeLayout>

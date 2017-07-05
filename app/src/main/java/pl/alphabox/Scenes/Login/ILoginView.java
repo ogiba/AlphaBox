@@ -7,4 +7,6 @@ package pl.alphabox.Scenes.Login;
 public interface ILoginView {
     void onLoginFailed(String resInfo);
     void onLoginFailed(int resInfo);
+    void onChangeMode(boolean isInRegisterMode);
+    void onPasswordNotMatch();
 }

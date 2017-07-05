@@ -20,8 +20,9 @@ public class LoginPresenter
     private static final String TAG = "LoginPresenter";
 
     private ILoginView loginView;
-
     private FirebaseAuth firebaseAuth;
+
+    private boolean registerMode = false;
 
     public LoginPresenter(ILoginView loginView) {
         this.loginView = loginView;
@@ -66,11 +67,27 @@ public class LoginPresenter
             Exception taskException = task.getException();
             Log.w(TAG, "signInWithEmail:failed", taskException);
 
-            if(taskException != null) {
+            if (taskException != null) {
                 loginView.onLoginFailed(taskException.getLocalizedMessage());
             } else {
                 loginView.onLoginFailed(R.string.activity_login_auth_failed);
             }
         }
+    }
+
+    @Override
+    public void changeMode() {
+        this.registerMode = !registerMode;
+        this.loginView.onChangeMode(registerMode);
+    }
+
+    @Override
+    public void registerNewUser(String username, String pw, String repeatedPw) {
+        if (!pw.equals(repeatedPw)){
+            loginView.onPasswordNotMatch();
+            return;
+        }
+
+        Log.d(TAG, "Username: " +  username);
     }
 }
