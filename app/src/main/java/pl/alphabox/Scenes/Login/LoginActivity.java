@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -20,6 +20,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     protected TextInputEditText passwordEditText;
     @BindView(R.id.btn_login_user)
     protected Button loginUserBtn;
+    @BindView(R.id.tv_register_new_user)
+    protected TextView registerNewUserTextView;
 
     private ILoginPresenter presenter;
 
@@ -51,8 +53,20 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         final String username = this.usernameEditText.getText().toString();
         final String password = this.passwordEditText.getText().toString();
 
-        if (!username.isEmpty() && !password.isEmpty())
+        if (!username.trim().equals("") && !password.trim().equals(""))
             this.presenter.loginUser(username, password);
+        else if (username.trim().equals("")) {
+            this.usernameEditText.setError(getResources()
+                    .getString(R.string.activity_login_username_required));
+        } else if (password.trim().equals("")) {
+            this.passwordEditText.setError(getResources()
+                    .getString(R.string.activity_login_password_required));
+        }
+    }
+
+    @OnClick(R.id.tv_register_new_user)
+    protected void registerNewUserAction() {
+        Toast.makeText(this, "Register clicked", Toast.LENGTH_SHORT).show();
     }
 
     @Override
