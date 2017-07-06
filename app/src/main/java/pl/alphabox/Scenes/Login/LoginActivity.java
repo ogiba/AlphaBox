@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     protected TextView cancelRegisteringTextView;
     @BindView(R.id.et_password_repeat_input_layout)
     protected View passwordInputLayout;
+    @BindView(R.id.progress_bar)
+    protected View progressBar;
 
     private ILoginPresenter presenter;
     private boolean registerMode = false;
@@ -66,26 +68,11 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
 
     @OnClick(R.id.btn_login_user)
     protected void loginUserAction() {
+        changeViewState(true);
         final String username = this.usernameEditText.getText().toString();
         final String password = this.passwordEditText.getText().toString();
 
-        if (!username.trim().equals("") && !password.trim().equals("") && !registerMode)
-            this.presenter.loginUser(username, password);
-        else if (username.trim().equals("")) {
-            this.usernameEditText.setError(getResources()
-                    .getString(R.string.activity_login_username_required));
-        } else if (password.trim().equals("")) {
-            this.passwordEditText.setError(getResources()
-                    .getString(R.string.activity_login_password_required));
-        } else if (registerMode) {
-            final String repeatedPw = this.repeatPwEditText.getText().toString();
-
-            if (repeatedPw.trim().equals("")) {
-                this.repeatPwEditText.setError("Test");
-            } else {
-                presenter.registerNewUser(username, password, repeatedPw);
-            }
-        }
+        presenter.loginUser(username, password);
     }
 
     @OnClick(R.id.tv_register_new_user)
@@ -101,12 +88,33 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     }
 
     @Override
+    public void onValidationError(LoginErrorTypes errorType) {
+        changeViewState(false);
+
+        switch (errorType) {
+            case EMAIL:
+                this.usernameEditText.setError(getResources()
+                        .getString(R.string.activity_login_username_required));
+                break;
+            case PASSWORD:
+                this.passwordEditText.setError(getResources()
+                        .getString(R.string.activity_login_password_required));
+                break;
+            case REPASSWORD:
+                this.repeatPwEditText.setError("Test");
+                break;
+        }
+    }
+
+    @Override
     public void onLoginFailed(String resInfo) {
+        changeViewState(false);
         Toast.makeText(this, resInfo, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onLoginFailed(int resInfo) {
+        changeViewState(false);
         Toast.makeText(this, resInfo, Toast.LENGTH_SHORT).show();
     }
 
@@ -128,12 +136,32 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     }
 
     @Override
+    public String onRegistrationStarted() {
+        return this.repeatPwEditText.getText().toString();
+    }
+
+    @Override
     public void onPasswordNotMatch() {
+        changeViewState(false);
         passwordEditText.setError("Password not matches");
         repeatPwEditText.setError("Password not matches");
     }
 
+    @Override
+    public void onLoginSuccess() {
+        changeViewState(false);
+    }
+
     private void setupPresenter() {
         this.presenter = new LoginPresenter(this);
+    }
+
+    private void changeViewState(boolean isInProgress) {
+        this.progressBar.setVisibility(isInProgress ? View.VISIBLE : View.GONE);
+        this.passwordEditText.setEnabled(!isInProgress);
+        this.usernameEditText.setEnabled(!isInProgress);
+        this.repeatPwEditText.setEnabled(!isInProgress);
+        this.loginUserBtn.setEnabled(!isInProgress);
+        this.cancelRegisteringTextView.setEnabled(!isInProgress);
     }
 }

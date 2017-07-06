@@ -46,7 +46,18 @@ public class LoginPresenter
 
     @Override
     public void loginUser(String username, String pw) {
-        this.firebaseAuth.signInWithEmailAndPassword(username, pw).addOnCompleteListener(this);
+
+        if (!username.trim().equals("") && !pw.trim().equals("") && !registerMode)
+            this.firebaseAuth.signInWithEmailAndPassword(username, pw).addOnCompleteListener(this);
+        else if (username.trim().equals("")) {
+            loginView.onValidationError(LoginErrorTypes.EMAIL);
+        } else if (pw.trim().equals("")) {
+            loginView.onValidationError(LoginErrorTypes.PASSWORD);
+        } else if (registerMode) {
+            final String repeatedPassword = loginView.onRegistrationStarted();
+
+            registerNewUser(username, pw, repeatedPassword);
+        }
     }
 
     @Override
@@ -72,6 +83,9 @@ public class LoginPresenter
             } else {
                 loginView.onLoginFailed(R.string.activity_login_auth_failed);
             }
+        } else {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+            loginView.onLoginSuccess();
         }
     }
 
@@ -83,11 +97,16 @@ public class LoginPresenter
 
     @Override
     public void registerNewUser(String username, String pw, String repeatedPw) {
-        if (!pw.equals(repeatedPw)){
+        if (repeatedPw.trim().equals("")) {
+            loginView.onValidationError(LoginErrorTypes.REPASSWORD);
+            return;
+        }
+
+        if (!pw.equals(repeatedPw)) {
             loginView.onPasswordNotMatch();
             return;
         }
 
-        Log.d(TAG, "Username: " +  username);
+        firebaseAuth.createUserWithEmailAndPassword(username, pw).addOnCompleteListener(this);
     }
 }
