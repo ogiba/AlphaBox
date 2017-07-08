@@ -7,8 +7,12 @@
     <string name="activity_login_button_login_label">Login</string>
     <string name="activity_login_button_register_label">Register</string>
     <string name="activity_login_register_label">Haven\'t account? Register now!</string>
-    <string name="activity_login_username_required">Email is required to login</string>
-    <string name="activity_login_password_required">Password is required to login</string>
+    <string name="activity_login_username_required">Email is required to %1$s</string>
+    <string name="activity_login_password_required">Password is required to %1$s</string>
+    <string name="activity_login_repeat_password_required">Repeated password is required to %1$s</string>
+    <string name="activity_login_login_error_label">login</string>
+    <string name="activity_login_register_error_label">register</string>
+    <string name="activity_login_different_password">Password not matches</string>
     <string name="activity_login_auth_failed">Login failed. Unexpected reason.</string>
 
     <string name="activity_main_apk_not_loaded">Apk file not loaded</string>

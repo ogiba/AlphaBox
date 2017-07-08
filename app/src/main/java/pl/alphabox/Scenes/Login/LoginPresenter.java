@@ -50,9 +50,9 @@ public class LoginPresenter
         if (!username.trim().equals("") && !pw.trim().equals("") && !registerMode)
             this.firebaseAuth.signInWithEmailAndPassword(username, pw).addOnCompleteListener(this);
         else if (username.trim().equals("")) {
-            loginView.onValidationError(LoginErrorTypes.EMAIL);
+            loginView.onValidationError(LoginErrorTypes.EMAIL, R.string.activity_login_login_error_label);
         } else if (pw.trim().equals("")) {
-            loginView.onValidationError(LoginErrorTypes.PASSWORD);
+            loginView.onValidationError(LoginErrorTypes.PASSWORD, R.string.activity_login_register_error_label);
         } else if (registerMode) {
             final String repeatedPassword = loginView.onRegistrationStarted();
 
@@ -65,6 +65,7 @@ public class LoginPresenter
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if (user != null) {
             Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+            loginView.onAuthenticated();
         } else {
             Log.d(TAG, "onAuthStateChanged:signed_out");
         }
@@ -98,7 +99,7 @@ public class LoginPresenter
     @Override
     public void registerNewUser(String username, String pw, String repeatedPw) {
         if (repeatedPw.trim().equals("")) {
-            loginView.onValidationError(LoginErrorTypes.REPASSWORD);
+            loginView.onValidationError(LoginErrorTypes.REPASSWORD, R.string.activity_login_register_error_label);
             return;
         }
 

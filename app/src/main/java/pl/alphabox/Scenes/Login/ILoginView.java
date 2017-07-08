@@ -5,11 +5,12 @@ package pl.alphabox.Scenes.Login;
  */
 
 public interface ILoginView {
-    void onValidationError(LoginErrorTypes errorType);
+    void onValidationError(LoginErrorTypes errorType, int errorRes);
     void onLoginFailed(String resInfo);
     void onLoginFailed(int resInfo);
     void onChangeMode(boolean isInRegisterMode);
     String onRegistrationStarted();
     void onPasswordNotMatch();
     void onLoginSuccess();
+    void onAuthenticated();
 }

@@ -1,5 +1,6 @@
 package pl.alphabox.Scenes.Login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.alphabox.R;
+import pl.alphabox.Scenes.Menu.MainActivity;
 
 public class LoginActivity extends AppCompatActivity implements ILoginView {
 
@@ -88,20 +90,24 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     }
 
     @Override
-    public void onValidationError(LoginErrorTypes errorType) {
+    public void onValidationError(LoginErrorTypes errorType, int errorRes) {
         changeViewState(false);
 
         switch (errorType) {
             case EMAIL:
-                this.usernameEditText.setError(getResources()
-                        .getString(R.string.activity_login_username_required));
+                this.usernameEditText.setError(String.format(getResources()
+                                .getString(R.string.activity_login_username_required),
+                        getResources().getString(errorRes)));
                 break;
             case PASSWORD:
-                this.passwordEditText.setError(getResources()
-                        .getString(R.string.activity_login_password_required));
+                this.passwordEditText.setError(String.format(getResources()
+                                .getString(R.string.activity_login_password_required),
+                        getResources().getString(errorRes)));
                 break;
             case REPASSWORD:
-                this.repeatPwEditText.setError("Test");
+                this.repeatPwEditText.setError(String.format(getResources()
+                                .getString(R.string.activity_login_repeat_password_required),
+                        getResources().getString(errorRes)));
                 break;
         }
     }
@@ -143,13 +149,19 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void onPasswordNotMatch() {
         changeViewState(false);
-        passwordEditText.setError("Password not matches");
-        repeatPwEditText.setError("Password not matches");
+        passwordEditText.setError(getResources().getString(R.string.activity_login_different_password));
+        repeatPwEditText.setError(getResources().getString(R.string.activity_login_different_password));
     }
 
     @Override
     public void onLoginSuccess() {
         changeViewState(false);
+        navigateToMainActivity();
+    }
+
+    @Override
+    public void onAuthenticated() {
+        navigateToMainActivity();
     }
 
     private void setupPresenter() {
@@ -163,5 +175,13 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         this.repeatPwEditText.setEnabled(!isInProgress);
         this.loginUserBtn.setEnabled(!isInProgress);
         this.cancelRegisteringTextView.setEnabled(!isInProgress);
+    }
+
+    private void navigateToMainActivity() {
+        final Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

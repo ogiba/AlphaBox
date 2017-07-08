@@ -126,16 +126,16 @@
             tools:text="Mocked value" />
 
         <ProgressBar
-            android:visibility="gone"
-            android:layout_above="@+id/et_username_input_layout"
             android:id="@+id/progress_bar"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="wrap_content"
             android:layout_height="16dp"
+            android:layout_above="@+id/et_username_input_layout"
             android:layout_alignEnd="@+id/et_username_input_layout"
             android:layout_alignStart="@+id/et_username_input_layout"
             android:layout_centerHorizontal="true"
             android:indeterminate="true"
-            android:max="100" />
+            android:max="100"
+            android:visibility="gone" />
     </RelativeLayout>
 </ScrollView>
