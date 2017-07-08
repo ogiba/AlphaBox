@@ -6,8 +6,12 @@ package pl.alphabox.Scenes.Login;
 
 public interface ILoginPresenter {
     void prepareLoginSystem();
+
     void releaseLoginSystem();
+
     void loginUser(String username, String pw);
+
     void changeMode();
+
     void registerNewUser(String username, String pw, String repeatedPw);
 }

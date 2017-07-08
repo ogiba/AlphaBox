@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.io.File;
 
 import pl.alphabox.Models.AppModel;
@@ -30,6 +32,12 @@ public class MainPresenter implements IMainPresenter {
     public MainPresenter(IMainView mainView, PackageManager manager) {
         this.mainView = mainView;
         this.packageManager = manager;
+    }
+
+    @Override
+    public void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        mainView.onLogoutUser();
     }
 
     @Override

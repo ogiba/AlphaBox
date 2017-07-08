@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.R;
+import pl.alphabox.Scenes.Login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements IMainView {
     private static final int REQUEST_STORAGE_READ_ACCESS = 0;
@@ -38,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     protected View appSizeContainer;
     @BindView(R.id.tv_app_size)
     protected TextView apkSizeTextView;
+    @BindView(R.id.btn_send_file)
+    protected View sendFileBtn;
+    @BindView(R.id.btn_remove_current_file)
+    protected View removeCurrentSelectionBtn;
 
     private IMainPresenter presenter;
 
@@ -47,9 +55,28 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setupToolbar();
         setupPresenter();
 
         restoreSavedInstance(savedInstanceState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.logout_user:
+                presenter.logoutUser();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -95,6 +122,13 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         this.presenter = new MainPresenter(this, getPackageManager());
     }
 
+    private void setupToolbar() {
+        this.setSupportActionBar(toolbar);
+        final ActionBar actionBar = this.getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayShowTitleEnabled(false);
+    }
+
     private void restoreSavedInstance(Bundle savedInstance) {
         if (savedInstance != null) {
             presenter.restoreInstance(savedInstance);
@@ -104,6 +138,24 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @OnClick(R.id.btn_load_apk)
     protected void onLoadButtonAction() {
         presenter.requestData();
+    }
+
+    @OnClick(R.id.btn_send_file)
+    protected void onSendFileAction() {
+        Toast.makeText(this, "Sending file", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.btn_remove_current_file)
+    protected void onRemoveSelectionAction() {
+        Toast.makeText(this, "Removed selection", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onLogoutUser() {
+        final Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -139,6 +191,10 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     public void onDataProvided(AppModel appModel) {
         if (appModel == null)
             return;
+
+        this.sendFileBtn.setVisibility(View.VISIBLE);
+        this.removeCurrentSelectionBtn.setVisibility(View.VISIBLE);
+        this.pickApkBtn.setVisibility(View.GONE);
 
         this.pickMessageTextView.setText(R.string.activity_main_apk_loaded);
 

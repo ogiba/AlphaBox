@@ -7,6 +7,8 @@ import pl.alphabox.Models.AppModel;
  */
 
 public interface IMainView {
+    void onLogoutUser();
+
     void onPermissionRequired();
 
     void onRequestData();

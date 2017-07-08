@@ -15,8 +15,12 @@
     <string name="activity_login_different_password">Password not matches</string>
     <string name="activity_login_auth_failed">Login failed. Unexpected reason.</string>
 
+    <string name="activity_main_title">Selecting .apk</string>
+    <string name="activity_main_menu_logout">Logout</string>
     <string name="activity_main_apk_not_loaded">Apk file not loaded</string>
     <string name="activity_main_apk_loaded">Apk file loaded</string>
     <string name="activity_main_apk_size_label">File size:</string>
     <string name="activity_main_apk_size"> %1$s Mb</string>
+    <string name="activity_main_send_apk_description">Send apk file</string>
+    <string name="activity_main_remove_apk_description">Remove selected apk file</string>
 </resources>

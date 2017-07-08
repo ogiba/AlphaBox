@@ -17,4 +17,6 @@ public interface IMainPresenter {
     void saveInstance(Bundle outState);
 
     void restoreInstance(Bundle args);
+
+    void logoutUser();
 }
