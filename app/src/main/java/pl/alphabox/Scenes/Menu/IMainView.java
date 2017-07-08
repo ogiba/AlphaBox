@@ -14,4 +14,6 @@ public interface IMainView {
     void onRequestData();
 
     void onDataProvided(AppModel appModel);
+
+    void onSelectionRemoved();
 }

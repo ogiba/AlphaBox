@@ -81,6 +81,12 @@ public class MainPresenter implements IMainPresenter {
         }
     }
 
+    @Override
+    public void removeSelection() {
+        this.apkUri = null;
+        this.mainView.onSelectionRemoved();
+    }
+
     private void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             this.mainView.onPermissionRequired();

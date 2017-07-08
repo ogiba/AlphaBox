@@ -1,6 +1,8 @@
 package pl.alphabox.Scenes.Menu;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout_user:
-                presenter.logoutUser();
+                showLogoutWarningDialog();
                 break;
             default:
                 break;
@@ -147,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @OnClick(R.id.btn_remove_current_file)
     protected void onRemoveSelectionAction() {
-        Toast.makeText(this, "Removed selection", Toast.LENGTH_SHORT).show();
+        this.presenter.removeSelection();
     }
 
     @Override
@@ -192,20 +195,51 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         if (appModel == null)
             return;
 
-        this.sendFileBtn.setVisibility(View.VISIBLE);
-        this.removeCurrentSelectionBtn.setVisibility(View.VISIBLE);
-        this.pickApkBtn.setVisibility(View.GONE);
+        changeViewState(true);
 
         this.pickMessageTextView.setText(R.string.activity_main_apk_loaded);
 
         this.apkNameTextView.setText(appModel.getName());
-        this.apkNameTextView.setVisibility(View.VISIBLE);
 
         this.apkIconView.setImageDrawable(appModel.getIcon());
-        this.apkIconView.setVisibility(View.VISIBLE);
 
-        this.appSizeContainer.setVisibility(View.VISIBLE);
         this.apkSizeTextView.setText(String.format(getResources().getString(R.string.activity_main_apk_size),
                 "" + appModel.getSize()));
+    }
+
+    @Override
+    public void onSelectionRemoved() {
+        changeViewState(false);
+    }
+
+    private void changeViewState(boolean isDataProvided) {
+        this.sendFileBtn.setVisibility(isDataProvided ? View.VISIBLE : View.GONE);
+        this.removeCurrentSelectionBtn.setVisibility(isDataProvided ? View.VISIBLE : View.GONE);
+        this.pickApkBtn.setVisibility(isDataProvided ? View.GONE : View.VISIBLE);
+
+        this.apkNameTextView.setVisibility(isDataProvided ? View.VISIBLE : View.GONE);
+        this.apkIconView.setVisibility(isDataProvided ? View.VISIBLE : View.GONE);
+        this.appSizeContainer.setVisibility(isDataProvided ? View.VISIBLE : View.GONE);
+    }
+
+    private void showLogoutWarningDialog() {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.activity_main_dialog_logout_title)
+                .setMessage(R.string.activity_main_dialog_logout_message)
+                .setPositiveButton(R.string.dialog_positive_action, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        presenter.logoutUser();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_negative_action, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        dialog.show();
     }
 }

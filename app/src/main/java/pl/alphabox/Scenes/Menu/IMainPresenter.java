@@ -8,6 +8,8 @@ import android.os.Bundle;
  */
 
 public interface IMainPresenter {
+    void logoutUser();
+
     void requestData();
 
     void provideData(Uri dataUri);
@@ -18,5 +20,5 @@ public interface IMainPresenter {
 
     void restoreInstance(Bundle args);
 
-    void logoutUser();
+    void removeSelection();
 }

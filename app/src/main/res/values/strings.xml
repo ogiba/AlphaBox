@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">AlphaBox</string>
 
+    <string name="dialog_ok_action">OK</string>
+    <string name="dialog_cancel_action">Cancel</string>
+    <string name="dialog_positive_action">Yes</string>
+    <string name="dialog_negative_action">No</string>
+
     <string name="activity_login_username_hint">Email</string>
     <string name="activity_login_password_hint">Password</string>
     <string name="activity_login_password_repeat_hint">Repeat Password</string>
@@ -23,4 +28,6 @@
     <string name="activity_main_apk_size"> %1$s Mb</string>
     <string name="activity_main_send_apk_description">Send apk file</string>
     <string name="activity_main_remove_apk_description">Remove selected apk file</string>
+    <string name="activity_main_dialog_logout_title">Warning</string>
+    <string name="activity_main_dialog_logout_message">Are you sure you want to login out?</string>
 </resources>
