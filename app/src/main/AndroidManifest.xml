@@ -17,6 +17,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".Scenes.Login.LoginActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
