@@ -62,6 +62,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/layout_app_info_container" />
+        android:layout_below="@+id/layout_app_info_container"
+        tools:listitem="@layout/listview_item_available_user" />
 
 </RelativeLayout>

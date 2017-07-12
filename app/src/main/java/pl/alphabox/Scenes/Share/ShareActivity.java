@@ -18,13 +18,16 @@ public class ShareActivity extends BaseToolbarActivity implements IShareView {
     protected TextView appSizeTextView;
 
     private ISharePresenter presenter;
+    private ShareUsersAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (presenter != null)
+        setupAdapter();
+        if (presenter != null) {
             presenter.transferExtras(getIntent().getExtras());
+        }
     }
 
     @Override
@@ -45,5 +48,9 @@ public class ShareActivity extends BaseToolbarActivity implements IShareView {
 
         if (appModel.getIcon() != null)
             appIconView.setImageDrawable(appModel.getIcon());
+    }
+
+    private void setupAdapter() {
+        this.adapter = new ShareUsersAdapter(this);
     }
 }

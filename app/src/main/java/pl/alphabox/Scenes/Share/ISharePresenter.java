@@ -7,5 +7,7 @@ import android.os.Bundle;
  */
 
 public interface ISharePresenter {
+    void initData();
+
     void transferExtras(Bundle extras);
 }
