@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.io.File;
 
 import pl.alphabox.Models.AppModel;
+import pl.alphabox.Scenes.Share.SharePresenter;
 
 /**
  * Created by ogiba on 29.06.2017.
@@ -28,6 +29,7 @@ public class MainPresenter implements IMainPresenter {
 
     private boolean isReadGranted = false;
     private Uri apkUri;
+    private AppModel receivedModel;
 
     public MainPresenter(IMainView mainView, PackageManager manager) {
         this.mainView = mainView;
@@ -57,7 +59,7 @@ public class MainPresenter implements IMainPresenter {
     @Override
     public void provideData(Uri dataUri) {
         this.apkUri = dataUri;
-        AppModel receivedModel = extractAppInformation();
+        this.receivedModel = extractAppInformation();
 
         if (receivedModel != null)
             this.mainView.onDataProvided(receivedModel);
@@ -84,7 +86,19 @@ public class MainPresenter implements IMainPresenter {
     @Override
     public void removeSelection() {
         this.apkUri = null;
+        this.receivedModel = null;
         this.mainView.onSelectionRemoved();
+    }
+
+    @Override
+    public void proceedSharingData() {
+        if (receivedModel == null) {
+            return;
+        }
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SharePresenter.BUNDLE_APP_MODEL, receivedModel);
+        this.mainView.onProceedSharingData(bundle);
     }
 
     private void checkPermission() {
@@ -112,7 +126,7 @@ public class MainPresenter implements IMainPresenter {
             File tmpFile = new File(apkUri.getPath());
             double appSizeInMB = (tmpFile.length() / 1024) / 1024;
 
-            return new AppModel(appName, icon, appSizeInMB);
+            return new AppModel(appName, apkUri.getPath(), icon, appSizeInMB);
         } catch (NullPointerException ex) {
             ex.printStackTrace();
             return null;

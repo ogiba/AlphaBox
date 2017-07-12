@@ -1,5 +1,7 @@
 package pl.alphabox.Scenes.Menu;
 
+import android.os.Bundle;
+
 import pl.alphabox.Models.AppModel;
 
 /**
@@ -16,4 +18,6 @@ public interface IMainView {
     void onDataProvided(AppModel appModel);
 
     void onSelectionRemoved();
+
+    void onProceedSharingData(Bundle bundle);
 }

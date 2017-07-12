@@ -14,8 +14,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.alphabox.R;
 import pl.alphabox.Scenes.Menu.MainActivity;
+import pl.alphabox.Utils.BaseActivity;
 
-public class LoginActivity extends AppCompatActivity implements ILoginView {
+public class LoginActivity extends BaseActivity implements ILoginView {
 
     @BindView(R.id.et_username_field)
     protected TextInputEditText usernameEditText;
@@ -40,10 +41,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        ButterKnife.bind(this);
-
-        setupPresenter();
     }
 
     @Override
@@ -58,6 +55,16 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
         super.onStop();
 
         this.presenter.releaseLoginSystem();
+    }
+
+    @Override
+    protected int provideLayout() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void setupPresenter() {
+        this.presenter = new LoginPresenter(this);
     }
 
     @Override
@@ -162,10 +169,6 @@ public class LoginActivity extends AppCompatActivity implements ILoginView {
     @Override
     public void onAuthenticated() {
         navigateToMainActivity();
-    }
-
-    private void setupPresenter() {
-        this.presenter = new LoginPresenter(this);
     }
 
     private void changeViewState(boolean isInProgress) {

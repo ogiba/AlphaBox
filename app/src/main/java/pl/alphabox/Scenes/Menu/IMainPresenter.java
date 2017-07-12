@@ -21,4 +21,6 @@ public interface IMainPresenter {
     void restoreInstance(Bundle args);
 
     void removeSelection();
+
+    void proceedSharingData();
 }

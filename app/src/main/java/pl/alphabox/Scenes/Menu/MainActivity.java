@@ -26,8 +26,10 @@ import butterknife.OnClick;
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.R;
 import pl.alphabox.Scenes.Login.LoginActivity;
+import pl.alphabox.Scenes.Share.ShareActivity;
+import pl.alphabox.Utils.BaseToolbarActivity;
 
-public class MainActivity extends AppCompatActivity implements IMainView {
+public class MainActivity extends BaseToolbarActivity implements IMainView {
     private static final int REQUEST_STORAGE_READ_ACCESS = 0;
     private static final int REQUEST_PICK_APK = 1;
 
@@ -55,13 +57,15 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
 
-        setupToolbar();
         setupPresenter();
 
         restoreSavedInstance(savedInstanceState);
+    }
+
+    @Override
+    protected int provideLayout() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -121,15 +125,9 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         super.onSaveInstanceState(outState);
     }
 
-    private void setupPresenter() {
+    @Override
+    protected void setupPresenter() {
         this.presenter = new MainPresenter(this, getPackageManager());
-    }
-
-    private void setupToolbar() {
-        this.setSupportActionBar(toolbar);
-        final ActionBar actionBar = this.getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayShowTitleEnabled(false);
     }
 
     private void restoreSavedInstance(Bundle savedInstance) {
@@ -145,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
 
     @OnClick(R.id.btn_send_file)
     protected void onSendFileAction() {
-        Toast.makeText(this, "Sending file", Toast.LENGTH_SHORT).show();
+        presenter.proceedSharingData();
     }
 
     @OnClick(R.id.btn_remove_current_file)
@@ -210,6 +208,13 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     @Override
     public void onSelectionRemoved() {
         changeViewState(false);
+    }
+
+    @Override
+    public void onProceedSharingData(Bundle bundle) {
+        Intent intent = new Intent(this, ShareActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     private void changeViewState(boolean isDataProvided) {
