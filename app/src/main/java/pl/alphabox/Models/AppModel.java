@@ -50,6 +50,10 @@ public class AppModel implements Parcelable {
         }
     };
 
+    public void setIcon(Drawable icon) {
+        this.icon = icon;
+    }
+
     public String getName() {
         return name;
     }
@@ -65,4 +69,6 @@ public class AppModel implements Parcelable {
     public String getApkUri() {
         return apkUri;
     }
+
+
 }

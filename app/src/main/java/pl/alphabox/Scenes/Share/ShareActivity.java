@@ -5,11 +5,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import pl.alphabox.Models.AppModel;
 import pl.alphabox.R;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
 public class ShareActivity extends BaseToolbarActivity implements IShareView {
-    @BindView(R.id.iv_app_icon) 
+    @BindView(R.id.iv_app_icon)
     protected ImageView appIconView;
     @BindView(R.id.tv_app_name)
     protected TextView appNameTextView;
@@ -22,9 +23,8 @@ public class ShareActivity extends BaseToolbarActivity implements IShareView {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle extras = getIntent().getExtras();
-
-        presenter.transferExtras(extras);
+        if (presenter != null)
+            presenter.transferExtras(getIntent().getExtras());
     }
 
     @Override
@@ -34,6 +34,16 @@ public class ShareActivity extends BaseToolbarActivity implements IShareView {
 
     @Override
     protected void setupPresenter() {
-        this.presenter = new SharePresenter(this);
+        this.presenter = new SharePresenter(this, getPackageManager());
+    }
+
+    @Override
+    public void onExtrasTransferred(AppModel appModel) {
+        appNameTextView.setText(appModel.getName());
+        appSizeTextView.setText(String.format(getResources().getString(R.string.activity_main_apk_size),
+                "" + appModel.getSize()));
+
+        if (appModel.getIcon() != null)
+            appIconView.setImageDrawable(appModel.getIcon());
     }
 }
