@@ -8,7 +8,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import pl.alphabox.Models.UserModel;
 import pl.alphabox.R;
 
 /**
@@ -86,6 +89,9 @@ public class LoginPresenter
             }
         } else {
             FirebaseUser user = firebaseAuth.getCurrentUser();
+            if (registerMode) {
+                addNewUserToDB(user);
+            }
             loginView.onLoginSuccess();
         }
     }
@@ -109,5 +115,16 @@ public class LoginPresenter
         }
 
         firebaseAuth.createUserWithEmailAndPassword(username, pw).addOnCompleteListener(this);
+    }
+
+    private void addNewUserToDB(FirebaseUser user) {
+        if (user.getUid().equals("") || user.getEmail() == null ){
+            return;
+        }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference reference = database.getReference("users");
+        UserModel userModel = new UserModel(user.getEmail());
+        reference.child(user.getUid()).setValue(userModel);
     }
 }
