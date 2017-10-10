@@ -7,17 +7,17 @@ import android.os.Parcelable;
  * Created by ogiba on 09.07.2017.
  */
 
-public class UserModel implements Parcelable {
+public class User implements Parcelable {
     public String email;
 
-    public UserModel() {
+    public User() {
     }
 
-    public UserModel(String email) {
+    public User(String email) {
         this.email = email;
     }
 
-    private UserModel(Parcel in){
+    private User(Parcel in){
         this.email = in.readString();
     }
 
@@ -31,14 +31,14 @@ public class UserModel implements Parcelable {
         dest.writeString(email);
     }
 
-    public static final Parcelable.Creator<UserModel> CREATOR
-            = new Parcelable.Creator<UserModel>() {
-        public UserModel createFromParcel(Parcel in) {
-            return new UserModel(in);
+    public static final Parcelable.Creator<User> CREATOR
+            = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel in) {
+            return new User(in);
         }
 
-        public UserModel[] newArray(int size) {
-            return new UserModel[size];
+        public User[] newArray(int size) {
+            return new User[size];
         }
     };
 }

@@ -5,12 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import pl.alphabox.Models.UserModel;
+import pl.alphabox.Models.User;
 import pl.alphabox.R;
 
 /**
@@ -20,7 +19,7 @@ import pl.alphabox.R;
 public class ShareUsersAdapter extends BaseAdapter {
 
     private Context context;
-    private ArrayList<UserModel> items;
+    private ArrayList<User> items;
 
     public ShareUsersAdapter(Context context) {
         this.context = context;
@@ -46,8 +45,8 @@ public class ShareUsersAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            View sourceView = LayoutInflater.from(context).inflate(R.layout.listview_item_available_user, parent);
-            viewHolder = new ViewHolder(sourceView);
+            convertView = LayoutInflater.from(context).inflate(R.layout.listview_item_available_user, parent, false);
+            viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -58,9 +57,15 @@ public class ShareUsersAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setItems(ArrayList<UserModel> items) {
+    public void setItems(ArrayList<User> items) {
         this.items.clear();
         this.items.addAll(items);
+
+        notifyDataSetChanged();
+    }
+
+    public void addItem(User item) {
+        this.items.add(item);
 
         notifyDataSetChanged();
     }

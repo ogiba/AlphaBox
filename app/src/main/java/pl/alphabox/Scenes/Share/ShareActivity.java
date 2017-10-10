@@ -2,10 +2,12 @@ package pl.alphabox.Scenes.Share;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
+import pl.alphabox.Models.User;
 import pl.alphabox.R;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
@@ -16,6 +18,8 @@ public class ShareActivity extends BaseToolbarActivity implements IShareView {
     protected TextView appNameTextView;
     @BindView(R.id.tv_app_size)
     protected TextView appSizeTextView;
+    @BindView(R.id.lv_users)
+    protected ListView usersListView;
 
     private ISharePresenter presenter;
     private ShareUsersAdapter adapter;
@@ -38,6 +42,7 @@ public class ShareActivity extends BaseToolbarActivity implements IShareView {
     @Override
     protected void setupPresenter() {
         this.presenter = new SharePresenter(this, getPackageManager());
+        this.presenter.initData();
     }
 
     @Override
@@ -50,7 +55,13 @@ public class ShareActivity extends BaseToolbarActivity implements IShareView {
             appIconView.setImageDrawable(appModel.getIcon());
     }
 
+    @Override
+    public void onUserLoaded(User user) {
+        this.adapter.addItem(user);
+    }
+
     private void setupAdapter() {
         this.adapter = new ShareUsersAdapter(this);
+        usersListView.setAdapter(adapter);
     }
 }

@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -13,7 +14,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import pl.alphabox.Models.AppModel;
+import pl.alphabox.Models.User;
 
 /**
  * Created by ogiba on 12.07.2017.
@@ -40,7 +44,10 @@ public class SharePresenter implements ISharePresenter, ChildEventListener {
 
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        Log.d("USER_ADDED", dataSnapshot.getKey());
 
+        User user = dataSnapshot.getValue(User.class);
+        shareView.onUserLoaded(user);
     }
 
     @Override
