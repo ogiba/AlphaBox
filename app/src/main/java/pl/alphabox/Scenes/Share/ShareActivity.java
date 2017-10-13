@@ -74,7 +74,8 @@ public class ShareActivity extends BaseToolbarActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Snackbar.make(this.getWindow().getDecorView(), "Selected: " + position, Snackbar.LENGTH_SHORT).show();
+        User selectedUser = (User)this.adapter.getItem(position);
+        Snackbar.make(view, "Selected: " + selectedUser.email, Snackbar.LENGTH_SHORT).show();
     }
 
     private void setupAdapter() {
