@@ -1,12 +1,15 @@
 package pl.alphabox.Scenes.Share;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
@@ -24,6 +27,8 @@ public class ShareActivity extends BaseToolbarActivity
     protected TextView appSizeTextView;
     @BindView(R.id.lv_users)
     protected ListView usersListView;
+    @BindView(R.id.progress_bar)
+    protected ProgressBar progressBar;
 
     private ISharePresenter presenter;
     private ShareUsersAdapter adapter;
@@ -62,11 +67,14 @@ public class ShareActivity extends BaseToolbarActivity
     @Override
     public void onUserLoaded(User user) {
         this.adapter.addItem(user);
+
+        if (progressBar.getVisibility() == View.VISIBLE)
+            this.progressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d("ShareActivity", "Selected: " + position);
+        Snackbar.make(this.getWindow().getDecorView(), "Selected: " + position, Snackbar.LENGTH_SHORT).show();
     }
 
     private void setupAdapter() {
