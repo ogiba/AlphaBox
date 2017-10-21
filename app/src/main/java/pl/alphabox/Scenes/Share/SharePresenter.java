@@ -26,7 +26,7 @@ import pl.alphabox.Models.User;
  * Created by ogiba on 12.07.2017.
  */
 
-public class SharePresenter implements ISharePresenter, ChildEventListener {
+public class SharePresenter implements ISharePresenter {
     public static final String BUNDLE_APP_MODEL = "appModelBundle";
 
     private IShareView shareView;
@@ -37,47 +37,6 @@ public class SharePresenter implements ISharePresenter, ChildEventListener {
     public SharePresenter(IShareView shareView, PackageManager packageManager) {
         this.shareView = shareView;
         this.packageManager = packageManager;
-    }
-
-    @Override
-    public void initData() {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
-        database.addChildEventListener(this);
-    }
-
-    @Override
-    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        Log.d("USER_ADDED", dataSnapshot.getKey());
-
-        User user = dataSnapshot.getValue(User.class);
-
-        FirebaseUser loggedUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (loggedUser != null && loggedUser.getEmail() != null) {
-            if (loggedUser.getEmail().equals(user.email))
-                return;
-        }
-        shareView.onUserLoaded(user);
-    }
-
-    @Override
-    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-    }
-
-    @Override
-    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-
     }
 
     @Override

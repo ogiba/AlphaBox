@@ -9,6 +9,4 @@ import pl.alphabox.Models.User;
 
 public interface IShareView {
     void onExtrasTransferred(AppModel appModel);
-
-    void onUserLoaded(User user);
 }

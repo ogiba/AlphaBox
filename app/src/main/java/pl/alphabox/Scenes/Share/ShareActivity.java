@@ -2,6 +2,8 @@ package pl.alphabox.Scenes.Share;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,26 +20,23 @@ import pl.alphabox.R;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
 public class ShareActivity extends BaseToolbarActivity
-        implements IShareView, ListView.OnItemClickListener {
+        implements IShareView {
     @BindView(R.id.iv_app_icon)
     protected ImageView appIconView;
     @BindView(R.id.tv_app_name)
     protected TextView appNameTextView;
     @BindView(R.id.tv_app_size)
     protected TextView appSizeTextView;
-    @BindView(R.id.lv_users)
-    protected ListView usersListView;
-    @BindView(R.id.progress_bar)
-    protected ProgressBar progressBar;
 
     private ISharePresenter presenter;
-    private ShareUsersAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupAdapter();
+        setupPresenter();
+        setupFragment();
+
         if (presenter != null) {
             presenter.transferExtras(getIntent().getExtras());
         }
@@ -51,7 +50,15 @@ public class ShareActivity extends BaseToolbarActivity
     @Override
     protected void setupPresenter() {
         this.presenter = new SharePresenter(this, getPackageManager());
-        this.presenter.initData();
+    }
+
+    public void setupFragment() {
+        Fragment fragment = ShareUserListFragment.newInstance();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override
@@ -62,25 +69,5 @@ public class ShareActivity extends BaseToolbarActivity
 
         if (appModel.getIcon() != null)
             appIconView.setImageDrawable(appModel.getIcon());
-    }
-
-    @Override
-    public void onUserLoaded(User user) {
-        this.adapter.addItem(user);
-
-        if (progressBar.getVisibility() == View.VISIBLE)
-            this.progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        User selectedUser = (User)this.adapter.getItem(position);
-        Snackbar.make(view, "Selected: " + selectedUser.email, Snackbar.LENGTH_SHORT).show();
-    }
-
-    private void setupAdapter() {
-        this.adapter = new ShareUsersAdapter(this);
-        usersListView.setAdapter(adapter);
-        usersListView.setOnItemClickListener(this);
     }
 }
