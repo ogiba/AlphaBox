@@ -1,6 +1,7 @@
 package pl.alphabox.Scenes.Share;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -78,5 +79,23 @@ public class ShareUserListFragment extends Fragment implements IShareUserList, A
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         User selectedUser = (User)this.adapter.getItem(position);
         Snackbar.make(view, "Selected: " + selectedUser.email, Snackbar.LENGTH_SHORT).show();
+    }
+
+    public static class Builder {
+        private Bundle args;
+
+        public void setArgs(@NonNull Bundle args) {
+            this.args = args;
+        }
+
+        public ShareUserListFragment build() {
+            final ShareUserListFragment fragment = new ShareUserListFragment();
+
+            if (args != null) {
+                fragment.setArguments(args);
+            }
+
+            return fragment;
+        }
     }
 }

@@ -53,7 +53,7 @@ public class ShareActivity extends BaseToolbarActivity
     }
 
     public void setupFragment() {
-        Fragment fragment = ShareUserListFragment.newInstance();
+        Fragment fragment = new ShareUserListFragment.Builder().build();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
