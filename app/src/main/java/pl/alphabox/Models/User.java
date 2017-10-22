@@ -10,6 +10,8 @@ import android.os.Parcelable;
 public class User implements Parcelable {
     public String email;
 
+    private boolean selected;
+
     public User() {
     }
 
@@ -41,4 +43,12 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
 }

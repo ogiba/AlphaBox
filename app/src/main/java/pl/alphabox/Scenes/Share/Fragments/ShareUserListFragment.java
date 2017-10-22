@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -16,13 +15,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
-import pl.alphabox.Scenes.Share.IShareView;
+import pl.alphabox.Scenes.Share.Fragments.Adapter.OnUserClickListener;
+import pl.alphabox.Scenes.Share.Fragments.Adapter.ShareUsersAdapter;
 
 /**
  * Created by robertogiba on 22.10.2017.
  */
 
-public class ShareUserListFragment extends Fragment implements IShareUserList, AdapterView.OnItemClickListener {
+public class ShareUserListFragment extends Fragment
+        implements IShareUserList, OnUserClickListener {
     @BindView(R.id.lv_users)
     protected ListView usersListView;
     @BindView(R.id.progress_bar)
@@ -61,8 +62,8 @@ public class ShareUserListFragment extends Fragment implements IShareUserList, A
 
     private void setupAdapter() {
         this.adapter = new ShareUsersAdapter(getContext());
+        adapter.setOnUserSelectListener(this);
         usersListView.setAdapter(adapter);
-        usersListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -74,11 +75,11 @@ public class ShareUserListFragment extends Fragment implements IShareUserList, A
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        User selectedUser = (User) this.adapter.getItem(position);
+    public void onUserSelected(View view, int position) {
+        User selectedUser = this.adapter.getItem(position);
         Snackbar.make(view, "Selected: " + selectedUser.email, Snackbar.LENGTH_SHORT).show();
 
-        ((IShareView)getActivity()).navigateToShareToSelectedUser(selectedUser);
+        this.adapter.selectItem(position);
     }
 
     public static class Builder {
