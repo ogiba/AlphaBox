@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
+import pl.alphabox.Models.User;
 import pl.alphabox.R;
+import pl.alphabox.Scenes.Share.Fragments.ShareUserFragment;
 import pl.alphabox.Scenes.Share.Fragments.ShareUserListFragment;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
@@ -50,7 +52,6 @@ public class ShareActivity extends BaseToolbarActivity
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -62,5 +63,17 @@ public class ShareActivity extends BaseToolbarActivity
 
         if (appModel.getIcon() != null)
             appIconView.setImageDrawable(appModel.getIcon());
+    }
+
+    @Override
+    public void navigateToShareToSelectedUser(User selectedUser) {
+        ShareUserFragment.Builder builder = new ShareUserFragment.Builder();
+        builder.setUser(selectedUser);
+        Fragment fragment = builder.build();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

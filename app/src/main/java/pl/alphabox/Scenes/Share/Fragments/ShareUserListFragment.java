@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
+import pl.alphabox.Scenes.Share.IShareView;
 
 /**
  * Created by robertogiba on 22.10.2017.
@@ -76,6 +77,8 @@ public class ShareUserListFragment extends Fragment implements IShareUserList, A
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         User selectedUser = (User) this.adapter.getItem(position);
         Snackbar.make(view, "Selected: " + selectedUser.email, Snackbar.LENGTH_SHORT).show();
+
+        ((IShareView)getActivity()).navigateToShareToSelectedUser(selectedUser);
     }
 
     public static class Builder {
