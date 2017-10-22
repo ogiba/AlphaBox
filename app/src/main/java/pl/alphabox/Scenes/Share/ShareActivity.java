@@ -103,7 +103,7 @@ public class ShareActivity extends BaseToolbarActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_share_activity, menu);
 
-        MenuItem item = menu.findItem(R.id.menu_done);
+        final MenuItem item = menu.findItem(R.id.menu_done);
 
         if (item != null) {
             item.setVisible(shouldShowDoneBtn);
@@ -123,10 +123,10 @@ public class ShareActivity extends BaseToolbarActivity
     }
 
     public void setupFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (fragmentManager.findFragmentByTag(FRAGMENT_USERS_LIST) == null) {
-            Fragment fragment = new ShareUserListFragment.Builder().build();
+            final Fragment fragment = new ShareUserListFragment.Builder().build();
 
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.fragment_container, fragment, FRAGMENT_USERS_LIST);
@@ -146,11 +146,11 @@ public class ShareActivity extends BaseToolbarActivity
 
     @Override
     public void navigateToShareToSelectedUser(User selectedUser) {
-        ShareUserFragment.Builder builder = new ShareUserFragment.Builder();
+        final ShareUserFragment.Builder builder = new ShareUserFragment.Builder();
         builder.setUser(selectedUser);
-        Fragment fragment = builder.build();
+        final Fragment fragment = builder.build();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

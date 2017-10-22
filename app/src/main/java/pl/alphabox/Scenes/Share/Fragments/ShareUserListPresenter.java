@@ -36,7 +36,7 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
     @Override
     public void initData() {
         if (users.size() == 0) {
-            DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
+            final DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
             database.addChildEventListener(this);
         } else {
             for (User user : users) {
@@ -61,7 +61,7 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
         if (savedInstance == null)
             return;
 
-        ArrayList<User> users = savedInstance.getParcelableArrayList(BUNDLE_USERS_LIST);
+        final ArrayList<User> users = savedInstance.getParcelableArrayList(BUNDLE_USERS_LIST);
         this.setUsers(users);
     }
 
@@ -69,9 +69,9 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         Log.d("USER_ADDED", dataSnapshot.getKey());
 
-        User user = dataSnapshot.getValue(User.class);
+        final User user = dataSnapshot.getValue(User.class);
 
-        FirebaseUser loggedUser = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser loggedUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (loggedUser != null && loggedUser.getEmail() != null) {
             if (loggedUser.getEmail().equals(user.email))
@@ -115,7 +115,7 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
             }
         }
 
-        User user = this.users.get(position);
+        final User user = this.users.get(position);
         user.setSelected(!user.isSelected());
 
         shareUserListView.onUpdateUserState(users, user.isSelected());

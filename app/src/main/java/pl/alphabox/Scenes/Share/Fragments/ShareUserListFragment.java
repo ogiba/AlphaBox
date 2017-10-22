@@ -54,7 +54,7 @@ public class ShareUserListFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_share_user_list, container, false);
+        final View view = inflater.inflate(R.layout.fragment_share_user_list, container, false);
         ButterKnife.bind(this, view);
 
         presenter.restoreSavedInstance(savedInstanceState);

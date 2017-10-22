@@ -20,7 +20,7 @@ import pl.alphabox.R;
 
 public class ShareUsersAdapter extends BaseAdapter {
 
-    private Context context;
+    final private Context context;
     private ArrayList<User> items;
     private OnUserClickListener userClickListener;
 
@@ -46,7 +46,7 @@ public class ShareUsersAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
+        final ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.listview_item_available_user, parent, false);
             viewHolder = new ViewHolder(convertView, context, position);
@@ -55,7 +55,7 @@ public class ShareUsersAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        User user = items.get(position);
+        final User user = items.get(position);
 
         viewHolder.emailLabel.setText(user.email);
         viewHolder.setOnUserSelectListener(userClickListener);
