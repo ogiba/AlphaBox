@@ -21,6 +21,7 @@ import pl.alphabox.Utils.BaseToolbarActivity;
 public class ShareActivity extends BaseToolbarActivity
         implements IShareView {
     private static final String FRAGMENT_USERS_LIST = "UsersListFragment";
+    private static final String STATE_DONE_BUTTON = "DoneButtonState";
 
     @BindView(R.id.iv_app_icon)
     protected ImageView appIconView;
@@ -40,8 +41,52 @@ public class ShareActivity extends BaseToolbarActivity
         setupFragment();
 
         if (presenter != null) {
+            presenter.restoreSavedInstance(savedInstanceState);
             presenter.transferExtras(getIntent().getExtras());
         }
+
+        restoreInstance(savedInstanceState);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean(STATE_DONE_BUTTON, shouldShowDoneBtn);
+
+        presenter.saveInstanceState(outState);
+    }
+
+    private void restoreInstance(Bundle savedInstance){
+        if (savedInstance == null)
+            return;
+
+        shouldShowDoneBtn = savedInstance.getBoolean(STATE_DONE_BUTTON);
     }
 
     @Override
@@ -115,7 +160,7 @@ public class ShareActivity extends BaseToolbarActivity
     public void changeDoneButtonVisibility(boolean shouldShow) {
         if (shouldShow && shouldShowDoneBtn)
             return;
-        
+
         this.shouldShowDoneBtn = shouldShow;
         this.invalidateOptionsMenu();
     }

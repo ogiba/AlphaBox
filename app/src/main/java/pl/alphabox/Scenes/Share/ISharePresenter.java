@@ -8,4 +8,8 @@ import android.os.Bundle;
 
 public interface ISharePresenter {
     void transferExtras(Bundle extras);
+
+    void saveInstanceState(Bundle outState);
+
+    void restoreSavedInstance(Bundle savedInstance);
 }
