@@ -8,8 +8,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
 
@@ -17,7 +20,12 @@ import pl.alphabox.R;
  * Created by robertogiba on 22.10.2017.
  */
 
-public class ShareUserFragment extends Fragment implements IShareUserView {
+public class ShareUserFragment extends Fragment
+        implements IShareUserView {
+    @BindView(R.id.btn_accept)
+    protected View acceptBtn;
+    @BindView(R.id.btn_cancel)
+    protected View canceltBtn;
 
     public static ShareUserFragment newInstance(Bundle args) {
         ShareUserFragment fragment = new ShareUserFragment();
@@ -36,6 +44,16 @@ public class ShareUserFragment extends Fragment implements IShareUserView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @OnClick(R.id.btn_accept)
+    protected void acceptButtonAction() {
+        Toast.makeText(getContext(), "Pressed accept", Toast.LENGTH_SHORT).show();
+    }
+
+    @OnClick(R.id.btn_cancel)
+    protected void cancelButtonAction() {
+        Toast.makeText(getContext(), "Pressed cancel", Toast.LENGTH_SHORT).show();
     }
 
     public static class Builder {

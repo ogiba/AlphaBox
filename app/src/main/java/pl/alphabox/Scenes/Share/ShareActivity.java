@@ -2,6 +2,7 @@ package pl.alphabox.Scenes.Share;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,11 +49,15 @@ public class ShareActivity extends BaseToolbarActivity
     }
 
     public void setupFragment() {
-        Fragment fragment = new ShareUserListFragment.Builder().build();
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
-        transaction.commit();
+        if (fragmentManager.getBackStackEntryCount() == 0) {
+            Fragment fragment = new ShareUserListFragment.Builder().build();
+
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.fragment_container, fragment);
+            transaction.commit();
+        }
     }
 
     @Override
