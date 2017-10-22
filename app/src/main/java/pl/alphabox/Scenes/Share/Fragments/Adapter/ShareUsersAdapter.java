@@ -1,6 +1,7 @@
 package pl.alphabox.Scenes.Share.Fragments.Adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class ShareUsersAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.listview_item_available_user, parent, false);
-            viewHolder = new ViewHolder(convertView, position);
+            viewHolder = new ViewHolder(convertView, context, position);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -58,7 +59,7 @@ public class ShareUsersAdapter extends BaseAdapter {
         User user = items.get(position);
 
         viewHolder.emailLabel.setText(user.email);
-        viewHolder.userClickListener = userClickListener;
+        viewHolder.setOnUserSelectListener(userClickListener);
         viewHolder.setSelected(user.isSelected());
 
         return convertView;
@@ -82,6 +83,12 @@ public class ShareUsersAdapter extends BaseAdapter {
     }
 
     public void selectItem(int position) {
+        for (int i = 0; i < items.size(); i++) {
+            if (i != position) {
+                items.get(i).setSelected(false);
+            }
+        }
+
         User user = this.items.get(position);
         user.setSelected(!user.isSelected());
 
@@ -91,11 +98,13 @@ public class ShareUsersAdapter extends BaseAdapter {
     private class ViewHolder implements View.OnClickListener {
         public TextView emailLabel;
         public ImageView checkImage;
-        public OnUserClickListener userClickListener;
 
+        private Context context;
         private int position;
+        private OnUserClickListener userClickListener;
 
-        ViewHolder(View sourceView, int position) {
+        ViewHolder(@NonNull View sourceView, @NonNull Context context, int position) {
+            this.context = context;
             this.position = position;
             this.emailLabel = (TextView) sourceView.findViewById(R.id.tv_user_email);
             this.checkImage = (ImageView) sourceView.findViewById(R.id.iv_select);
@@ -111,7 +120,14 @@ public class ShareUsersAdapter extends BaseAdapter {
             userClickListener.onUserSelected(v, position);
         }
 
-        public void setSelected(boolean isSelected) {
+        public void setOnUserSelectListener(OnUserClickListener callback) {
+            this.userClickListener = callback;
+        }
+
+        public void setSelected(boolean isSelected) {gi
+            if (context == null)
+                return;
+
             if (isSelected)
                 checkImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_done_black_24dp));
             else
