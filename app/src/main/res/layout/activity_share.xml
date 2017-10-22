@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context="pl.alphabox.Scenes.Share.ShareActivity">
 
     <android.support.v7.widget.Toolbar
@@ -56,12 +57,12 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:id="@+id/fragment_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/layout_app_info_container"/>
+        android:layout_below="@+id/layout_app_info_container"
+        android:orientation="vertical" />
 </RelativeLayout>

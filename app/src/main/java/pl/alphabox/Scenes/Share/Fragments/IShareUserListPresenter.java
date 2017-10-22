@@ -13,6 +13,8 @@ import pl.alphabox.Models.User;
 public interface IShareUserListPresenter {
     void initData();
 
+    void reloadData();
+
     void restoreSavedInstance(Bundle savedInstance);
 
     void saveInstance(Bundle outState);

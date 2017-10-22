@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,13 @@ import pl.alphabox.Scenes.Share.IShareView;
  */
 
 public class ShareUserListFragment extends Fragment
-        implements IShareUserList, OnUserClickListener {
+        implements IShareUserList, OnUserClickListener, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.lv_users)
     protected ListView usersListView;
     @BindView(R.id.progress_bar)
     protected ProgressBar progressBar;
+    @BindView(R.id.swipe_refresh_layout)
+    protected SwipeRefreshLayout refreshLayout;
 
     private IShareUserListPresenter presenter;
     private ShareUsersAdapter adapter;
@@ -61,7 +64,9 @@ public class ShareUserListFragment extends Fragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         setupAdapter();
+        setupSwipeRefresh();
 
         this.presenter.initData();
     }
@@ -82,12 +87,32 @@ public class ShareUserListFragment extends Fragment
         usersListView.setAdapter(adapter);
     }
 
+    private void setupSwipeRefresh() {
+        refreshLayout.setOnRefreshListener(this);
+        refreshLayout.setColorSchemeColors(getResources().getColor(R.color.colorAccent),
+                getResources().getColor(R.color.colorPrimary),
+                getResources().getColor(R.color.colorPrimaryDark));
+    }
+
+    @Override
+    public void onRefresh() {
+        if (getActivity() instanceof IShareView) {
+            ((IShareView) getActivity()).changeDoneButtonVisibility(false);
+        }
+
+        adapter.clearItems();
+        presenter.reloadData();
+    }
+
     @Override
     public void onUserLoaded(User user) {
         this.adapter.addItem(user);
 
         if (progressBar.getVisibility() == View.VISIBLE)
             this.progressBar.setVisibility(View.GONE);
+
+        if (refreshLayout.isRefreshing())
+            refreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -99,7 +124,8 @@ public class ShareUserListFragment extends Fragment
     public void onUpdateUserState(ArrayList<User> users, boolean userSelected) {
         this.adapter.setItems(users);
 
-        ((IShareView) getActivity()).changeDoneButtonVisibility(userSelected);
+        if (getActivity() instanceof IShareView)
+            ((IShareView) getActivity()).changeDoneButtonVisibility(userSelected);
     }
 
     public static class Builder {

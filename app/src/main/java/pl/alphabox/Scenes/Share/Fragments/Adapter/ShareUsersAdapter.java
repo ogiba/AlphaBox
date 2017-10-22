@@ -81,6 +81,10 @@ public class ShareUsersAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void clearItems() {
+        items.clear();
+    }
+
     public ArrayList<User> getItems() {
         return items;
     }

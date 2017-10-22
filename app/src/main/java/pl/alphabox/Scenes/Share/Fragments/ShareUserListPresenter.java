@@ -46,6 +46,12 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
     }
 
     @Override
+    public void reloadData() {
+        users.clear();
+        initData();
+    }
+
+    @Override
     public void saveInstance(Bundle outState) {
         outState.putParcelableArrayList(BUNDLE_USERS_LIST, users);
     }

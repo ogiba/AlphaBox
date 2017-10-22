@@ -74,6 +74,7 @@ public class SharePresenter implements ISharePresenter {
         final Uri apkUri = Uri.parse(appModel.getApkUri());
 
         final PackageInfo packageInfo = packageManager.getPackageArchiveInfo(apkUri.getPath(), PackageManager.GET_META_DATA);
-        return packageInfo.applicationInfo.loadIcon(packageManager);
+//        return packageInfo.applicationInfo.loadIcon(packageManager);
+        return packageManager.getApplicationIcon(packageInfo.applicationInfo);
     }
 }
