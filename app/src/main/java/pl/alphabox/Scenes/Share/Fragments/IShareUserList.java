@@ -1,5 +1,7 @@
 package pl.alphabox.Scenes.Share.Fragments;
 
+import java.util.ArrayList;
+
 import pl.alphabox.Models.User;
 
 /**
@@ -8,4 +10,6 @@ import pl.alphabox.Models.User;
 
 public interface IShareUserList {
     void onUserLoaded(User user);
+
+    void onUpdateUserState(ArrayList<User> users, boolean userSelected);
 }

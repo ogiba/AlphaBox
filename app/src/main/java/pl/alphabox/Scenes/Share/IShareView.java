@@ -11,4 +11,6 @@ public interface IShareView {
     void onExtrasTransferred(AppModel appModel);
 
     void navigateToShareToSelectedUser(User user);
+
+    void changeDoneButtonVisibility(boolean shouldShow);
 }

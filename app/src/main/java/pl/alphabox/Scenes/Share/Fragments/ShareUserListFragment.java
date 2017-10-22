@@ -3,7 +3,6 @@ package pl.alphabox.Scenes.Share.Fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
 import pl.alphabox.Scenes.Share.Fragments.Adapter.OnUserClickListener;
 import pl.alphabox.Scenes.Share.Fragments.Adapter.ShareUsersAdapter;
+import pl.alphabox.Scenes.Share.IShareView;
 
 /**
  * Created by robertogiba on 22.10.2017.
@@ -39,13 +41,11 @@ public class ShareUserListFragment extends Fragment
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
 
         setupPresenter();
-        setupAdapter();
-
-        this.presenter.initData();
     }
 
     @Nullable
@@ -53,7 +53,23 @@ public class ShareUserListFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_share_user_list, container, false);
         ButterKnife.bind(this, view);
+
+        presenter.restoreSavedInstance(savedInstanceState);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        setupAdapter();
+
+        this.presenter.initData();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        presenter.saveInstance(outState);
     }
 
     private void setupPresenter() {
@@ -76,10 +92,14 @@ public class ShareUserListFragment extends Fragment
 
     @Override
     public void onUserSelected(View view, int position) {
-        User selectedUser = this.adapter.getItem(position);
-        Snackbar.make(view, "Selected: " + selectedUser.email, Snackbar.LENGTH_SHORT).show();
+        presenter.updateUserState(position);
+    }
 
-        this.adapter.selectItem(position);
+    @Override
+    public void onUpdateUserState(ArrayList<User> users, boolean userSelected) {
+        this.adapter.setItems(users);
+
+        ((IShareView) getActivity()).changeDoneButtonVisibility(userSelected);
     }
 
     public static class Builder {

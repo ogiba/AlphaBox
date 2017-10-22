@@ -1,5 +1,6 @@
 package pl.alphabox.Scenes.Share.Fragments;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,6 +11,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 import pl.alphabox.Models.User;
 import pl.alphabox.Scenes.Share.Fragments.IShareUserList;
 import pl.alphabox.Scenes.Share.Fragments.IShareUserListPresenter;
@@ -19,17 +22,41 @@ import pl.alphabox.Scenes.Share.Fragments.IShareUserListPresenter;
  */
 
 public class ShareUserListPresenter implements IShareUserListPresenter, ChildEventListener {
+    private static final String BUNDLE_USERS_LIST = "UsersListBundle";
 
     final private IShareUserList shareUserListView;
 
+    private ArrayList<User> users;
+
     public ShareUserListPresenter(IShareUserList shareUserListView) {
         this.shareUserListView = shareUserListView;
+        this.users = new ArrayList<>();
     }
 
     @Override
     public void initData() {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
-        database.addChildEventListener(this);
+        if (users.size() == 0) {
+            DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
+            database.addChildEventListener(this);
+        } else {
+            for (User user : users) {
+                shareUserListView.onUserLoaded(user);
+            }
+        }
+    }
+
+    @Override
+    public void saveInstance(Bundle outState) {
+        outState.putParcelableArrayList(BUNDLE_USERS_LIST, users);
+    }
+
+    @Override
+    public void restoreSavedInstance(Bundle savedInstance) {
+        if (savedInstance == null)
+            return;
+
+        ArrayList<User> users = savedInstance.getParcelableArrayList(BUNDLE_USERS_LIST);
+        this.setUsers(users);
     }
 
     @Override
@@ -44,6 +71,8 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
             if (loggedUser.getEmail().equals(user.email))
                 return;
         }
+
+        users.add(user);
         shareUserListView.onUserLoaded(user);
     }
 
@@ -65,5 +94,24 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
     @Override
     public void onCancelled(DatabaseError databaseError) {
 
+    }
+
+    @Override
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
+    }
+
+    @Override
+    public void updateUserState(int position) {
+        for (int i = 0; i < users.size(); i++) {
+            if (i != position) {
+                users.get(i).setSelected(false);
+            }
+        }
+
+        User user = this.users.get(position);
+        user.setSelected(!user.isSelected());
+
+        shareUserListView.onUpdateUserState(users, user.isSelected());
     }
 }

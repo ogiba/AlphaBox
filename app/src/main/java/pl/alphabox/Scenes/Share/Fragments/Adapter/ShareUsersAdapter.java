@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -82,17 +81,8 @@ public class ShareUsersAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void selectItem(int position) {
-        for (int i = 0; i < items.size(); i++) {
-            if (i != position) {
-                items.get(i).setSelected(false);
-            }
-        }
-
-        User user = this.items.get(position);
-        user.setSelected(!user.isSelected());
-
-        notifyDataSetChanged();
+    public ArrayList<User> getItems() {
+        return items;
     }
 
     private class ViewHolder implements View.OnClickListener {
@@ -124,7 +114,7 @@ public class ShareUsersAdapter extends BaseAdapter {
             this.userClickListener = callback;
         }
 
-        public void setSelected(boolean isSelected) {gi
+        public void setSelected(boolean isSelected) {
             if (context == null)
                 return;
 
