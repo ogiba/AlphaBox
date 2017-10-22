@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share;
+package pl.alphabox.Scenes.Share.Fragments;
 
 import android.util.Log;
 
@@ -11,6 +11,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import pl.alphabox.Models.User;
+import pl.alphabox.Scenes.Share.Fragments.IShareUserList;
+import pl.alphabox.Scenes.Share.Fragments.IShareUserListPresenter;
 
 /**
  * Created by robertogiba on 22.10.2017.

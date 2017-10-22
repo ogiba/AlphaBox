@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share;
+package pl.alphabox.Scenes.Share.Fragments;
 
 /**
  * Created by robertogiba on 22.10.2017.

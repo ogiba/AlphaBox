@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share;
+package pl.alphabox.Scenes.Share.Fragments;
 
 import android.content.Context;
 import android.view.LayoutInflater;

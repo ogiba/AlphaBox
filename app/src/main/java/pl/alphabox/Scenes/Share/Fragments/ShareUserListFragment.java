@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share;
+package pl.alphabox.Scenes.Share.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -30,11 +30,8 @@ public class ShareUserListFragment extends Fragment implements IShareUserList, A
     private IShareUserListPresenter presenter;
     private ShareUsersAdapter adapter;
 
-    public static ShareUserListFragment newInstance() {
-        
-        Bundle args = new Bundle();
-        
-        ShareUserListFragment fragment = new ShareUserListFragment();
+    public static ShareUserListFragment newInstance(Bundle args) {
+        final ShareUserListFragment fragment = new ShareUserListFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,7 +74,7 @@ public class ShareUserListFragment extends Fragment implements IShareUserList, A
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        User selectedUser = (User)this.adapter.getItem(position);
+        User selectedUser = (User) this.adapter.getItem(position);
         Snackbar.make(view, "Selected: " + selectedUser.email, Snackbar.LENGTH_SHORT).show();
     }
 
@@ -89,13 +86,10 @@ public class ShareUserListFragment extends Fragment implements IShareUserList, A
         }
 
         public ShareUserListFragment build() {
-            final ShareUserListFragment fragment = new ShareUserListFragment();
+            if (args == null)
+                args = new Bundle();
 
-            if (args != null) {
-                fragment.setArguments(args);
-            }
-
-            return fragment;
+            return newInstance(args);
         }
     }
 }

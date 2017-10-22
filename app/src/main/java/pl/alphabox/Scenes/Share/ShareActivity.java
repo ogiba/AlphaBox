@@ -1,22 +1,15 @@
 package pl.alphabox.Scenes.Share;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
-import pl.alphabox.Models.User;
 import pl.alphabox.R;
+import pl.alphabox.Scenes.Share.Fragments.ShareUserListFragment;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
 public class ShareActivity extends BaseToolbarActivity
