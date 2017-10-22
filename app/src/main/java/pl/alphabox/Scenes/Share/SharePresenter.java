@@ -77,4 +77,8 @@ public class SharePresenter implements ISharePresenter {
 //        return packageInfo.applicationInfo.loadIcon(packageManager);
         return packageManager.getApplicationIcon(packageInfo.applicationInfo);
     }
+
+    public void uploadFile() {
+        
+    }
 }

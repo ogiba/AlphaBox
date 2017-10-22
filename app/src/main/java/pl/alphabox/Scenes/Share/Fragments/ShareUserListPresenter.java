@@ -70,6 +70,7 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
         Log.d("USER_ADDED", dataSnapshot.getKey());
 
         final User user = dataSnapshot.getValue(User.class);
+        user.id = dataSnapshot.getKey();
 
         final FirebaseUser loggedUser = FirebaseAuth.getInstance().getCurrentUser();
 

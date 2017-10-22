@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 
 public class User implements Parcelable {
+    public String id;
     public String email;
 
     private boolean selected;
@@ -20,6 +21,7 @@ public class User implements Parcelable {
     }
 
     private User(Parcel in){
+        this.id = in.readString();
         this.email = in.readString();
     }
 
@@ -30,6 +32,7 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(email);
     }
 
