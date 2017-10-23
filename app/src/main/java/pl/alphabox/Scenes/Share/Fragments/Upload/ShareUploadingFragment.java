@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +20,8 @@ import pl.alphabox.R;
 public class ShareUploadingFragment extends Fragment implements IShareUploadingView {
     @BindView(R.id.progress_bar)
     protected ProgressBar progressBar;
+    @BindView(R.id.tv_progress_info)
+    protected TextView progressViewInfo;
 
     private IShareUploadingPresenter presenter;
 
@@ -58,7 +61,7 @@ public class ShareUploadingFragment extends Fragment implements IShareUploadingV
 
     @Override
     public void onProgress(int progress) {
-        progressBar.setProgress(progress);
+        progressViewInfo.setText(String.format("Uploading: %s", progress));
     }
 
     public static class Builder {

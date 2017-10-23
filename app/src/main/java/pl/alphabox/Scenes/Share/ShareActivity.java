@@ -191,6 +191,7 @@ public class ShareActivity extends BaseToolbarActivity
         final Fragment fragment = builder.build();
 
         transaction.replace(R.id.fragment_container, fragment, "TEST");
+        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
