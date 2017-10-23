@@ -5,4 +5,5 @@ package pl.alphabox.Scenes.Share.Fragments.Upload;
  */
 
 public interface IShareUploadingView {
+    void onProgress(int progress);
 }

@@ -33,6 +33,8 @@ public class ShareUploadingFragment extends Fragment implements IShareUploadingV
         super.onCreate(savedInstanceState);
 
         setupPresenter();
+
+        presenter.parseArguments(getArguments());
     }
 
     @Nullable
@@ -46,10 +48,17 @@ public class ShareUploadingFragment extends Fragment implements IShareUploadingV
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        presenter.uploadFile();
     }
 
     private void setupPresenter() {
         this.presenter = new ShareUploadingPresenter(this);
+    }
+
+    @Override
+    public void onProgress(int progress) {
+        progressBar.setProgress(progress);
     }
 
     public static class Builder {
