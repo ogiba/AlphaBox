@@ -14,8 +14,9 @@ import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
+import pl.alphabox.Scenes.Share.Fragments.UsersList.IShareUserList;
 import pl.alphabox.Scenes.Share.Fragments.ShareUserFragment;
-import pl.alphabox.Scenes.Share.Fragments.ShareUserListFragment;
+import pl.alphabox.Scenes.Share.Fragments.UsersList.ShareUserListFragment;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
 public class ShareActivity extends BaseToolbarActivity
@@ -82,7 +83,7 @@ public class ShareActivity extends BaseToolbarActivity
         presenter.saveInstanceState(outState);
     }
 
-    private void restoreInstance(Bundle savedInstance){
+    private void restoreInstance(Bundle savedInstance) {
         if (savedInstance == null)
             return;
 
@@ -117,6 +118,8 @@ public class ShareActivity extends BaseToolbarActivity
         switch (item.getItemId()) {
             case R.id.menu_done:
                 Toast.makeText(this, "Done btn pressed", Toast.LENGTH_SHORT).show();
+//                presenter.uploadFile();
+                presenter.doneButtonClicked();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -163,5 +166,25 @@ public class ShareActivity extends BaseToolbarActivity
 
         this.shouldShowDoneBtn = shouldShow;
         this.invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onDoneButtonClicked() {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+
+        if (fragmentManager.findFragmentByTag(FRAGMENT_USERS_LIST) instanceof IShareUserList) {
+            final User selectedUser = ((IShareUserList) fragmentManager.
+                    findFragmentByTag(FRAGMENT_USERS_LIST)).retrievePresenter().getSelectedUser();
+
+            presenter.transferDataToUpload(selectedUser);
+        }
+    }
+
+    @Override
+    public void onTransferData(Bundle args) {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+//        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+//        transaction.replace(R.id.fragment_container, null, "");
     }
 }

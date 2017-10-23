@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share.Fragments;
+package pl.alphabox.Scenes.Share.Fragments.UsersList;
 
 import android.os.Bundle;
 
@@ -22,4 +22,6 @@ public interface IShareUserListPresenter {
     void setUsers(ArrayList<User> users);
 
     void updateUserState(int position);
+
+    User getSelectedUser();
 }

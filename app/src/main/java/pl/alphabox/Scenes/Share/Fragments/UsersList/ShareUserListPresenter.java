@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share.Fragments;
+package pl.alphabox.Scenes.Share.Fragments.UsersList;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,8 +14,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import pl.alphabox.Models.User;
-import pl.alphabox.Scenes.Share.Fragments.IShareUserList;
-import pl.alphabox.Scenes.Share.Fragments.IShareUserListPresenter;
+import pl.alphabox.Scenes.Share.Fragments.UsersList.IShareUserList;
+import pl.alphabox.Scenes.Share.Fragments.UsersList.IShareUserListPresenter;
 
 /**
  * Created by robertogiba on 22.10.2017.
@@ -120,5 +120,16 @@ public class ShareUserListPresenter implements IShareUserListPresenter, ChildEve
         user.setSelected(!user.isSelected());
 
         shareUserListView.onUpdateUserState(users, user.isSelected());
+    }
+
+    @Override
+    public User getSelectedUser() {
+        User selectedUser = null;
+        for (User user : users) {
+            if (user.isSelected())
+                selectedUser = user;
+        }
+
+        return selectedUser;
     }
 }

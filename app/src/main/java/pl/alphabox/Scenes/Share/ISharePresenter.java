@@ -2,6 +2,8 @@ package pl.alphabox.Scenes.Share;
 
 import android.os.Bundle;
 
+import pl.alphabox.Models.User;
+
 /**
  * Created by ogiba on 12.07.2017.
  */
@@ -12,4 +14,10 @@ public interface ISharePresenter {
     void saveInstanceState(Bundle outState);
 
     void restoreSavedInstance(Bundle savedInstance);
+
+    void doneButtonClicked();
+
+    void uploadFile();
+
+    void transferDataToUpload(User user);
 }

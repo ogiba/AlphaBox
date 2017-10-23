@@ -1,5 +1,7 @@
 package pl.alphabox.Scenes.Share;
 
+import android.os.Bundle;
+
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.Models.User;
 
@@ -10,7 +12,11 @@ import pl.alphabox.Models.User;
 public interface IShareView {
     void onExtrasTransferred(AppModel appModel);
 
+    void onDoneButtonClicked();
+
     void navigateToShareToSelectedUser(User user);
 
     void changeDoneButtonVisibility(boolean shouldShow);
+
+    void onTransferData(Bundle args);
 }

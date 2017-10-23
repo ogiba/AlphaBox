@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share.Fragments;
+package pl.alphabox.Scenes.Share.Fragments.UsersList;
 
 import java.util.ArrayList;
 
@@ -12,4 +12,6 @@ public interface IShareUserList {
     void onUserLoaded(User user);
 
     void onUpdateUserState(ArrayList<User> users, boolean userSelected);
+
+    IShareUserListPresenter retrievePresenter();
 }

@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share.Fragments;
+package pl.alphabox.Scenes.Share.Fragments.UsersList;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,8 +17,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
-import pl.alphabox.Scenes.Share.Fragments.Adapter.OnUserClickListener;
-import pl.alphabox.Scenes.Share.Fragments.Adapter.ShareUsersAdapter;
+import pl.alphabox.Scenes.Share.Fragments.UsersList.Adapter.OnUserClickListener;
+import pl.alphabox.Scenes.Share.Fragments.UsersList.Adapter.ShareUsersAdapter;
 import pl.alphabox.Scenes.Share.IShareView;
 
 /**
@@ -126,6 +126,11 @@ public class ShareUserListFragment extends Fragment
 
         if (getActivity() instanceof IShareView)
             ((IShareView) getActivity()).changeDoneButtonVisibility(userSelected);
+    }
+
+    @Override
+    public IShareUserListPresenter retrievePresenter() {
+        return presenter;
     }
 
     public static class Builder {

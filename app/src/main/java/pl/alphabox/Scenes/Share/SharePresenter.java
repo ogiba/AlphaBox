@@ -5,9 +5,12 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,6 +19,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
@@ -78,7 +84,44 @@ public class SharePresenter implements ISharePresenter {
         return packageManager.getApplicationIcon(packageInfo.applicationInfo);
     }
 
-    public void uploadFile() {
+    @Override
+    public void doneButtonClicked() {
+        shareView.onDoneButtonClicked();
+    }
+
+    @Override
+    public void transferDataToUpload(User user) {
+        Bundle args = new Bundle();
+        args.putParcelable("", user);
+        args.putParcelable("", appModel);
+
         
+    }
+
+    @Override
+    public void uploadFile() {
+        StorageReference sharedApksRef = FirebaseStorage.getInstance().getReference("shared_files/" +
+                appModel.getName());
+
+        Uri file = Uri.parse("file://" + appModel.getApkUri());
+
+        UploadTask uploadTask = sharedApksRef.putFile(file);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @SuppressWarnings("VisibleForTests")
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+
+                if (downloadUrl != null)
+                    Log.d(TAG, downloadUrl.toString());
+            }
+        });
+
     }
 }

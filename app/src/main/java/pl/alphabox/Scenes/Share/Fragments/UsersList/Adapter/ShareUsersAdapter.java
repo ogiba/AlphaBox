@@ -1,4 +1,4 @@
-package pl.alphabox.Scenes.Share.Fragments.Adapter;
+package pl.alphabox.Scenes.Share.Fragments.UsersList.Adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
