@@ -17,7 +17,5 @@ public interface ISharePresenter {
 
     void doneButtonClicked();
 
-    void uploadFile();
-
     void transferDataToUpload(User user);
 }

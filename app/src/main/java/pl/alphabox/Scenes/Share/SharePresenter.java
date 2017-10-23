@@ -27,6 +27,8 @@ import java.util.ArrayList;
 
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.Models.User;
+import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingFragment;
+import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingPresenter;
 
 /**
  * Created by ogiba on 12.07.2017.
@@ -92,36 +94,9 @@ public class SharePresenter implements ISharePresenter {
     @Override
     public void transferDataToUpload(User user) {
         Bundle args = new Bundle();
-        args.putParcelable("", user);
-        args.putParcelable("", appModel);
+        args.putParcelable(ShareUploadingPresenter.ARGS_SELECTED_USER, user);
+        args.putParcelable(ShareUploadingPresenter.ARGS_APK_TO_SHARE, appModel);
 
-        
-    }
-
-    @Override
-    public void uploadFile() {
-        StorageReference sharedApksRef = FirebaseStorage.getInstance().getReference("shared_files/" +
-                appModel.getName());
-
-        Uri file = Uri.parse("file://" + appModel.getApkUri());
-
-        UploadTask uploadTask = sharedApksRef.putFile(file);
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @SuppressWarnings("VisibleForTests")
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-
-                if (downloadUrl != null)
-                    Log.d(TAG, downloadUrl.toString());
-            }
-        });
-
+        shareView.onTransferData(args);
     }
 }

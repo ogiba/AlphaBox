@@ -14,6 +14,7 @@ import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
+import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingFragment;
 import pl.alphabox.Scenes.Share.Fragments.UsersList.IShareUserList;
 import pl.alphabox.Scenes.Share.Fragments.ShareUserFragment;
 import pl.alphabox.Scenes.Share.Fragments.UsersList.ShareUserListFragment;
@@ -183,8 +184,13 @@ public class ShareActivity extends BaseToolbarActivity
     @Override
     public void onTransferData(Bundle args) {
         final FragmentManager fragmentManager = getSupportFragmentManager();
-//        final FragmentTransaction transaction = fragmentManager.beginTransaction();
+        final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-//        transaction.replace(R.id.fragment_container, null, "");
+        final ShareUploadingFragment.Builder builder = new ShareUploadingFragment.Builder();
+        builder.setArgs(args);
+        final Fragment fragment = builder.build();
+
+        transaction.replace(R.id.fragment_container, fragment, "TEST");
+        transaction.commit();
     }
 }
