@@ -71,6 +71,7 @@ public class ShareUploadingPresenter
         if (downloadUrl != null) {
             pairUrlWithUser(downloadUrl.toString());
             Log.d(TAG, downloadUrl.toString());
+            uploadingView.onUploaded();
         }
     }
 

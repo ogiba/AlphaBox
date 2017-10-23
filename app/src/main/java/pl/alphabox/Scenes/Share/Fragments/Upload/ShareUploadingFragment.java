@@ -64,6 +64,11 @@ public class ShareUploadingFragment extends Fragment implements IShareUploadingV
         progressViewInfo.setText(String.format("Uploading: %s", progress));
     }
 
+    @Override
+    public void onUploaded() {
+        getActivity().finish();
+    }
+
     public static class Builder {
         private Bundle args;
 
