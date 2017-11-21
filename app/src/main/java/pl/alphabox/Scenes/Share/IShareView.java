@@ -1,7 +1,5 @@
 package pl.alphabox.Scenes.Share;
 
-import java.util.ArrayList;
-
 import android.os.Bundle;
 
 import pl.alphabox.Models.AppModel;
@@ -21,6 +19,4 @@ public interface IShareView {
     void changeDoneButtonVisibility(boolean shouldShow);
 
     void onTransferData(Bundle args);
-
-    void onLoadData(ArrayList<User> items);
 }

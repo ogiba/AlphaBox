@@ -8,14 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.Models.User;
 import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingPresenter;
@@ -24,11 +16,10 @@ import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingPresenter;
  * Created by ogiba on 12.07.2017.
  */
 
-public class SharePresenter implements ISharePresenter, ChildEventListener {
+public class SharePresenter implements ISharePresenter {
     public static final String BUNDLE_APP_MODEL = "appModelBundle";
     private static final String TAG = "SharePresenter";
-
-    private ArrayList<User> users;
+    
     final private IShareView shareView;
     final private PackageManager packageManager;
 
@@ -37,42 +28,6 @@ public class SharePresenter implements ISharePresenter, ChildEventListener {
     public SharePresenter(IShareView shareView, PackageManager packageManager) {
         this.shareView = shareView;
         this.packageManager = packageManager;
-        this.users = new ArrayList<>();
-
-        initData();
-    }
-
-    private void initData() {
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
-        database.addChildEventListener(this);
-    }
-
-    @Override
-    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        User user = dataSnapshot.getValue(User.class);
-        users.add(user);
-        Log.i("onChildChanged", "user email: " + user.email);
-        shareView.onLoadData(users);
-    }
-
-    @Override
-    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-    }
-
-    @Override
-    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-
     }
 
     @Override

@@ -37,7 +37,6 @@ public class ShareActivity extends BaseToolbarActivity
 
     private ISharePresenter presenter;
     private boolean shouldShowDoneBtn = false;
-    private ShareUsersAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,15 +149,6 @@ public class ShareActivity extends BaseToolbarActivity
 
         if (appModel.getIcon() != null)
             appIconView.setImageDrawable(appModel.getIcon());
-    }
-
-    @Override
-    public void onLoadData(ArrayList<User> items) {
-        adapter.setItems(items);
-    }
-
-    private void setupAdapter() {
-        this.adapter = new ShareUsersAdapter(this);
     }
 
     @Override
