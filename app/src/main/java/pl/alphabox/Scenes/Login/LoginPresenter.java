@@ -11,7 +11,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import pl.alphabox.Models.UserModel;
+import pl.alphabox.Models.User;
 import pl.alphabox.R;
 
 /**
@@ -124,7 +124,7 @@ public class LoginPresenter
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference reference = database.getReference("users");
-        UserModel userModel = new UserModel(user.getEmail());
+        User userModel = new User(user.getEmail());
         reference.child(user.getUid()).setValue(userModel);
     }
 }

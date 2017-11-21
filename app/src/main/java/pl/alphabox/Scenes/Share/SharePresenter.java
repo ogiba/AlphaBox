@@ -17,7 +17,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import pl.alphabox.Models.AppModel;
-import pl.alphabox.Models.UserModel;
+import pl.alphabox.Models.User;
+import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingPresenter;
 
 /**
  * Created by ogiba on 12.07.2017.
@@ -25,10 +26,11 @@ import pl.alphabox.Models.UserModel;
 
 public class SharePresenter implements ISharePresenter, ChildEventListener {
     public static final String BUNDLE_APP_MODEL = "appModelBundle";
+    private static final String TAG = "SharePresenter";
 
-    private IShareView shareView;
-    private PackageManager packageManager;
-    private ArrayList<UserModel> users;
+    private ArrayList<User> users;
+    final private IShareView shareView;
+    final private PackageManager packageManager;
 
     private AppModel appModel;
 
@@ -40,15 +42,14 @@ public class SharePresenter implements ISharePresenter, ChildEventListener {
         initData();
     }
 
-    @Override
-    public void initData() {
+    private void initData() {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("users");
         database.addChildEventListener(this);
     }
 
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        UserModel user = dataSnapshot.getValue(UserModel.class);
+        User user = dataSnapshot.getValue(User.class);
         users.add(user);
         Log.i("onChildChanged", "user email: " + user.email);
         shareView.onLoadData(users);
@@ -81,10 +82,23 @@ public class SharePresenter implements ISharePresenter, ChildEventListener {
 
         this.appModel = extras.getParcelable(BUNDLE_APP_MODEL);
 
-        Drawable appIcon = extractIconFromUri();
+        final Drawable appIcon = extractIconFromUri();
         appModel.setIcon(appIcon);
 
         shareView.onExtrasTransferred(appModel);
+    }
+
+    @Override
+    public void saveInstanceState(Bundle outState) {
+        Log.d(TAG, "Saved current instance");
+    }
+
+    @Override
+    public void restoreSavedInstance(Bundle savedInstance) {
+        if (savedInstance == null)
+            return;
+
+        Log.d(TAG, "Restored saved instance");
     }
 
     @Nullable
@@ -92,9 +106,24 @@ public class SharePresenter implements ISharePresenter, ChildEventListener {
         if (appModel == null)
             return null;
 
-        Uri apkUri = Uri.parse(appModel.getApkUri());
+        final Uri apkUri = Uri.parse(appModel.getApkUri());
 
-        PackageInfo packageInfo = packageManager.getPackageArchiveInfo(apkUri.getPath(), PackageManager.GET_META_DATA);
-        return packageInfo.applicationInfo.loadIcon(packageManager);
+        final PackageInfo packageInfo = packageManager.getPackageArchiveInfo(apkUri.getPath(), PackageManager.GET_META_DATA);
+//        return packageInfo.applicationInfo.loadIcon(packageManager);
+        return packageManager.getApplicationIcon(packageInfo.applicationInfo);
+    }
+
+    @Override
+    public void doneButtonClicked() {
+        shareView.onDoneButtonClicked();
+    }
+
+    @Override
+    public void transferDataToUpload(User user) {
+        Bundle args = new Bundle();
+        args.putParcelable(ShareUploadingPresenter.ARGS_SELECTED_USER, user);
+        args.putParcelable(ShareUploadingPresenter.ARGS_APK_TO_SHARE, appModel);
+
+        shareView.onTransferData(args);
     }
 }

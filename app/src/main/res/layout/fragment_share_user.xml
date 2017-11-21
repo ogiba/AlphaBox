@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Are you sure you want to share\n app to selected user?"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/btn_accept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/text_information"
+        android:layout_below="@+id/text_information"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/button_rounded_background"
+        android:paddingBottom="15dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:paddingTop="15dp"
+        android:text="Yes"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/text_information"
+        android:layout_alignTop="@+id/btn_accept"
+        android:layout_below="@+id/text_information"
+        android:background="@drawable/button_rounded_background"
+        android:paddingBottom="15dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:paddingTop="15dp"
+        android:text="No"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+</RelativeLayout>

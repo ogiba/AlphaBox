@@ -2,8 +2,10 @@ package pl.alphabox.Scenes.Share;
 
 import java.util.ArrayList;
 
+import android.os.Bundle;
+
 import pl.alphabox.Models.AppModel;
-import pl.alphabox.Models.UserModel;
+import pl.alphabox.Models.User;
 
 /**
  * Created by ogiba on 12.07.2017.
@@ -12,5 +14,13 @@ import pl.alphabox.Models.UserModel;
 public interface IShareView {
     void onExtrasTransferred(AppModel appModel);
 
-    void onLoadData(ArrayList<UserModel> items);
+    void onDoneButtonClicked();
+
+    void navigateToShareToSelectedUser(User user);
+
+    void changeDoneButtonVisibility(boolean shouldShow);
+
+    void onTransferData(Bundle args);
+
+    void onLoadData(ArrayList<User> items);
 }
