@@ -4,8 +4,11 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
+import pl.alphabox.Models.UserModel;
 import pl.alphabox.R;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
@@ -48,6 +51,11 @@ public class ShareActivity extends BaseToolbarActivity implements IShareView {
 
         if (appModel.getIcon() != null)
             appIconView.setImageDrawable(appModel.getIcon());
+    }
+
+    @Override
+    public void onLoadData(ArrayList<UserModel> items) {
+        adapter.setItems(items);
     }
 
     private void setupAdapter() {
