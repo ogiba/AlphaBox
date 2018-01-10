@@ -10,13 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
-import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingFragment;
-import pl.alphabox.Scenes.Share.Fragments.UsersList.IShareUserList;
 import pl.alphabox.Scenes.Share.Fragments.ShareUserFragment;
+import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingFragment;
+import pl.alphabox.Scenes.Share.Fragments.UsersList.Adapter.ShareUsersAdapter;
+import pl.alphabox.Scenes.Share.Fragments.UsersList.IShareUserList;
 import pl.alphabox.Scenes.Share.Fragments.UsersList.ShareUserListFragment;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
@@ -118,8 +121,7 @@ public class ShareActivity extends BaseToolbarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_done:
-                Toast.makeText(this, "Done btn pressed", Toast.LENGTH_SHORT).show();
-//                presenter.uploadFile();
+                showToast("Done btn pressed");
                 presenter.doneButtonClicked();
                 break;
         }

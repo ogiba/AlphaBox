@@ -2,7 +2,9 @@ package pl.alphabox.Utils;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import pl.alphabox.R;
@@ -35,5 +37,13 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         } else {
             throw new Exception("Toolbar is required when extending " + BaseToolbarActivity.class + "class");
         }
+    }
+
+    protected void showToast(String message) {
+        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
+    }
+
+    protected void showToast(@StringRes int stringId) {
+        runOnUiThread(() -> Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show());
     }
 }

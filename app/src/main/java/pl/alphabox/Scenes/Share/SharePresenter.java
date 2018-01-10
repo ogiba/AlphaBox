@@ -5,29 +5,11 @@ import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.ArrayList;
-
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.Models.User;
-import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingFragment;
 import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingPresenter;
 
 /**
@@ -37,7 +19,7 @@ import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingPresenter;
 public class SharePresenter implements ISharePresenter {
     public static final String BUNDLE_APP_MODEL = "appModelBundle";
     private static final String TAG = "SharePresenter";
-
+    
     final private IShareView shareView;
     final private PackageManager packageManager;
 
