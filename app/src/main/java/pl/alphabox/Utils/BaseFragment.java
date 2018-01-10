@@ -1,7 +1,7 @@
 package pl.alphabox.Utils;
 
+import android.app.Fragment;
 import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 /**
@@ -15,6 +15,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showToast(@StringRes int stringId) {
-        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), stringIds, Toast.LENGTH_SHORT).show());
+        getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), stringId, Toast.LENGTH_SHORT).show());
     }
 }

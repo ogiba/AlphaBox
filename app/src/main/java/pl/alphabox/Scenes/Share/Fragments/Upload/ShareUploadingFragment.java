@@ -2,7 +2,6 @@ package pl.alphabox.Scenes.Share.Fragments.Upload;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,13 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.alphabox.R;
+import pl.alphabox.Utils.BaseFragment;
 
 /**
  * Created by robertogiba on 23.10.2017.
  */
 
-public class ShareUploadingFragment extends Fragment implements IShareUploadingView {
+public class ShareUploadingFragment extends BaseFragment implements IShareUploadingView {
     @BindView(R.id.progress_bar)
     protected ProgressBar progressBar;
     @BindView(R.id.tv_progress_info)

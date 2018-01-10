@@ -1,10 +1,8 @@
 package pl.alphabox.Scenes.Share.Fragments;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +13,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.alphabox.Models.User;
 import pl.alphabox.R;
+import pl.alphabox.Utils.BaseFragment;
 
 /**
  * Created by robertogiba on 22.10.2017.
  */
 
-public class ShareUserFragment extends Fragment
+public class ShareUserFragment extends BaseFragment
         implements IShareUserView {
     @BindView(R.id.btn_accept)
     protected View acceptBtn;
@@ -48,12 +47,12 @@ public class ShareUserFragment extends Fragment
 
     @OnClick(R.id.btn_accept)
     protected void acceptButtonAction() {
-        Toast.makeText(getContext(), "Pressed accept", Toast.LENGTH_SHORT).show();
+        showToast("Pressed accept");
     }
 
     @OnClick(R.id.btn_cancel)
     protected void cancelButtonAction() {
-        Toast.makeText(getContext(), "Pressed cancel", Toast.LENGTH_SHORT).show();
+        showToast("Pressed cancel");
     }
 
     public static class Builder {

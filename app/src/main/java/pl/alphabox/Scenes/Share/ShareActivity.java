@@ -1,16 +1,13 @@
 package pl.alphabox.Scenes.Share;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import pl.alphabox.Models.AppModel;
@@ -18,7 +15,6 @@ import pl.alphabox.Models.User;
 import pl.alphabox.R;
 import pl.alphabox.Scenes.Share.Fragments.ShareUserFragment;
 import pl.alphabox.Scenes.Share.Fragments.Upload.ShareUploadingFragment;
-import pl.alphabox.Scenes.Share.Fragments.UsersList.Adapter.ShareUsersAdapter;
 import pl.alphabox.Scenes.Share.Fragments.UsersList.IShareUserList;
 import pl.alphabox.Scenes.Share.Fragments.UsersList.ShareUserListFragment;
 import pl.alphabox.Utils.BaseToolbarActivity;
@@ -129,7 +125,7 @@ public class ShareActivity extends BaseToolbarActivity
     }
 
     public void setupFragment() {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
 
         if (fragmentManager.findFragmentByTag(FRAGMENT_USERS_LIST) == null) {
             final Fragment fragment = new ShareUserListFragment.Builder().build();
@@ -156,7 +152,7 @@ public class ShareActivity extends BaseToolbarActivity
         builder.setUser(selectedUser);
         final Fragment fragment = builder.build();
 
-        final FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        final FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -173,7 +169,7 @@ public class ShareActivity extends BaseToolbarActivity
 
     @Override
     public void onDoneButtonClicked() {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
 
         if (fragmentManager.findFragmentByTag(FRAGMENT_USERS_LIST) instanceof IShareUserList) {
             final User selectedUser = ((IShareUserList) fragmentManager.
@@ -185,7 +181,7 @@ public class ShareActivity extends BaseToolbarActivity
 
     @Override
     public void onTransferData(Bundle args) {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         final ShareUploadingFragment.Builder builder = new ShareUploadingFragment.Builder();

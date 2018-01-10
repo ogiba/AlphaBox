@@ -3,7 +3,6 @@ package pl.alphabox.Scenes.Share.Fragments.UsersList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +19,13 @@ import pl.alphabox.R;
 import pl.alphabox.Scenes.Share.Fragments.UsersList.Adapter.OnUserClickListener;
 import pl.alphabox.Scenes.Share.Fragments.UsersList.Adapter.ShareUsersAdapter;
 import pl.alphabox.Scenes.Share.IShareView;
+import pl.alphabox.Utils.BaseFragment;
 
 /**
  * Created by robertogiba on 22.10.2017.
  */
 
-public class ShareUserListFragment extends Fragment
+public class ShareUserListFragment extends BaseFragment
         implements IShareUserList, OnUserClickListener, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.lv_users)
     protected ListView usersListView;
@@ -82,7 +82,7 @@ public class ShareUserListFragment extends Fragment
     }
 
     private void setupAdapter() {
-        this.adapter = new ShareUsersAdapter(getContext());
+        this.adapter = new ShareUsersAdapter(getActivity());
         adapter.setOnUserSelectListener(this);
         usersListView.setAdapter(adapter);
     }
