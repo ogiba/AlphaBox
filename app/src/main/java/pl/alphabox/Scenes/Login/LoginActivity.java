@@ -3,20 +3,18 @@ package pl.alphabox.Scenes.Login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.alphabox.R;
 import pl.alphabox.Scenes.Menu.MainActivity;
 import pl.alphabox.Utils.BaseActivity;
 
-public class LoginActivity extends BaseActivity implements ILoginView {
+public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILoginView {
 
     @BindView(R.id.et_username_field)
     protected TextInputEditText usernameEditText;
@@ -35,7 +33,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @BindView(R.id.progress_bar)
     protected View progressBar;
 
-    private ILoginPresenter presenter;
     private boolean registerMode = false;
 
     @Override
@@ -63,8 +60,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     }
 
     @Override
-    protected void setupPresenter() {
-        this.presenter = new LoginPresenter(this);
+    protected ILoginPresenter providePresenter() {
+        return new LoginPresenter(this);
     }
 
     @Override

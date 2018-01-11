@@ -19,7 +19,7 @@ import pl.alphabox.Scenes.Share.Fragments.UsersList.IShareUserList;
 import pl.alphabox.Scenes.Share.Fragments.UsersList.ShareUserListFragment;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
-public class ShareActivity extends BaseToolbarActivity
+public class ShareActivity extends BaseToolbarActivity<ISharePresenter>
         implements IShareView {
     private static final String FRAGMENT_USERS_LIST = "UsersListFragment";
     private static final String STATE_DONE_BUTTON = "DoneButtonState";
@@ -31,14 +31,12 @@ public class ShareActivity extends BaseToolbarActivity
     @BindView(R.id.tv_app_size)
     protected TextView appSizeTextView;
 
-    private ISharePresenter presenter;
     private boolean shouldShowDoneBtn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setupPresenter();
         setupFragment();
 
         if (presenter != null) {
@@ -96,8 +94,8 @@ public class ShareActivity extends BaseToolbarActivity
     }
 
     @Override
-    protected void setupPresenter() {
-        this.presenter = new SharePresenter(this, getPackageManager());
+    protected ISharePresenter providePresenter() {
+        return new SharePresenter(this, getPackageManager());
     }
 
     @Override

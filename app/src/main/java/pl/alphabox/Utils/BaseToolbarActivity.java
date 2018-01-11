@@ -13,7 +13,7 @@ import pl.alphabox.R;
  * Created by ogiba on 12.07.2017.
  */
 
-public abstract class BaseToolbarActivity extends BaseActivity {
+public abstract class BaseToolbarActivity<T> extends BaseActivity<T> {
     @BindView(R.id.toolbar)
     protected Toolbar toolbar;
 
@@ -37,13 +37,5 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         } else {
             throw new Exception("Toolbar is required when extending " + BaseToolbarActivity.class + "class");
         }
-    }
-
-    protected void showToast(String message) {
-        runOnUiThread(() -> Toast.makeText(this, message, Toast.LENGTH_SHORT).show());
-    }
-
-    protected void showToast(@StringRes int stringId) {
-        runOnUiThread(() -> Toast.makeText(this, stringId, Toast.LENGTH_SHORT).show());
     }
 }

@@ -1,7 +1,6 @@
 package pl.alphabox.Scenes.Menu;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,9 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.R;
@@ -29,7 +25,7 @@ import pl.alphabox.Scenes.Login.LoginActivity;
 import pl.alphabox.Scenes.Share.ShareActivity;
 import pl.alphabox.Utils.BaseToolbarActivity;
 
-public class MainActivity extends BaseToolbarActivity implements IMainView {
+public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements IMainView {
     private static final int REQUEST_STORAGE_READ_ACCESS = 0;
     private static final int REQUEST_PICK_APK = 1;
 
@@ -52,13 +48,9 @@ public class MainActivity extends BaseToolbarActivity implements IMainView {
     @BindView(R.id.btn_remove_current_file)
     protected View removeCurrentSelectionBtn;
 
-    private IMainPresenter presenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setupPresenter();
 
         restoreSavedInstance(savedInstanceState);
     }
@@ -126,8 +118,8 @@ public class MainActivity extends BaseToolbarActivity implements IMainView {
     }
 
     @Override
-    protected void setupPresenter() {
-        this.presenter = new MainPresenter(this, getPackageManager());
+    protected IMainPresenter providePresenter() {
+        return new MainPresenter(this, getPackageManager());
     }
 
     private void restoreSavedInstance(Bundle savedInstance) {
