@@ -16,6 +16,7 @@ import com.google.firebase.storage.UploadTask;
 
 import pl.alphabox.Models.AppModel;
 import pl.alphabox.Models.User;
+import pl.alphabox.Models.UserFile;
 
 /**
  * Created by robertogiba on 23.10.2017.
@@ -86,6 +87,10 @@ public class ShareUploadingPresenter
 
     private void pairUrlWithUser(String urlToFile) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("sharedFiles");
-        databaseReference.child(selectedUser.id).setValue(urlToFile);
+        String key = databaseReference.push().getKey();
+
+        UserFile userFile = new UserFile(selectedUser.id, urlToFile);
+
+        databaseReference.child(key).setValue(userFile);
     }
 }
