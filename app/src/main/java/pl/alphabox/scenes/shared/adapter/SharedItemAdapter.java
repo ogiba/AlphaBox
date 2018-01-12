@@ -66,4 +66,9 @@ public class SharedItemAdapter extends BaseAdapter {
         this.addItem(item);
         notifyDataSetChanged();
     }
+
+    public void clearList() {
+        this.items.clear();
+        notifyDataSetChanged();
+    }
 }

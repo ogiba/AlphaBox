@@ -2,6 +2,7 @@ package pl.alphabox.scenes.shared;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,13 +19,16 @@ import pl.alphabox.utils.BaseActivity;
 import pl.alphabox.utils.BaseToolbarActivity;
 
 public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresenter>
-        implements ISharedItemsView {
+        implements ISharedItemsView, SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.tv_empty_info)
     protected View emptyInfo;
 
     @BindView(R.id.lv_shared_items)
     protected ListView sharedItemsListView;
+
+    @BindView(R.id.swipe_refresh_layout)
+    protected SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected int provideLayout() {
@@ -53,6 +57,7 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
         super.onCreate(savedInstanceState);
 
         setupShareItemsAdapter();
+        setupSwipeRefreshLayout();
 
         presenter.loadSharedItems();
     }
@@ -73,16 +78,43 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
         this.sharedItemsListView.setAdapter(new SharedItemAdapter());
     }
 
+    private void setupSwipeRefreshLayout() {
+        this.swipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void onRefresh() {
+        Adapter adapter = sharedItemsListView.getAdapter();
+
+        if (adapter != null && adapter instanceof SharedItemAdapter) {
+            ((SharedItemAdapter) adapter).clearList();
+            presenter.loadSharedItems();
+        } else {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
     @Override
     public void onResolvedItem(UserFile item) {
         if (emptyInfo.getVisibility() == View.VISIBLE) {
             emptyInfo.setVisibility(View.GONE);
         }
 
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
+        }
+
         Adapter adapter = sharedItemsListView.getAdapter();
 
         if (adapter != null && adapter instanceof SharedItemAdapter) {
             ((SharedItemAdapter) adapter).addItem(item);
+        }
+    }
+
+    @Override
+    public void childrenNotFound() {
+        if (swipeRefreshLayout.isRefreshing()) {
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 }

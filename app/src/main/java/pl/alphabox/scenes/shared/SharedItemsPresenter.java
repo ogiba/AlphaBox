@@ -45,12 +45,16 @@ public class SharedItemsPresenter implements ISharedItemsPresenter, ValueEventLi
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        for (DataSnapshot sharedFilesSnapshot : dataSnapshot.getChildren()) {
-            final UserFile userFile = sharedFilesSnapshot.getValue(UserFile.class);
+        if (dataSnapshot.hasChildren()) {
+            for (DataSnapshot sharedFilesSnapshot : dataSnapshot.getChildren()) {
+                final UserFile userFile = sharedFilesSnapshot.getValue(UserFile.class);
 
-            if (userFile != null) {
-                sharedItemsView.onResolvedItem(userFile);
+                if (userFile != null) {
+                    sharedItemsView.onResolvedItem(userFile);
+                }
             }
+        } else {
+            sharedItemsView.childrenNotFound();
         }
     }
 
