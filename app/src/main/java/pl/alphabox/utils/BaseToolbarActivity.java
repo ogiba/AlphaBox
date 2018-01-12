@@ -26,11 +26,11 @@ public abstract class BaseToolbarActivity<T> extends BaseActivity<T> {
         }
     }
 
-    private void setupToolbar() throws Exception {
+    protected void setupToolbar() throws Exception {
         if (toolbar != null) {
             this.setSupportActionBar(toolbar);
             if (this.getSupportActionBar() != null) {
-                this.getSupportActionBar().setDisplayShowTitleEnabled(false);
+                this.getSupportActionBar().setDisplayShowTitleEnabled(true);
             }
         } else {
             throw new Exception("Toolbar is required when extending " + BaseToolbarActivity.class + "class");
