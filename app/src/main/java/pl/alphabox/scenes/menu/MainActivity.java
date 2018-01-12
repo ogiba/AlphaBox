@@ -1,7 +1,6 @@
 package pl.alphabox.scenes.menu;
 
 import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -19,10 +18,11 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import pl.alphabox.models.AppModel;
 import pl.alphabox.R;
+import pl.alphabox.models.AppModel;
 import pl.alphabox.scenes.login.LoginActivity;
 import pl.alphabox.scenes.share.ShareActivity;
+import pl.alphabox.scenes.shared.SharedItemsActivity;
 import pl.alphabox.utils.BaseToolbarActivity;
 
 public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements IMainView {
@@ -73,7 +73,7 @@ public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements
                 showLogoutWarningDialog();
                 break;
             case R.id.menu_apk_list:
-                showToast("List of apks");
+                navigateToSharedItems();
                 break;
             default:
                 break;
@@ -226,20 +226,17 @@ public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.activity_main_dialog_logout_title)
                 .setMessage(R.string.activity_main_dialog_logout_message)
-                .setPositiveButton(R.string.dialog_positive_action, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        presenter.logoutUser();
-                    }
+                .setPositiveButton(R.string.dialog_positive_action, (alertDialog, which) -> {
+                    alertDialog.dismiss();
+                    presenter.logoutUser();
                 })
-                .setNegativeButton(R.string.dialog_negative_action, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
+                .setNegativeButton(R.string.dialog_negative_action, (alertDialog, which) -> alertDialog.dismiss())
                 .create();
         dialog.show();
+    }
+
+    private void navigateToSharedItems() {
+        Intent intent = new Intent(this, SharedItemsActivity.class);
+        startActivity(intent);
     }
 }
