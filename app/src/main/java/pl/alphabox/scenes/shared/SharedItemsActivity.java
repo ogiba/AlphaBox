@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Adapter;
 import android.widget.ListView;
 
@@ -11,12 +12,16 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import pl.alphabox.R;
+import pl.alphabox.models.UserFile;
 import pl.alphabox.scenes.shared.adapter.SharedItemAdapter;
 import pl.alphabox.utils.BaseActivity;
 import pl.alphabox.utils.BaseToolbarActivity;
 
 public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresenter>
         implements ISharedItemsView {
+
+    @BindView(R.id.tv_empty_info)
+    protected View emptyInfo;
 
     @BindView(R.id.lv_shared_items)
     protected ListView sharedItemsListView;
@@ -69,11 +74,15 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
     }
 
     @Override
-    public void onItemsLoad(ArrayList<Object> items) {
+    public void onResolvedItem(UserFile item) {
+        if (emptyInfo.getVisibility() == View.VISIBLE) {
+            emptyInfo.setVisibility(View.GONE);
+        }
+
         Adapter adapter = sharedItemsListView.getAdapter();
 
         if (adapter != null && adapter instanceof SharedItemAdapter) {
-            ((SharedItemAdapter) adapter).setItems(items);
+            ((SharedItemAdapter) adapter).addItem(item);
         }
     }
 }

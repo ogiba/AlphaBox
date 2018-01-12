@@ -6,9 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.verify;
-
 /**
  * Created by robertogiba on 12.01.2018.
  */
@@ -29,7 +26,5 @@ public class SharedItemsPresenterTest {
     @Test
     public void loadItems_succeed() {
         sharedItemsPresenter.loadSharedItems();
-
-        verify(sharedItemsView).onItemsLoad(any());
     }
 }

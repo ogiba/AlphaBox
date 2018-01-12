@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
 import pl.alphabox.R;
+import pl.alphabox.models.UserFile;
 import pl.alphabox.scenes.shared.viewholder.SharedItemViewHolder;
 
 /**
@@ -16,7 +17,7 @@ import pl.alphabox.scenes.shared.viewholder.SharedItemViewHolder;
 
 public class SharedItemAdapter extends BaseAdapter {
 
-    private ArrayList<Object> items;
+    private ArrayList<UserFile> items;
 
     public SharedItemAdapter() {
         this.items = new ArrayList<>();
@@ -28,7 +29,7 @@ public class SharedItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public UserFile getItem(int position) {
         return items.get(position);
     }
 
@@ -55,9 +56,14 @@ public class SharedItemAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void setItems(ArrayList<Object> items) {
+    public void setItems(ArrayList<UserFile> items) {
         this.items.clear();
         this.items.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    public void addItem(UserFile item) {
+        this.addItem(item);
         notifyDataSetChanged();
     }
 }
