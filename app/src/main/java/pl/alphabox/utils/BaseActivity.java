@@ -1,4 +1,4 @@
-package pl.alphabox.Utils;
+package pl.alphabox.utils;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;

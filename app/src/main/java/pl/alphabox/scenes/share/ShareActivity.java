@@ -17,7 +17,7 @@ import pl.alphabox.scenes.share.fragments.ShareUserFragment;
 import pl.alphabox.scenes.share.fragments.upload.ShareUploadingFragment;
 import pl.alphabox.scenes.share.fragments.users.IShareUserList;
 import pl.alphabox.scenes.share.fragments.users.ShareUserListFragment;
-import pl.alphabox.Utils.BaseToolbarActivity;
+import pl.alphabox.utils.BaseToolbarActivity;
 
 public class ShareActivity extends BaseToolbarActivity<ISharePresenter>
         implements IShareView {

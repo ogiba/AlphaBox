@@ -1,10 +1,8 @@
-package pl.alphabox.Utils;
+package pl.alphabox.utils;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import pl.alphabox.R;

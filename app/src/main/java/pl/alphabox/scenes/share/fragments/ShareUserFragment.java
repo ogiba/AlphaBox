@@ -12,7 +12,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.alphabox.models.User;
 import pl.alphabox.R;
-import pl.alphabox.Utils.BaseFragment;
+import pl.alphabox.utils.BaseFragment;
 
 /**
  * Created by robertogiba on 22.10.2017.

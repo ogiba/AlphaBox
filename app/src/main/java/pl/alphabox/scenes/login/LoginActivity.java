@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import pl.alphabox.R;
 import pl.alphabox.scenes.menu.MainActivity;
-import pl.alphabox.Utils.BaseActivity;
+import pl.alphabox.utils.BaseActivity;
 
 public class LoginActivity extends BaseActivity<ILoginPresenter> implements ILoginView {
 

@@ -23,7 +23,7 @@ import pl.alphabox.models.AppModel;
 import pl.alphabox.R;
 import pl.alphabox.scenes.login.LoginActivity;
 import pl.alphabox.scenes.share.ShareActivity;
-import pl.alphabox.Utils.BaseToolbarActivity;
+import pl.alphabox.utils.BaseToolbarActivity;
 
 public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements IMainView {
     private static final int REQUEST_STORAGE_READ_ACCESS = 0;

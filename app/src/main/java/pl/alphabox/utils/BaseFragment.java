@@ -1,4 +1,4 @@
-package pl.alphabox.Utils;
+package pl.alphabox.utils;
 
 import android.app.Fragment;
 import android.support.annotation.StringRes;

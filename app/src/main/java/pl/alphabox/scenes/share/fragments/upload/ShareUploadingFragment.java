@@ -11,7 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.alphabox.R;
-import pl.alphabox.Utils.BaseFragment;
+import pl.alphabox.utils.BaseFragment;
 
 /**
  * Created by robertogiba on 23.10.2017.
