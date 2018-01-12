@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="pl.alphabox.Scenes.Share.ShareActivity">
+    tools:context="pl.alphabox.scenes.share.ShareActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"

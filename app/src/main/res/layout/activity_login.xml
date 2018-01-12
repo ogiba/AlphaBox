@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
     android:fillViewport="true"
-    tools:context="pl.alphabox.Scenes.Login.LoginActivity">
+    tools:context="pl.alphabox.scenes.login.LoginActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
