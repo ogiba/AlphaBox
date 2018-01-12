@@ -83,7 +83,7 @@ public class LoginPresenter
             Log.w(TAG, "signInWithEmail:failed", taskException);
 
             if (taskException != null) {
-                loginView.onLoginFailed(taskException.getLocalizedMessage());
+                loginView.onLoginFailed(R.string.connection_problem_message);
             } else {
                 loginView.onLoginFailed(R.string.activity_login_auth_failed);
             }
