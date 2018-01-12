@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_apk_list"
+        android:icon="@drawable/ic_list_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/activity_main_menu_apk_list"
+        app:showAsAction="always" />
+
     <item
         android:id="@+id/logout_user"
         android:icon="@drawable/ic_logout_white_24dp"

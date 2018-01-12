@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pl.alphabox.Scenes.Menu.MainActivity"
-    android:animateLayoutChanges="true">
+    android:animateLayoutChanges="true"
+    tools:context="pl.alphabox.Scenes.Menu.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,12 +13,12 @@
         android:background="@color/colorPrimary">
 
         <TextView
-            android:textSize="18sp"
             android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/activity_main_title"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
 
     </android.support.v7.widget.Toolbar>
 

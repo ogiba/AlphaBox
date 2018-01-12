@@ -22,6 +22,7 @@
 
     <string name="activity_main_title">Selecting .apk</string>
     <string name="activity_main_menu_logout">Logout</string>
+    <string name="activity_main_menu_apk_list">Shared apks</string>
     <string name="activity_main_apk_not_loaded">Apk file not loaded</string>
     <string name="activity_main_apk_loaded">Apk file loaded</string>
     <string name="activity_main_apk_size_label">File size:</string>

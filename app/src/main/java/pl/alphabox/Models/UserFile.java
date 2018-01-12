@@ -11,10 +11,15 @@ import android.support.annotation.StringRes;
 public class UserFile implements Parcelable {
     public String userId;
     public String urlToFile;
+    public String sharedByUser;
 
-    public UserFile(String userId, String urlToFile) {
+    public UserFile() {
+    }
+
+    public UserFile(String userId, String urlToFile, String sharedByUser) {
         this.userId = userId;
         this.urlToFile = urlToFile;
+        this.sharedByUser = sharedByUser;
     }
 
     @Override
@@ -26,11 +31,13 @@ public class UserFile implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.userId);
         dest.writeString(this.urlToFile);
+        dest.writeString(this.sharedByUser);
     }
 
     protected UserFile(Parcel in) {
         this.userId = in.readString();
         this.urlToFile = in.readString();
+        this.sharedByUser = in.readString();
     }
 
     public static final Parcelable.Creator<UserFile> CREATOR = new Parcelable.Creator<UserFile>() {

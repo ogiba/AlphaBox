@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -48,12 +51,12 @@ public class ShareUploadingPresenter
 
     @Override
     public void uploadFile() {
-        StorageReference sharedApksRef = FirebaseStorage.getInstance().getReference("shared_files/" +
+        StorageReference sharedApkRef = FirebaseStorage.getInstance().getReference("shared_files/" +
                 appModel.getName());
 
         Uri file = Uri.parse("file://" + appModel.getApkUri());
 
-        UploadTask uploadTask = sharedApksRef.putFile(file);
+        UploadTask uploadTask = sharedApkRef.putFile(file);
         uploadTask.addOnFailureListener(this);
         uploadTask.addOnProgressListener(this);
         uploadTask.addOnSuccessListener(this);
@@ -89,8 +92,12 @@ public class ShareUploadingPresenter
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("sharedFiles");
         String key = databaseReference.push().getKey();
 
-        UserFile userFile = new UserFile(selectedUser.id, urlToFile);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        databaseReference.child(key).setValue(userFile);
+        if (currentUser != null) {
+            UserFile userFile = new UserFile(selectedUser.id, urlToFile, currentUser.getUid());
+
+            databaseReference.child(key).setValue(userFile);
+        }
     }
 }

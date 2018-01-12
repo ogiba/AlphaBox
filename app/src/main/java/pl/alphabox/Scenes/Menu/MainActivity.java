@@ -72,6 +72,9 @@ public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements
             case R.id.logout_user:
                 showLogoutWarningDialog();
                 break;
+            case R.id.menu_apk_list:
+                showToast("List of apks");
+                break;
             default:
                 break;
         }
