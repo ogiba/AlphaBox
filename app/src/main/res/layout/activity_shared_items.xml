@@ -17,5 +17,6 @@
         android:id="@+id/lv_shared_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar" />
+        android:layout_below="@id/toolbar"
+        tools:listitem="@layout/item_list_shared_item" />
 </RelativeLayout>

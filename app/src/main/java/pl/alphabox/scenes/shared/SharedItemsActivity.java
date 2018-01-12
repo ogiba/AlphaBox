@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.widget.Adapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import pl.alphabox.R;
+import pl.alphabox.scenes.shared.adapter.SharedItemAdapter;
 import pl.alphabox.utils.BaseActivity;
 import pl.alphabox.utils.BaseToolbarActivity;
 
@@ -45,6 +47,8 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setupShareItemsAdapter();
+
         presenter.loadSharedItems();
     }
 
@@ -60,8 +64,16 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupShareItemsAdapter() {
+        this.sharedItemsListView.setAdapter(new SharedItemAdapter());
+    }
+
     @Override
     public void onItemsLoad(ArrayList<Object> items) {
+        Adapter adapter = sharedItemsListView.getAdapter();
 
+        if (adapter != null && adapter instanceof SharedItemAdapter) {
+            ((SharedItemAdapter) adapter).setItems(items);
+        }
     }
 }
