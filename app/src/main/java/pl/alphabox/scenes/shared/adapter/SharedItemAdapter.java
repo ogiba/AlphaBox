@@ -63,7 +63,7 @@ public class SharedItemAdapter extends BaseAdapter {
     }
 
     public void addItem(UserFile item) {
-        this.addItem(item);
+        this.items.add(item);
         notifyDataSetChanged();
     }
 
