@@ -238,5 +238,7 @@ public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements
     private void navigateToSharedItems() {
         Intent intent = new Intent(this, SharedItemsActivity.class);
         startActivity(intent);
+
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
     }
 }

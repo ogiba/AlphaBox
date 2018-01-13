@@ -74,6 +74,13 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+    }
+
     private void setupShareItemsAdapter() {
         this.sharedItemsListView.setAdapter(new SharedItemAdapter());
     }
