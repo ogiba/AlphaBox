@@ -20,6 +20,7 @@
     <string name="activity_login_different_password">Password not matches</string>
     <string name="activity_login_auth_failed">Login failed. Unexpected reason.</string>
 
+    <string name="activity_main_exit_on_double_press">Please click BACK again to exit</string>
     <string name="activity_main_title">Selecting .apk</string>
     <string name="activity_main_menu_logout">Logout</string>
     <string name="activity_main_menu_apk_list">Shared apks</string>
