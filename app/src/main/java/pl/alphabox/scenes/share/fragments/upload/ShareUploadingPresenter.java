@@ -50,8 +50,8 @@ public class ShareUploadingPresenter
 
     @Override
     public void uploadFile() {
-        StorageReference sharedApkRef = FirebaseStorage.getInstance().getReference("shared_files/" +
-                appModel.getName());
+        StorageReference sharedApkRef = FirebaseStorage.getInstance()
+                .getReference(String.format("shared_files/app_file_%s", System.currentTimeMillis()));
 
         Uri file = Uri.parse("file://" + appModel.getApkUri());
 
@@ -95,6 +95,7 @@ public class ShareUploadingPresenter
 
         if (currentUser != null) {
             UserFile userFile = new UserFile(selectedUser.id, urlToFile, currentUser.getUid());
+            userFile.setAppName(appModel.getName());
 
             databaseReference.child(key).setValue(userFile);
         }
