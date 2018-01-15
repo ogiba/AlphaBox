@@ -34,6 +34,7 @@ public class ShareUploadingPresenter
     final private IShareUploadingView uploadingView;
     private AppModel appModel;
     private User selectedUser;
+    private long shareTime;
 
     public ShareUploadingPresenter(IShareUploadingView uploadingView) {
         this.uploadingView = uploadingView;
@@ -50,8 +51,10 @@ public class ShareUploadingPresenter
 
     @Override
     public void uploadFile() {
+        this.shareTime = System.currentTimeMillis();
+
         StorageReference sharedApkRef = FirebaseStorage.getInstance()
-                .getReference(String.format("shared_files/app_file_%s", System.currentTimeMillis()));
+                .getReference(String.format("shared_files/app_file_%s", shareTime));
 
         Uri file = Uri.parse("file://" + appModel.getApkUri());
 
@@ -95,7 +98,9 @@ public class ShareUploadingPresenter
 
         if (currentUser != null) {
             UserFile userFile = new UserFile(selectedUser.id, urlToFile, currentUser.getUid());
-            userFile.setAppName(appModel.getName());
+            userFile.setAppName(appModel.getName())
+                    .setApkSize(appModel.getSize())
+                    .setShareTime(shareTime);
 
             databaseReference.child(key).setValue(userFile);
         }

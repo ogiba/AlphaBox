@@ -12,6 +12,8 @@ public class UserFile implements Parcelable {
     public String urlToFile;
     public String sharedByUser;
     public String appName;
+    public double apkSize;
+    public long shareTime;
 
     public UserFile() {
     }
@@ -22,8 +24,19 @@ public class UserFile implements Parcelable {
         this.sharedByUser = sharedByUser;
     }
 
-    public void setAppName(String appName) {
+    public UserFile setAppName(String appName) {
         this.appName = appName;
+        return this;
+    }
+
+    public UserFile setApkSize(double apkSize) {
+        this.apkSize = apkSize;
+        return this;
+    }
+
+    public UserFile setShareTime(long shareTime) {
+        this.shareTime = shareTime;
+        return this;
     }
 
     @Override
@@ -37,6 +50,8 @@ public class UserFile implements Parcelable {
         dest.writeString(this.urlToFile);
         dest.writeString(this.sharedByUser);
         dest.writeString(this.appName);
+        dest.writeDouble(this.apkSize);
+        dest.writeLong(this.shareTime);
     }
 
     protected UserFile(Parcel in) {
@@ -44,6 +59,8 @@ public class UserFile implements Parcelable {
         this.urlToFile = in.readString();
         this.sharedByUser = in.readString();
         this.appName = in.readString();
+        this.apkSize = in.readDouble();
+        this.shareTime = in.readInt();
     }
 
     public static final Parcelable.Creator<UserFile> CREATOR = new Parcelable.Creator<UserFile>() {
