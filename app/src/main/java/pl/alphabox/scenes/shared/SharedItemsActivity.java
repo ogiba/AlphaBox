@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnItemClick;
 import pl.alphabox.R;
 import pl.alphabox.models.UserFile;
 import pl.alphabox.scenes.shared.adapter.SharedItemAdapter;
@@ -123,5 +124,10 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
+    }
+
+    @OnItemClick(R.id.lv_shared_items)
+    protected void fileItemAction(int position) {
+        showToast(String.format("Clicked file at: %s", position));
     }
 }

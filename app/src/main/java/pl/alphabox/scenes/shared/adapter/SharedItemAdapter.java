@@ -51,7 +51,13 @@ public class SharedItemAdapter extends BaseAdapter {
             viewHolder = (SharedItemViewHolder) convertView.getTag();
         }
 
-        viewHolder.setName(String.format("Item %s", position));
+        String nameOfFile = items.get(position).appName;
+
+        if (nameOfFile == null || nameOfFile.isEmpty()) {
+            nameOfFile = String.format("Item %s", position);
+        }
+
+        viewHolder.setName(nameOfFile);
 
         return convertView;
     }
