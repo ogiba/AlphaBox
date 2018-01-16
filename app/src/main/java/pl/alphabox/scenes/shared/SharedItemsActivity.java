@@ -1,5 +1,6 @@
 package pl.alphabox.scenes.shared;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,14 +10,12 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.OnItemClick;
 import pl.alphabox.R;
 import pl.alphabox.models.UserFile;
 import pl.alphabox.scenes.shared.adapter.SharedItemAdapter;
-import pl.alphabox.utils.BaseActivity;
+import pl.alphabox.scenes.shared.details.SharedItemActivity;
 import pl.alphabox.utils.BaseToolbarActivity;
 
 public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresenter>
@@ -129,5 +128,13 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
     @OnItemClick(R.id.lv_shared_items)
     protected void fileItemAction(int position) {
         showToast(String.format("Clicked file at: %s", position));
+        presenter.sharedItemClicked(position);
+    }
+
+    @Override
+    public void onFileSelected(Bundle bundle) {
+        Intent intent = new Intent(this, SharedItemActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

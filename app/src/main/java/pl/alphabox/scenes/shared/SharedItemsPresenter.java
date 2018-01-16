@@ -1,5 +1,6 @@
 package pl.alphabox.scenes.shared;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -10,6 +11,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
+import pl.alphabox.models.User;
 import pl.alphabox.models.UserFile;
 
 /**
@@ -18,10 +22,13 @@ import pl.alphabox.models.UserFile;
 
 public class SharedItemsPresenter implements ISharedItemsPresenter, ValueEventListener {
     private static final String TAG = SharedItemsPresenter.class.getSimpleName();
-    private ISharedItemsView sharedItemsView;
+
+    private final ISharedItemsView sharedItemsView;
+    private ArrayList<UserFile> files;
 
     public SharedItemsPresenter(ISharedItemsView sharedItemsView) {
         this.sharedItemsView = sharedItemsView;
+        this.files = new ArrayList<>();
     }
 
     @Override
@@ -47,16 +54,27 @@ public class SharedItemsPresenter implements ISharedItemsPresenter, ValueEventLi
                 final UserFile userFile = sharedFilesSnapshot.getValue(UserFile.class);
 
                 if (userFile != null) {
-                    sharedItemsView.onResolvedItem(userFile);
+                    this.files.add(userFile);
+                    this.sharedItemsView.onResolvedItem(userFile);
                 }
             }
         } else {
-            sharedItemsView.childrenNotFound();
+            this.sharedItemsView.childrenNotFound();
         }
     }
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
         Log.d(TAG, "loadPost:onCancelled", databaseError.toException());
+    }
+
+    @Override
+    public void sharedItemClicked(int position) {
+        final UserFile clickedItem = this.files.get(position);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("TEST", clickedItem);
+
+        sharedItemsView.onFileSelected(bundle);
     }
 }

@@ -6,4 +6,6 @@ package pl.alphabox.scenes.shared;
 
 public interface ISharedItemsPresenter {
     void loadSharedItems();
+
+    void sharedItemClicked(int position);
 }
