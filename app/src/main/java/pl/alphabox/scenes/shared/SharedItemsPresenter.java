@@ -69,11 +69,8 @@ public class SharedItemsPresenter implements ISharedItemsPresenter, ValueEventLi
 
     @Override
     public void sharedItemClicked(int position) {
-        final UserFile clickedItem = this.files.get(position);
+        final UserFile selectedFile = this.files.get(position);
 
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("TEST", clickedItem);
-
-        sharedItemsView.onFileSelected(bundle);
+        sharedItemsView.onFileSelected(selectedFile);
     }
 }

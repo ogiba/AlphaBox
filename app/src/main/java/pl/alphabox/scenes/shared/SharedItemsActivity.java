@@ -132,9 +132,10 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
     }
 
     @Override
-    public void onFileSelected(Bundle bundle) {
-        Intent intent = new Intent(this, SharedItemActivity.class);
-        intent.putExtras(bundle);
+    public void onFileSelected(UserFile userFile) {
+        final Intent intent = new SharedItemActivity.Builder()
+                .setUserFile(userFile)
+                .build(this);
         startActivity(intent);
     }
 }

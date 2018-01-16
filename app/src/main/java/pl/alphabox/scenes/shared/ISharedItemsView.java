@@ -1,7 +1,5 @@
 package pl.alphabox.scenes.shared;
 
-import android.os.Bundle;
-
 import pl.alphabox.models.UserFile;
 
 /**
@@ -13,5 +11,5 @@ public interface ISharedItemsView {
 
     void onChildrenNotFound();
 
-    void onFileSelected(Bundle bundle);
+    void onFileSelected(UserFile selectedFile);
 }
