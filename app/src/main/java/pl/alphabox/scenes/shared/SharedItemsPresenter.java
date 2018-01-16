@@ -1,6 +1,5 @@
 package pl.alphabox.scenes.shared;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;

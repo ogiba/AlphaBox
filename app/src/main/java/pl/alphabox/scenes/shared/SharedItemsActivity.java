@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.OnItemClick;
@@ -23,6 +24,9 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
 
     @BindView(R.id.tv_empty_info)
     protected View emptyInfo;
+
+    @BindView(R.id.progress_bar)
+    protected ProgressBar progressBar;
 
     @BindView(R.id.lv_shared_items)
     protected ListView sharedItemsListView;
@@ -105,6 +109,10 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
     public void onResolvedItem(UserFile item) {
         if (emptyInfo.getVisibility() == View.VISIBLE) {
             emptyInfo.setVisibility(View.GONE);
+        }
+
+        if (progressBar.getVisibility() == View.VISIBLE) {
+            progressBar.setVisibility(View.GONE);
         }
 
         if (swipeRefreshLayout.isRefreshing()) {
