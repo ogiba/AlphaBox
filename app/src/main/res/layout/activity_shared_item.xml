@@ -9,6 +9,94 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:background="@color/colorPrimary"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/toolbar"
+        android:padding="10dp"
+        android:text="Application name:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_name_label"
+        android:gravity="end"
+        android:padding="10dp"
+        tools:text="Just name" />
+
+    <TextView
+        android:id="@+id/tv_size_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_app_name"
+        android:padding="10dp"
+        android:text="Size:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_app_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_size_label"
+        android:gravity="end"
+        android:padding="10dp"
+        tools:text="20 Mb" />
+
+    <TextView
+        android:id="@+id/tv_shared_by_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_app_size"
+        android:padding="10dp"
+        android:text="Shared by:"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_shared_by_label"
+        android:gravity="end"
+        android:padding="10dp"
+        tools:text="Bob" />
+
+    <TextView
+        android:id="@+id/tv_time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_user_name"
+        android:padding="10dp"
+        android:text="Sharing time"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_share_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_time_label"
+        android:gravity="end"
+        android:padding="10dp"
+        tools:text="00.00.0000 00:00" />
 </RelativeLayout>
