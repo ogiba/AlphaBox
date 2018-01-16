@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".scenes.share.ShareActivity" />
-        <activity android:name=".scenes.shared.SharedItemsActivity"></activity>
+        <activity android:name=".scenes.shared.SharedItemsActivity" />
+        <activity android:name=".scenes.shared.details.SharedItemActivity"></activity>
     </application>
 
 </manifest>
