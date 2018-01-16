@@ -9,8 +9,8 @@ import pl.alphabox.R;
 import pl.alphabox.models.UserFile;
 import pl.alphabox.utils.BaseToolbarActivity;
 
-public class SharedItemActivity extends BaseToolbarActivity<ISharedItemPresenter>
-        implements ISharedItemView {
+public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDetailsPresenter>
+        implements ISharedItemDetailsView {
 
     @Override
     protected int provideLayout() {
@@ -18,8 +18,8 @@ public class SharedItemActivity extends BaseToolbarActivity<ISharedItemPresenter
     }
 
     @Override
-    protected ISharedItemPresenter providePresenter() {
-        return new SharedItemPresenter(this);
+    protected ISharedItemDetailsPresenter providePresenter() {
+        return new SharedItemDetailsPresenter(this);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SharedItemActivity extends BaseToolbarActivity<ISharedItemPresenter
         }
 
         public Intent build(Context context) {
-            final Intent intent = new Intent(context, SharedItemActivity.class);
+            final Intent intent = new Intent(context, SharedItemDetailsActivity.class);
             intent.putExtras(extras);
             return intent;
         }

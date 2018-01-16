@@ -16,7 +16,7 @@ import butterknife.OnItemClick;
 import pl.alphabox.R;
 import pl.alphabox.models.UserFile;
 import pl.alphabox.scenes.shared.adapter.SharedItemAdapter;
-import pl.alphabox.scenes.shared.details.SharedItemActivity;
+import pl.alphabox.scenes.shared.details.SharedItemDetailsActivity;
 import pl.alphabox.utils.BaseToolbarActivity;
 
 public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresenter>
@@ -141,7 +141,7 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
 
     @Override
     public void onFileSelected(UserFile userFile) {
-        final Intent intent = new SharedItemActivity.Builder()
+        final Intent intent = new SharedItemDetailsActivity.Builder()
                 .setUserFile(userFile)
                 .build(this);
         startActivity(intent);
