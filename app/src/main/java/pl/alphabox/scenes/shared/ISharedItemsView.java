@@ -11,7 +11,7 @@ import pl.alphabox.models.UserFile;
 public interface ISharedItemsView {
     void onResolvedItem(UserFile item);
 
-    void childrenNotFound();
+    void onChildrenNotFound();
 
     void onFileSelected(Bundle bundle);
 }

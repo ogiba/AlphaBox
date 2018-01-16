@@ -13,7 +13,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import pl.alphabox.models.User;
 import pl.alphabox.models.UserFile;
 
 /**
@@ -59,7 +58,7 @@ public class SharedItemsPresenter implements ISharedItemsPresenter, ValueEventLi
                 }
             }
         } else {
-            this.sharedItemsView.childrenNotFound();
+            this.sharedItemsView.onChildrenNotFound();
         }
     }
 

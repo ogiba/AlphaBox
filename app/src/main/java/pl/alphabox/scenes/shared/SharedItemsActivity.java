@@ -119,7 +119,7 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
     }
 
     @Override
-    public void childrenNotFound() {
+    public void onChildrenNotFound() {
         if (swipeRefreshLayout.isRefreshing()) {
             swipeRefreshLayout.setRefreshing(false);
         }
