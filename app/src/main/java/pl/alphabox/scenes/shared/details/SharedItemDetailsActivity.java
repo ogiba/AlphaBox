@@ -108,6 +108,21 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
         shareTimeView.setText(sharingTime);
     }
 
+    @Override
+    public void onFileDownloaded(String filePath) {
+        showToast(String.format("Saved file at: %s", filePath));
+    }
+
+    @Override
+    public void onDownloadFailed(String message) {
+        showToast(String.format("Downloading failed cause: %s", message));
+    }
+
+    @Override
+    public void onDownloadProgress(int progress) {
+
+    }
+
     @OnClick(R.id.btn_download_file)
     protected void downloadFileAction() {
         presenter.downloadButtonClicked();

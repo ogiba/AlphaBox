@@ -1,8 +1,10 @@
 package pl.alphabox.scenes.shared.details;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,13 +28,18 @@ import pl.alphabox.models.UserFile;
  */
 
 public class SharedItemDetailsPresenter
-        implements ISharedItemDetailsPresenter, ValueEventListener {
+        implements ISharedItemDetailsPresenter, ValueEventListener,
+        OnSuccessListener<FileDownloadTask.TaskSnapshot>, OnProgressListener<FileDownloadTask.TaskSnapshot>,
+        OnFailureListener {
     private static final String TAG = ISharedItemDetailsPresenter.class.getSimpleName();
+    private static final String STATE_STORAGE_REFERENCE = "storageReferenceState";
+    private static final String STATE_DOWNLOAD_FILE = "downloadFileState";
 
     private final ISharedItemDetailsView itemView;
 
     private UserFile userFile;
     private StorageReference storageReference;
+    private String downloadedFilePath;
 
     public SharedItemDetailsPresenter(ISharedItemDetailsView itemView) {
         this.itemView = itemView;
@@ -52,7 +59,11 @@ public class SharedItemDetailsPresenter
     @Override
     public void saveInstance(Bundle outState) {
         if (storageReference != null) {
-            outState.putString("REFERENCE", storageReference.toString());
+            outState.putString(STATE_STORAGE_REFERENCE, storageReference.toString());
+        }
+
+        if (downloadedFilePath != null) {
+            outState.putString(STATE_DOWNLOAD_FILE, downloadedFilePath);
         }
     }
 
@@ -61,8 +72,8 @@ public class SharedItemDetailsPresenter
         if (savedState == null) {
             return;
         }
-
-        final String stringStorageRef = savedState.getString("REFERENCE");
+        this.downloadedFilePath = savedState.getString(STATE_DOWNLOAD_FILE);
+        final String stringStorageRef = savedState.getString(STATE_STORAGE_REFERENCE);
         restoreStorageReference(stringStorageRef);
     }
 
@@ -106,21 +117,9 @@ public class SharedItemDetailsPresenter
         storageReference = firebaseStorage.getReferenceFromUrl(userFile.urlToFile);
 
         File localFile = File.createTempFile(userFile.appName, ".apk");
+        this.downloadedFilePath = localFile.getAbsolutePath();
 
-        storageReference.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                Log.d(TAG, String.format("File downloaded: %s", localFile.getAbsolutePath()));
-            }
-        }).addOnProgressListener(new OnProgressListener<FileDownloadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                final Double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                final int progressInInt = progress.intValue();
-
-                Log.d(TAG, String.format("File download progress: %s", progressInInt));
-            }
-        });
+        storageReference.getFile(localFile).addOnSuccessListener(this).addOnProgressListener(this);
     }
 
     private void restoreStorageReference(String stringRef) {
@@ -134,12 +133,44 @@ public class SharedItemDetailsPresenter
         if (tasks.size() > 0) {
             FileDownloadTask task = tasks.get(0);
 
-            task.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(FileDownloadTask.TaskSnapshot state) {
-                    Log.d(TAG, state.toString());
-                }
-            });
+            task.addOnSuccessListener(this)
+                    .addOnProgressListener(this);
         }
+    }
+
+    @Override
+    public void onFailure(@NonNull Exception e) {
+        Log.d(TAG, "File downloading failed", e);
+
+        if (itemView == null) {
+            return;
+        }
+
+        itemView.onDownloadFailed(e.getMessage());
+    }
+
+    @Override
+    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+        Log.d(TAG, String.format("File downloaded: %s", downloadedFilePath));
+
+        if (itemView == null) {
+            return;
+        }
+
+        itemView.onFileDownloaded(downloadedFilePath);
+    }
+
+    @Override
+    public void onProgress(FileDownloadTask.TaskSnapshot taskSnapshot) {
+        final Double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+        final int progressInInt = progress.intValue();
+
+        Log.d(TAG, String.format("File download progress: %s", progressInInt));
+
+        if (itemView == null) {
+            return;
+        }
+
+        itemView.onDownloadProgress(progressInInt);
     }
 }
