@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import pl.alphabox.R;
 import pl.alphabox.models.UserFile;
 import pl.alphabox.utils.BaseToolbarActivity;
@@ -26,6 +28,9 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
 
     @BindView(R.id.tv_share_time)
     protected TextView shareTimeView;
+
+    @BindView(R.id.btn_download_file)
+    protected View downloadFileButton;
 
     @Override
     protected int provideLayout() {
@@ -91,6 +96,11 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
         appSizeView.setText(appSize);
         userNameView.setText(sharedByUser);
         shareTimeView.setText(sharingTime);
+    }
+
+    @OnClick(R.id.btn_download_file)
+    protected void downloadFileAction() {
+        showToast("Download file clicked");
     }
 
     public static class Builder {

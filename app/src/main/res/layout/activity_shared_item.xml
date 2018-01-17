@@ -110,6 +110,23 @@
                 android:gravity="end"
                 android:padding="10dp"
                 tools:text="00.00.0000 00:00" />
+
+            <TextView
+                android:id="@+id/btn_download_file"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/tv_share_time"
+                android:layout_margin="10dp"
+                android:background="@drawable/button_rounded_background"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Download"
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
