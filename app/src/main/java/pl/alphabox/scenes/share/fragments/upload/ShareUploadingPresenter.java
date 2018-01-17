@@ -16,6 +16,8 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.List;
+
 import pl.alphabox.models.AppModel;
 import pl.alphabox.models.User;
 import pl.alphabox.models.UserFile;
@@ -29,12 +31,15 @@ public class ShareUploadingPresenter
         OnProgressListener<UploadTask.TaskSnapshot>, OnSuccessListener<UploadTask.TaskSnapshot> {
     public static final String ARGS_SELECTED_USER = "SelectedUserArgument";
     public static final String ARGS_APK_TO_SHARE = "ApkToShareArgument";
+
     private static final String TAG = "ShareUploadingPresenter";
+    private static final String STATE_STORAGE_REFERENCE = "storageReferenceState";
 
     final private IShareUploadingView uploadingView;
     private AppModel appModel;
     private User selectedUser;
     private long shareTime;
+    private StorageReference storageReference;
 
     public ShareUploadingPresenter(IShareUploadingView uploadingView) {
         this.uploadingView = uploadingView;
@@ -50,18 +55,35 @@ public class ShareUploadingPresenter
     }
 
     @Override
+    public void saveInstance(Bundle outState) {
+        if (storageReference != null) {
+            outState.putString(STATE_STORAGE_REFERENCE, storageReference.toString());
+        }
+    }
+
+    @Override
+    public void restoreInstance(Bundle savedState) {
+        if (savedState == null) {
+            return;
+        }
+
+        final String stringRef = savedState.getString(STATE_STORAGE_REFERENCE);
+        restoreStorageReference(stringRef);
+    }
+
+    @Override
     public void uploadFile() {
         this.shareTime = System.currentTimeMillis();
 
-        StorageReference sharedApkRef = FirebaseStorage.getInstance()
+        storageReference = FirebaseStorage.getInstance()
                 .getReference(String.format("shared_files/app_file_%s", shareTime));
 
         Uri file = Uri.parse("file://" + appModel.getApkUri());
 
-        UploadTask uploadTask = sharedApkRef.putFile(file);
-        uploadTask.addOnFailureListener(this);
-        uploadTask.addOnProgressListener(this);
-        uploadTask.addOnSuccessListener(this);
+        UploadTask uploadTask = storageReference.putFile(file);
+        uploadTask.addOnFailureListener(this)
+                .addOnProgressListener(this)
+                .addOnSuccessListener(this);
     }
 
     @Override
@@ -103,6 +125,23 @@ public class ShareUploadingPresenter
                     .setShareTime(shareTime);
 
             databaseReference.child(key).setValue(userFile);
+        }
+    }
+
+    private void restoreStorageReference(String stringRef) {
+        if (stringRef == null || stringRef.isEmpty()) {
+            return;
+        }
+
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(stringRef);
+
+        List<UploadTask> tasks = storageReference.getActiveUploadTasks();
+        if (tasks.size() > 0) {
+            UploadTask task = tasks.get(0);
+
+            task.addOnFailureListener(this)
+                    .addOnProgressListener(this)
+                    .addOnSuccessListener(this);
         }
     }
 }

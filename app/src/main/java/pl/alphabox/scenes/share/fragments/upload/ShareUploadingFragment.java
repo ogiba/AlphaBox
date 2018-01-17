@@ -1,5 +1,7 @@
 package pl.alphabox.scenes.share.fragments.upload;
 
+import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -38,6 +40,7 @@ public class ShareUploadingFragment extends BaseFragment implements IShareUpload
         setupPresenter();
 
         presenter.parseArguments(getArguments());
+        presenter.restoreInstance(savedInstanceState);
     }
 
     @Nullable
@@ -55,6 +58,12 @@ public class ShareUploadingFragment extends BaseFragment implements IShareUpload
         presenter.uploadFile();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        presenter.saveInstance(outState);
+        super.onSaveInstanceState(outState);
+    }
+
     private void setupPresenter() {
         this.presenter = new ShareUploadingPresenter(this);
     }
@@ -66,7 +75,13 @@ public class ShareUploadingFragment extends BaseFragment implements IShareUpload
 
     @Override
     public void onUploaded() {
-        getActivity().finish();
+        Activity activity = getActivity();
+
+        if (activity == null) {
+            return;
+        }
+
+        activity.finish();
     }
 
     public static class Builder {

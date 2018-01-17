@@ -10,5 +10,9 @@ public interface IShareUploadingPresenter {
 
     void parseArguments(Bundle arguments);
 
+    void saveInstance(Bundle outState);
+
+    void restoreInstance(Bundle savedState);
+
     void uploadFile();
 }
