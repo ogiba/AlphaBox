@@ -145,5 +145,7 @@ public class SharedItemsActivity extends BaseToolbarActivity<ISharedItemsPresent
                 .setUserFile(userFile)
                 .build(this);
         startActivity(intent);
+
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
     }
 }
