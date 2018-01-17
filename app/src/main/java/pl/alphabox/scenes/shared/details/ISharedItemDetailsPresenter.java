@@ -8,4 +8,6 @@ import pl.alphabox.models.UserFile;
 
 public interface ISharedItemDetailsPresenter {
     void transferData(UserFile userFile);
+
+    void downloadButtonClicked();
 }

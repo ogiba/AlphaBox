@@ -100,7 +100,7 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
 
     @OnClick(R.id.btn_download_file)
     protected void downloadFileAction() {
-        showToast("Download file clicked");
+        presenter.downloadButtonClicked();
     }
 
     public static class Builder {
