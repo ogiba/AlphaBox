@@ -1,5 +1,6 @@
 package pl.alphabox.scenes.shared.details;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -15,6 +16,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import pl.alphabox.models.User;
 import pl.alphabox.models.UserFile;
@@ -30,6 +32,7 @@ public class SharedItemDetailsPresenter
     private final ISharedItemDetailsView itemView;
 
     private UserFile userFile;
+    private StorageReference storageReference;
 
     public SharedItemDetailsPresenter(ISharedItemDetailsView itemView) {
         this.itemView = itemView;
@@ -44,6 +47,23 @@ public class SharedItemDetailsPresenter
         this.userFile = userFile;
 
         retrieveUserEmail();
+    }
+
+    @Override
+    public void saveInstance(Bundle outState) {
+        if (storageReference != null) {
+            outState.putString("REFERENCE", storageReference.toString());
+        }
+    }
+
+    @Override
+    public void restoreSavedInstance(Bundle savedState) {
+        if (savedState == null) {
+            return;
+        }
+
+        final String stringStorageRef = savedState.getString("REFERENCE");
+        restoreStorageReference(stringStorageRef);
     }
 
     @Override
@@ -83,7 +103,7 @@ public class SharedItemDetailsPresenter
 
     private void downloadFile() throws IOException {
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        StorageReference storageReference = firebaseStorage.getReferenceFromUrl(userFile.urlToFile);
+        storageReference = firebaseStorage.getReferenceFromUrl(userFile.urlToFile);
 
         File localFile = File.createTempFile(userFile.appName, ".apk");
 
@@ -101,6 +121,25 @@ public class SharedItemDetailsPresenter
                 Log.d(TAG, String.format("File download progress: %s", progressInInt));
             }
         });
+    }
 
+    private void restoreStorageReference(String stringRef) {
+        if (stringRef == null || stringRef.isEmpty()) {
+            return;
+        }
+
+        storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(stringRef);
+
+        List<FileDownloadTask> tasks = storageReference.getActiveDownloadTasks();
+        if (tasks.size() > 0) {
+            FileDownloadTask task = tasks.get(0);
+
+            task.addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot state) {
+                    Log.d(TAG, state.toString());
+                }
+            });
+        }
     }
 }

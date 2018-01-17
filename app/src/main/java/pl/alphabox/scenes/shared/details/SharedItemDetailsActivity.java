@@ -3,6 +3,7 @@ package pl.alphabox.scenes.shared.details;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +48,8 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
         super.onCreate(savedInstanceState);
 
         parseExtras(getIntent().getExtras());
+
+        presenter.restoreSavedInstance(savedInstanceState);
     }
 
     @Override
@@ -56,6 +59,7 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
+            actionBar.setTitle("File details");
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(false);
         }
@@ -71,6 +75,12 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        presenter.saveInstance(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override

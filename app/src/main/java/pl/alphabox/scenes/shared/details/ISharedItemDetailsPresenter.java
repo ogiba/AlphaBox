@@ -1,5 +1,7 @@
 package pl.alphabox.scenes.shared.details;
 
+import android.os.Bundle;
+
 import pl.alphabox.models.UserFile;
 
 /**
@@ -8,6 +10,10 @@ import pl.alphabox.models.UserFile;
 
 public interface ISharedItemDetailsPresenter {
     void transferData(UserFile userFile);
+
+    void saveInstance(Bundle outState);
+
+    void restoreSavedInstance(Bundle savedState);
 
     void downloadButtonClicked();
 }
