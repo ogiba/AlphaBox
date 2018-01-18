@@ -1,8 +1,11 @@
 package pl.alphabox.scenes.shared.details.fragments.progress;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,10 +45,14 @@ public class SharedItemProgressFragment extends BaseFragment {
 
         //TODO: Change it for right code
         new Handler().postDelayed(() -> getActivity().runOnUiThread(() -> {
-            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.download_fragment_container,
-                    SharedItemInstallFragment.newInstance(), "INSTALL");
-            fragmentTransaction.commit();
+            SharedItemInstallFragment installFragment = SharedItemInstallFragment.newInstance();
+            installFragment.replace(getFragmentManager(), R.id.download_fragment_container);
         }), 2000);
+    }
+
+    public void replace(FragmentManager fragmentManager, @IdRes int container) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(container, this);
+        fragmentTransaction.commit();
     }
 }

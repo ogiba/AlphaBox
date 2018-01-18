@@ -1,6 +1,9 @@
 package pl.alphabox.scenes.shared.details.fragments.install;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,5 +49,11 @@ public class SharedItemInstallFragment extends BaseFragment {
     @OnClick(R.id.btn_file_install)
     protected void fileInstallAction() {
         showToast("File install clicked");
+    }
+
+    public void replace(FragmentManager fragmentManager, @IdRes int container) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(container, this);
+        fragmentTransaction.commit();
     }
 }

@@ -104,10 +104,8 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
     }
 
     private void setupFragment() {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.download_fragment_container,
-                SharedItemDownloadFragment.newInstance(), "TEST");
-        fragmentTransaction.commit();
+        SharedItemDownloadFragment downloadFragment = SharedItemDownloadFragment.newInstance();
+        downloadFragment.replace(getFragmentManager(), R.id.download_fragment_container);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package pl.alphabox.scenes.shared.details.fragments.download;
 
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +49,13 @@ public class SharedItemDownloadFragment extends BaseFragment {
 
     @OnClick(R.id.btn_download_file)
     protected void downloadFileAction() {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.download_fragment_container,
-                SharedItemProgressFragment.newInstance(), "PROGRESS");
+        SharedItemProgressFragment progressFragment = SharedItemProgressFragment.newInstance();
+        progressFragment.replace(getFragmentManager(), R.id.download_fragment_container);
+    }
+
+    public void replace(FragmentManager fragmentManager, @IdRes int container) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(container, this);
         fragmentTransaction.commit();
     }
 }
