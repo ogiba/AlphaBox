@@ -1,6 +1,8 @@
 package pl.alphabox.scenes.shared.details.fragments.progress;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import pl.alphabox.R;
+import pl.alphabox.scenes.shared.details.fragments.install.SharedItemInstallFragment;
 import pl.alphabox.utils.BaseFragment;
 
 /**
@@ -30,5 +33,19 @@ public class SharedItemProgressFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_shared_item_progress, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        //TODO: Change it for right code
+        new Handler().postDelayed(() -> getActivity().runOnUiThread(() -> {
+            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.download_fragment_container,
+                    SharedItemInstallFragment.newInstance(), "INSTALL");
+            fragmentTransaction.commit();
+        }), 2000);
     }
 }
