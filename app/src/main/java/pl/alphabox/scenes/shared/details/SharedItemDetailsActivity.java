@@ -1,9 +1,9 @@
 package pl.alphabox.scenes.shared.details;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import pl.alphabox.R;
 import pl.alphabox.models.UserFile;
+import pl.alphabox.scenes.shared.details.fragments.download.SharedItemDownloadFragment;
 import pl.alphabox.utils.BaseToolbarActivity;
 
 public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDetailsPresenter>
@@ -30,8 +31,8 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
     @BindView(R.id.tv_share_time)
     protected TextView shareTimeView;
 
-    @BindView(R.id.btn_download_file)
-    protected View downloadFileButton;
+//    @BindView(R.id.btn_download_file)
+//    protected View downloadFileButton;
 
     @Override
     protected int provideLayout() {
@@ -50,6 +51,8 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
         parseExtras(getIntent().getExtras());
 
         presenter.restoreSavedInstance(savedInstanceState);
+
+        setupFragment();
     }
 
     @Override
@@ -100,6 +103,13 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
         presenter.transferData(resolvedData);
     }
 
+    private void setupFragment() {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.download_fragment_container,
+                SharedItemDownloadFragment.newInstance(), "TEST");
+        fragmentTransaction.commit();
+    }
+
     @Override
     public void onDataResoled(String appName, String appSize, String sharedByUser, String sharingTime) {
         appNameView.setText(appName);
@@ -123,10 +133,10 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
 
     }
 
-    @OnClick(R.id.btn_download_file)
-    protected void downloadFileAction() {
-        presenter.downloadButtonClicked();
-    }
+//    @OnClick(R.id.btn_download_file)
+//    protected void downloadFileAction() {
+//        presenter.downloadButtonClicked();
+//    }
 
     public static class Builder {
         static final String EXTRA_USER_FILE = "userFileExtra";

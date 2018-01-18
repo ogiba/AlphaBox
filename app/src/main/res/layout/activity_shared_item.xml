@@ -118,22 +118,22 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@id/tv_share_time">
 
-                <TextView
-                    android:id="@+id/btn_download_file"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/button_rounded_background"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:gravity="center"
-                    android:padding="10dp"
-                    android:text="Download"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
+                <!--<TextView-->
+                    <!--android:id="@+id/btn_download_file"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentEnd="true"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:background="@drawable/button_rounded_background"-->
+                    <!--android:clickable="true"-->
+                    <!--android:focusable="true"-->
+                    <!--android:gravity="center"-->
+                    <!--android:padding="10dp"-->
+                    <!--android:text="Download"-->
+                    <!--android:textColor="@android:color/white"-->
+                    <!--android:textStyle="bold" />-->
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
