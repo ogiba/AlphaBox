@@ -47,6 +47,9 @@ public class SharedItemDownloadFragment extends BaseFragment {
 
     @OnClick(R.id.btn_download_file)
     protected void downloadFileAction() {
-        
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.download_fragment_container,
+                SharedItemProgressFragment.newInstance(), "PROGRESS");
+        fragmentTransaction.commit();
     }
 }
