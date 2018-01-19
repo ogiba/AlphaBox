@@ -15,12 +15,13 @@ import butterknife.OnClick;
 import pl.alphabox.R;
 import pl.alphabox.scenes.shared.details.fragments.progress.SharedItemProgressFragment;
 import pl.alphabox.utils.BaseFragment;
+import pl.alphabox.utils.BasePartFragment;
 
 /**
  * Created by robertogiba on 18.01.2018.
  */
 
-public class SharedItemDownloadFragment extends BaseFragment {
+public class SharedItemDownloadFragment extends BasePartFragment {
 
     @BindView(R.id.btn_download_file)
     protected View downloadFileButton;
@@ -51,11 +52,5 @@ public class SharedItemDownloadFragment extends BaseFragment {
     protected void downloadFileAction() {
         SharedItemProgressFragment progressFragment = SharedItemProgressFragment.newInstance();
         progressFragment.replace(getFragmentManager(), R.id.download_fragment_container);
-    }
-
-    public void replace(FragmentManager fragmentManager, @IdRes int container) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(container, this);
-        fragmentTransaction.commit();
     }
 }

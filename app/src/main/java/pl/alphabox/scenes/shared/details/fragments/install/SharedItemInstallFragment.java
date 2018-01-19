@@ -13,13 +13,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pl.alphabox.R;
-import pl.alphabox.utils.BaseFragment;
+import pl.alphabox.utils.BasePartFragment;
 
 /**
  * Created by robertogiba on 18.01.2018.
  */
 
-public class SharedItemInstallFragment extends BaseFragment {
+public class SharedItemInstallFragment extends BasePartFragment {
 
     @BindView(R.id.btn_file_install)
     protected View fileInstallButton;
@@ -49,11 +49,5 @@ public class SharedItemInstallFragment extends BaseFragment {
     @OnClick(R.id.btn_file_install)
     protected void fileInstallAction() {
         showToast("File install clicked");
-    }
-
-    public void replace(FragmentManager fragmentManager, @IdRes int container) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(container, this);
-        fragmentTransaction.commit();
     }
 }

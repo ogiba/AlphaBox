@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +13,13 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import pl.alphabox.R;
 import pl.alphabox.scenes.shared.details.fragments.install.SharedItemInstallFragment;
-import pl.alphabox.utils.BaseFragment;
+import pl.alphabox.utils.BasePartFragment;
 
 /**
  * Created by robertogiba on 18.01.2018.
  */
 
-public class SharedItemProgressFragment extends BaseFragment {
+public class SharedItemProgressFragment extends BasePartFragment {
     public static SharedItemProgressFragment newInstance() {
 
         Bundle args = new Bundle();
@@ -48,11 +47,5 @@ public class SharedItemProgressFragment extends BaseFragment {
             SharedItemInstallFragment installFragment = SharedItemInstallFragment.newInstance();
             installFragment.replace(getFragmentManager(), R.id.download_fragment_container);
         }), 2000);
-    }
-
-    public void replace(FragmentManager fragmentManager, @IdRes int container) {
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(container, this);
-        fragmentTransaction.commit();
     }
 }

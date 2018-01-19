@@ -1,5 +1,6 @@
 package pl.alphabox.scenes.shared.details;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -104,6 +105,10 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
     }
 
     private void setupFragment() {
+        if (getFragmentManager().findFragmentByTag("TEST") != null) {
+            return;
+        }
+
         SharedItemDownloadFragment downloadFragment = SharedItemDownloadFragment.newInstance();
         downloadFragment.replace(getFragmentManager(), R.id.download_fragment_container);
     }
