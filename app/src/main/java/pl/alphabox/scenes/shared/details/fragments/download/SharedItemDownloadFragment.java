@@ -42,7 +42,7 @@ public class SharedItemDownloadFragment extends BasePartFragment {
 
     @OnClick(R.id.btn_download_file)
     protected void downloadFileAction() {
-        SharedItemProgressFragment progressFragment = SharedItemProgressFragment.newInstance();
+        SharedItemProgressFragment progressFragment = new SharedItemProgressFragment.Builder().build();
         progressFragment.replace(getFragmentManager(), R.id.download_fragment_container);
     }
 }

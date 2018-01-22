@@ -23,7 +23,7 @@ public class ShareUserFragment extends BaseFragment
     @BindView(R.id.btn_accept)
     protected View acceptBtn;
     @BindView(R.id.btn_cancel)
-    protected View canceltBtn;
+    protected View cancelBtn;
 
     public static ShareUserFragment newInstance(Bundle args) {
         ShareUserFragment fragment = new ShareUserFragment();

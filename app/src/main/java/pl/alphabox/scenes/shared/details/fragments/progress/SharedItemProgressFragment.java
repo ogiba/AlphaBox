@@ -1,12 +1,15 @@
 package pl.alphabox.scenes.shared.details.fragments.progress;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import butterknife.BindView;
 import pl.alphabox.R;
+import pl.alphabox.models.UserFile;
 import pl.alphabox.scenes.shared.details.fragments.install.SharedItemInstallFragment;
 import pl.alphabox.utils.BasePartFragment;
 
@@ -17,11 +20,15 @@ import pl.alphabox.utils.BasePartFragment;
 public class SharedItemProgressFragment extends BasePartFragment
         implements ISharedItemProgressView {
 
+    @BindView(R.id.progress_bar)
+    protected ProgressBar progressBar;
+
+    @BindView(R.id.tv_progress_info)
+    protected TextView progressInfoView;
+
     private ISharedItemProgressPresenter presenter;
 
-    public static SharedItemProgressFragment newInstance() {
-        Bundle args = new Bundle();
-
+    public static SharedItemProgressFragment newInstance(Bundle args) {
         SharedItemProgressFragment fragment = new SharedItemProgressFragment();
         fragment.setArguments(args);
         return fragment;
@@ -44,11 +51,44 @@ public class SharedItemProgressFragment extends BasePartFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        presenter.resolveArguments(getArguments());
+    }
 
-        //TODO: Change it for right code
-        new Handler().postDelayed(() -> getActivity().runOnUiThread(() -> {
-            SharedItemInstallFragment installFragment = SharedItemInstallFragment.newInstance();
-            installFragment.replace(getFragmentManager(), R.id.download_fragment_container);
-        }), 2000);
+    @Override
+    public void onArgumentsResolved() {
+        presenter.downloadFileAction();
+    }
+
+    @Override
+    public void onDownloadFailed(String errorMessage) {
+        showToast(errorMessage);
+    }
+
+    @Override
+    public void onFileDownloaded(String filePath) {
+        SharedItemInstallFragment installFragment = SharedItemInstallFragment.newInstance();
+        installFragment.replace(getFragmentManager(), R.id.download_fragment_container);
+    }
+
+    @Override
+    public void onDownloadingProgress(int progress) {
+        progressInfoView.setText(String.format("Downloading: %s", progress));
+    }
+
+    public static class Builder {
+        private Bundle args;
+
+        public Builder() {
+            this.args = new Bundle();
+        }
+
+        public Builder setUserFile(UserFile userFile) {
+            this.args.putParcelable("", userFile);
+            return this;
+        }
+
+        public SharedItemProgressFragment build() {
+            return newInstance(args);
+        }
     }
 }

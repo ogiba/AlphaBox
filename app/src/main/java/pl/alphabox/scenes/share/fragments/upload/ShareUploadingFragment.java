@@ -1,21 +1,16 @@
 package pl.alphabox.scenes.share.fragments.upload;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import pl.alphabox.R;
 import pl.alphabox.utils.BaseButterKnifeFragment;
-import pl.alphabox.utils.BaseFragment;
 
 /**
  * Created by robertogiba on 23.10.2017.
