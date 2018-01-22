@@ -3,6 +3,7 @@ package pl.alphabox.scenes.share.fragments.upload;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +14,14 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.alphabox.R;
+import pl.alphabox.utils.BaseButterKnifeFragment;
 import pl.alphabox.utils.BaseFragment;
 
 /**
  * Created by robertogiba on 23.10.2017.
  */
 
-public class ShareUploadingFragment extends BaseFragment implements IShareUploadingView {
+public class ShareUploadingFragment extends BaseButterKnifeFragment implements IShareUploadingView {
     @BindView(R.id.progress_bar)
     protected ProgressBar progressBar;
     @BindView(R.id.tv_progress_info)
@@ -43,12 +45,10 @@ public class ShareUploadingFragment extends BaseFragment implements IShareUpload
         presenter.restoreInstance(savedInstanceState);
     }
 
-    @Nullable
+    @NonNull
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_share_uploading, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    protected Integer provideLayoutForFragment() {
+        return R.layout.fragment_share_uploading;
     }
 
     @Override

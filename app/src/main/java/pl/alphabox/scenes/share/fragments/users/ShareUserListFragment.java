@@ -19,13 +19,14 @@ import pl.alphabox.R;
 import pl.alphabox.scenes.share.fragments.users.adapter.OnUserClickListener;
 import pl.alphabox.scenes.share.fragments.users.adapter.ShareUsersAdapter;
 import pl.alphabox.scenes.share.IShareView;
+import pl.alphabox.utils.BaseButterKnifeFragment;
 import pl.alphabox.utils.BaseFragment;
 
 /**
  * Created by robertogiba on 22.10.2017.
  */
 
-public class ShareUserListFragment extends BaseFragment
+public class ShareUserListFragment extends BaseButterKnifeFragment
         implements IShareUserList, OnUserClickListener, SwipeRefreshLayout.OnRefreshListener {
     @BindView(R.id.lv_users)
     protected ListView usersListView;
@@ -51,14 +52,17 @@ public class ShareUserListFragment extends BaseFragment
         setupPresenter();
     }
 
+    @NonNull
+    @Override
+    protected Integer provideLayoutForFragment() {
+        return R.layout.fragment_share_user_list;
+    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_share_user_list, container, false);
-        ButterKnife.bind(this, view);
-
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         presenter.restoreSavedInstance(savedInstanceState);
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override

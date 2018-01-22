@@ -1,16 +1,11 @@
 package pl.alphabox.scenes.shared.details.fragments.progress;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.IdRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import butterknife.ButterKnife;
 import pl.alphabox.R;
 import pl.alphabox.scenes.shared.details.fragments.install.SharedItemInstallFragment;
 import pl.alphabox.utils.BasePartFragment;
@@ -19,7 +14,8 @@ import pl.alphabox.utils.BasePartFragment;
  * Created by robertogiba on 18.01.2018.
  */
 
-public class SharedItemProgressFragment extends BasePartFragment {
+public class SharedItemProgressFragment extends BasePartFragment
+        implements ISharedItemProgressView {
 
     private ISharedItemProgressPresenter presenter;
 
@@ -31,12 +27,17 @@ public class SharedItemProgressFragment extends BasePartFragment {
         return fragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shared_item_progress, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        presenter = new SharedItemProgressPresenter(this);
+    }
+
+    @NonNull
+    @Override
+    protected Integer provideLayoutForFragment() {
+        return R.layout.fragment_shared_item_progress;
     }
 
     @Override

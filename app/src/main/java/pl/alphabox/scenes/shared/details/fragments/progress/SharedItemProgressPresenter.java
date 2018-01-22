@@ -5,4 +5,9 @@ package pl.alphabox.scenes.shared.details.fragments.progress;
  */
 
 public class SharedItemProgressPresenter implements ISharedItemProgressPresenter {
+    final private ISharedItemProgressView itemProgressView;
+
+    public SharedItemProgressPresenter(ISharedItemProgressView itemProgressView) {
+        this.itemProgressView = itemProgressView;
+    }
 }
