@@ -73,7 +73,9 @@ public class SharedItemProgressFragment extends BasePartFragment
 
     @Override
     public void onFileDownloaded(String filePath) {
-        SharedItemInstallFragment installFragment = SharedItemInstallFragment.newInstance();
+        SharedItemInstallFragment installFragment = new SharedItemInstallFragment.Builder()
+                .setFilePath(filePath)
+                .build();
         installFragment.replace(getFragmentManager(), R.id.download_fragment_container);
     }
 

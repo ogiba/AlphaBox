@@ -3,6 +3,7 @@ package pl.alphabox.scenes.shared.details.fragments.install;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 
 import butterknife.BindView;
@@ -15,14 +16,12 @@ import pl.alphabox.utils.BasePartFragment;
  */
 
 public class SharedItemInstallFragment extends BasePartFragment {
+    private static final String TAG = SharedItemInstallFragment.class.getSimpleName();
 
     @BindView(R.id.btn_file_install)
     protected View fileInstallButton;
 
-    public static SharedItemInstallFragment newInstance() {
-
-        Bundle args = new Bundle();
-
+    public static SharedItemInstallFragment newInstance(Bundle args) {
         SharedItemInstallFragment fragment = new SharedItemInstallFragment();
         fragment.setArguments(args);
         return fragment;
@@ -37,10 +36,37 @@ public class SharedItemInstallFragment extends BasePartFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        String filePath = getArguments().getString(Builder.ARG_FILE_PATH);
+        Log.d(TAG, String.format("Resolved file path: %s", filePath));
     }
 
     @OnClick(R.id.btn_file_install)
     protected void fileInstallAction() {
         showToast("File install clicked");
+    }
+
+    public static class Builder {
+        public static final String ARG_FILE_PATH = "filePathArgument";
+
+        private Bundle args;
+
+        public Builder() {
+            this.args = new Bundle();
+        }
+
+        @SuppressWarnings("unused")
+        public Builder(Bundle args) {
+            this.args = args;
+        }
+
+        public Builder setFilePath(String filePath) {
+            this.args.putString(ARG_FILE_PATH, filePath);
+            return this;
+        }
+
+        public SharedItemInstallFragment build() {
+            return newInstance(args);
+        }
     }
 }
