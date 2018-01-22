@@ -20,8 +20,10 @@ import pl.alphabox.utils.BasePartFragment;
  */
 
 public class SharedItemProgressFragment extends BasePartFragment {
-    public static SharedItemProgressFragment newInstance() {
 
+    private ISharedItemProgressPresenter presenter;
+
+    public static SharedItemProgressFragment newInstance() {
         Bundle args = new Bundle();
 
         SharedItemProgressFragment fragment = new SharedItemProgressFragment();
