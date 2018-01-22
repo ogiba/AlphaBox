@@ -10,6 +10,10 @@ import android.support.annotation.IdRes;
 
 public abstract class BasePartFragment extends BaseButterKnifeFragment {
     public void replace(FragmentManager fragmentManager, @IdRes int container) {
+        if (fragmentManager == null) {
+            return;
+        }
+
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(container, this, "TEST");
         fragmentTransaction.commit();

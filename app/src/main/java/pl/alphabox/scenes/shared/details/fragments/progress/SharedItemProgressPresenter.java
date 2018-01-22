@@ -26,7 +26,6 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
         OnSuccessListener<FileDownloadTask.TaskSnapshot>, OnProgressListener<FileDownloadTask.TaskSnapshot>,
         OnFailureListener {
     private static final String TAG = SharedItemProgressPresenter.class.getSimpleName();
-    private static final String ARG_FILE_USER = "userFileArgument";
     private static final String STATE_STORAGE_REFERENCE = "storageReferenceState";
     private static final String STATE_DOWNLOAD_FILE = "downloadFileState";
 
@@ -52,7 +51,7 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
     }
 
     @Override
-    public void savedState(Bundle outState) {
+    public void saveInstanceState(Bundle outState) {
         if (storageReference != null) {
             outState.putString(STATE_STORAGE_REFERENCE, storageReference.toString());
         }
@@ -68,7 +67,7 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
             return;
         }
 
-        userFile = arguments.getParcelable(ARG_FILE_USER);
+        userFile = arguments.getParcelable(SharedItemProgressFragment.Builder.ARG_FILE_USER);
 
         if (!isStorageReferenceRestored) {
             itemProgressView.onArgumentsResolved();
@@ -77,6 +76,11 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
 
     @Override
     public void downloadFileAction() {
+        if (userFile == null) {
+            Log.e(TAG, "UserFile cannot be null");
+            return;
+        }
+
         try {
             downloadFile();
         } catch (IOException e) {

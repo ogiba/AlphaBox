@@ -51,6 +51,7 @@ public class SharedItemDetailsPresenter
 
         this.userFile = userFile;
 
+        itemView.onUserFileResolved(userFile);
         retrieveUserEmail();
     }
 

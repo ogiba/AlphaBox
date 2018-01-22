@@ -51,7 +51,14 @@ public class SharedItemProgressFragment extends BasePartFragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        presenter.restoreState(savedInstanceState);
         presenter.resolveArguments(getArguments());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        presenter.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -76,6 +83,8 @@ public class SharedItemProgressFragment extends BasePartFragment
     }
 
     public static class Builder {
+        public static final String ARG_FILE_USER = "userFileArgument";
+
         private Bundle args;
 
         public Builder() {
@@ -83,7 +92,7 @@ public class SharedItemProgressFragment extends BasePartFragment
         }
 
         public Builder setUserFile(UserFile userFile) {
-            this.args.putParcelable("", userFile);
+            this.args.putParcelable(ARG_FILE_USER, userFile);
             return this;
         }
 

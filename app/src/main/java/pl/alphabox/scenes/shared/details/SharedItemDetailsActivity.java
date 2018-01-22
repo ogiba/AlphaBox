@@ -53,7 +53,7 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
 
         presenter.restoreSavedInstance(savedInstanceState);
 
-        setupFragment();
+//        setupFragment();
     }
 
     @Override
@@ -109,7 +109,20 @@ public class SharedItemDetailsActivity extends BaseToolbarActivity<ISharedItemDe
             return;
         }
 
-        SharedItemDownloadFragment downloadFragment = SharedItemDownloadFragment.newInstance();
+        SharedItemDownloadFragment downloadFragment = new SharedItemDownloadFragment.Builder()
+                .build();
+        downloadFragment.replace(getFragmentManager(), R.id.download_fragment_container);
+    }
+
+    @Override
+    public void onUserFileResolved(UserFile resolvedUserFile) {
+        if (getFragmentManager().findFragmentByTag("TEST") != null) {
+            return;
+        }
+
+        SharedItemDownloadFragment downloadFragment = new SharedItemDownloadFragment.Builder()
+                .setUserFile(resolvedUserFile)
+                .build();
         downloadFragment.replace(getFragmentManager(), R.id.download_fragment_container);
     }
 

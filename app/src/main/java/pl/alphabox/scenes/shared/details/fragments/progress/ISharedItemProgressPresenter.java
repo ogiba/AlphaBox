@@ -10,7 +10,7 @@ import android.support.annotation.Nullable;
 public interface ISharedItemProgressPresenter {
     void restoreState(Bundle savedState);
 
-    void savedState(Bundle outState);
+    void saveInstanceState(Bundle outState);
 
     void resolveArguments(@Nullable Bundle arguments);
 
