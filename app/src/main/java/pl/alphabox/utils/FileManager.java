@@ -1,6 +1,5 @@
 package pl.alphabox.utils;
 
-import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
@@ -12,6 +11,7 @@ import java.io.IOException;
  */
 
 public class FileManager {
+    public static final String DIRECTORY_SHARED_ITEMS = "SharedItems";
 
     private File directory;
 
@@ -19,11 +19,17 @@ public class FileManager {
         this.directory = directory;
     }
 
-    public File saveFile(String directoryName, String fileName) throws IOException {
+    public File createFile(String fileName, String... directoryPathParts) throws IOException {
         File file;
 
         Uri.Builder builder = new Uri.Builder();
-        Uri uri = builder.path(directory.getPath()).appendPath(directoryName).build();
+        builder.path(directory.getPath());
+
+        for (String pathPart : directoryPathParts) {
+            builder.appendPath(pathPart);
+        }
+
+        Uri uri = builder.build();
 
         File directoryFile = new File(uri.toString());
 
@@ -31,7 +37,7 @@ public class FileManager {
             directoryFile.mkdirs();
         }
 
-        file = new File(directory, fileName);
+        file = new File(directoryFile, fileName);
 
         boolean isFileCreated = file.exists() || file.createNewFile();
 
@@ -44,7 +50,8 @@ public class FileManager {
 
 
     @Nullable
-    public static File saveFile(File directory, String fileName) throws IOException {
+    @SuppressWarnings("unused")
+    public static File createFile(File directory, String fileName) throws IOException {
         File file;
 
         if (!directory.exists()) {
@@ -59,6 +66,6 @@ public class FileManager {
             return file;
         }
 
-        return file;
+        return null;
     }
 }

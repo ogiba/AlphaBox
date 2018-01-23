@@ -38,7 +38,8 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
     private String downloadedFilePath;
     private boolean isStorageReferenceRestored = false;
 
-    public SharedItemProgressPresenter(ISharedItemProgressView itemProgressView, FileManager fileManager) {
+    public SharedItemProgressPresenter(@NonNull ISharedItemProgressView itemProgressView,
+                                       @NonNull FileManager fileManager) {
         this.itemProgressView = itemProgressView;
         this.fileManager = fileManager;
     }
@@ -95,10 +96,13 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReferenceFromUrl(userFile.urlToFile);
 
-        File localFile = File.createTempFile(userFile.appName, ".apk");
-        this.downloadedFilePath = localFile.getAbsolutePath();
+        File localFile = fileManager.createFile(userFile.appName + ".apk",
+                FileManager.DIRECTORY_SHARED_ITEMS, userFile.appName);
 
-        storageReference.getFile(localFile).addOnSuccessListener(this).addOnProgressListener(this);
+        if (localFile != null) {
+            this.downloadedFilePath = localFile.getAbsolutePath();
+            storageReference.getFile(localFile).addOnSuccessListener(this).addOnProgressListener(this);
+        }
     }
 
     private void restoreStorageReference(String stringRef) {
