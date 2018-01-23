@@ -15,16 +15,24 @@ import pl.alphabox.utils.BasePartFragment;
  * Created by robertogiba on 18.01.2018.
  */
 
-public class SharedItemInstallFragment extends BasePartFragment {
+public class SharedItemInstallFragment extends BasePartFragment implements ISharedItemInstallView {
     private static final String TAG = SharedItemInstallFragment.class.getSimpleName();
 
     @BindView(R.id.btn_file_install)
     protected View fileInstallButton;
 
+    private ISharedItemInstallPresenter presenter;
+
     public static SharedItemInstallFragment newInstance(Bundle args) {
         SharedItemInstallFragment fragment = new SharedItemInstallFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        presenter = new SharedItemInstallPresenter(this);
     }
 
     @NonNull
