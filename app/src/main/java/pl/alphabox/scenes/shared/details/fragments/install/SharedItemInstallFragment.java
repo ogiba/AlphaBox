@@ -1,10 +1,14 @@
 package pl.alphabox.scenes.shared.details.fragments.install;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -45,13 +49,21 @@ public class SharedItemInstallFragment extends BasePartFragment implements IShar
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String filePath = getArguments().getString(Builder.ARG_FILE_PATH);
-        Log.d(TAG, String.format("Resolved file path: %s", filePath));
+        presenter.resolveArguments(getArguments());
+    }
+
+    @Override
+    public void onInstall(String filePath) {
+//        Intent intent = new Intent(Intent.ACTION_VIEW);
+//        intent.setDataAndType(Uri.fromFile(new File(filePath)), "application/vnd.android.package-archive");
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // without this flag android returned a intent error!
+//        startActivity(intent);
     }
 
     @OnClick(R.id.btn_file_install)
     protected void fileInstallAction() {
-        showToast("File install clicked");
+//        showToast("File install clicked");
+        presenter.installAction();
     }
 
     public static class Builder {

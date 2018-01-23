@@ -5,4 +5,5 @@ package pl.alphabox.scenes.shared.details.fragments.install;
  */
 
 public interface ISharedItemInstallView {
+    void onInstall(String filePath);
 }
