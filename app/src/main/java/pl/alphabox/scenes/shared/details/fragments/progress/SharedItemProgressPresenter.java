@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 import pl.alphabox.models.UserFile;
+import pl.alphabox.utils.FileManager;
 
 /**
  * Created by robertogiba on 22.01.2018.
@@ -29,15 +30,17 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
     private static final String STATE_STORAGE_REFERENCE = "storageReferenceState";
     private static final String STATE_DOWNLOAD_FILE = "downloadFileState";
 
-    final private ISharedItemProgressView itemProgressView;
+    private final ISharedItemProgressView itemProgressView;
+    private final FileManager fileManager;
 
     private StorageReference storageReference;
     private UserFile userFile;
     private String downloadedFilePath;
     private boolean isStorageReferenceRestored = false;
 
-    public SharedItemProgressPresenter(ISharedItemProgressView itemProgressView) {
+    public SharedItemProgressPresenter(ISharedItemProgressView itemProgressView, FileManager fileManager) {
         this.itemProgressView = itemProgressView;
+        this.fileManager = fileManager;
     }
 
     @Override

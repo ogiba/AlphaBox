@@ -12,6 +12,7 @@ import pl.alphabox.R;
 import pl.alphabox.models.UserFile;
 import pl.alphabox.scenes.shared.details.fragments.install.SharedItemInstallFragment;
 import pl.alphabox.utils.BasePartFragment;
+import pl.alphabox.utils.FileManager;
 
 /**
  * Created by robertogiba on 18.01.2018.
@@ -38,7 +39,7 @@ public class SharedItemProgressFragment extends BasePartFragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter = new SharedItemProgressPresenter(this);
+        presenter = new SharedItemProgressPresenter(this, new FileManager(getActivity().getFilesDir()));
     }
 
     @NonNull
