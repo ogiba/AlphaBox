@@ -127,20 +127,12 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
     public void onFailure(@NonNull Exception e) {
         Log.d(TAG, "File downloading failed", e);
 
-        if (itemProgressView == null) {
-            return;
-        }
-
         itemProgressView.onDownloadFailed(e.getMessage());
     }
 
     @Override
     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
         Log.d(TAG, String.format("File downloaded: %s", downloadedFilePath));
-
-        if (itemProgressView == null) {
-            return;
-        }
 
         itemProgressView.onFileDownloaded(downloadedFilePath);
     }
@@ -151,10 +143,6 @@ public class SharedItemProgressPresenter implements ISharedItemProgressPresenter
         final int progressInInt = progress.intValue();
 
         Log.d(TAG, String.format("File download progress: %s", progressInInt));
-
-        if (itemProgressView == null) {
-            return;
-        }
 
         itemProgressView.onDownloadingProgress(progressInInt);
     }

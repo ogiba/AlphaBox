@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 
@@ -12,6 +13,7 @@ import java.io.File;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import pl.alphabox.BuildConfig;
 import pl.alphabox.R;
 import pl.alphabox.utils.BasePartFragment;
 
@@ -54,15 +56,16 @@ public class SharedItemInstallFragment extends BasePartFragment implements IShar
 
     @Override
     public void onInstall(String filePath) {
-//        Intent intent = new Intent(Intent.ACTION_VIEW);
-//        intent.setDataAndType(Uri.fromFile(new File(filePath)), "application/vnd.android.package-archive");
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // without this flag android returned a intent error!
-//        startActivity(intent);
+        Intent intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+        intent.setDataAndType(FileProvider.getUriForFile(getActivity(),
+                String.format("%s.fileprovider", BuildConfig.APPLICATION_ID), new File(filePath)),
+                "application/vnd.android.package-archive");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_GRANT_READ_URI_PERMISSION); // without this flag android returned a intent error!
+        startActivity(intent);
     }
 
     @OnClick(R.id.btn_file_install)
     protected void fileInstallAction() {
-//        showToast("File install clicked");
         presenter.installAction();
     }
 
