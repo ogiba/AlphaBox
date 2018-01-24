@@ -121,6 +121,7 @@ public class ShareUploadingPresenter
         if (currentUser != null) {
             UserFile userFile = new UserFile(selectedUser.id, urlToFile, currentUser.getUid());
             userFile.setAppName(appModel.getName())
+                    .setVersionName(appModel.getVersionName())
                     .setApkSize(appModel.getSize())
                     .setShareTime(shareTime);
 

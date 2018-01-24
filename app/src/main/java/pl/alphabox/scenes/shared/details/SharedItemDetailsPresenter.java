@@ -100,7 +100,9 @@ public class SharedItemDetailsPresenter
             User user = dataSnapshot.getValue(User.class);
 
             if (user != null) {
-                itemView.onDataResoled(userFile.appName, "" + userFile.apkSize, user.email,
+                itemView.onDataResoled(String.format("%s v%s", userFile.appName, userFile.versionName != null
+                                ? userFile.versionName : "0.0.0"),
+                        "" + userFile.apkSize, user.email,
                         "" + userFile.shareTime);
             }
         }

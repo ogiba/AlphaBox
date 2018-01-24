@@ -120,13 +120,17 @@ public class MainPresenter implements IMainPresenter {
 
         Drawable icon = packageInfo.applicationInfo.loadIcon(packageManager);
         String appName = (String) packageInfo.applicationInfo.loadLabel(packageManager);
+        String versionName = packageInfo.versionName;
 
 
         try {
             File tmpFile = new File(apkUri.getPath());
             double appSizeInMB = (tmpFile.length() / 1024) / 1024;
 
-            return new AppModel(appName, apkUri.getPath(), icon, appSizeInMB);
+            AppModel appModel = new AppModel(appName, apkUri.getPath(), icon, appSizeInMB);
+            appModel.setVersionName(versionName);
+
+            return appModel;
         } catch (NullPointerException ex) {
             ex.printStackTrace();
             return null;

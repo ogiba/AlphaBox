@@ -13,6 +13,7 @@ public class AppModel implements Parcelable {
     private double fileSize;
     private String apkUri;
     private Drawable icon;
+    private String versionName;
 
     public AppModel(String name, String uri, Drawable icon, double fileSize) {
         this.name = name;
@@ -21,45 +22,24 @@ public class AppModel implements Parcelable {
         this.fileSize = fileSize;
     }
 
-    private AppModel(Parcel in) {
-        this.name = in.readString();
-        this.apkUri = in.readString();
-        this.fileSize = in.readDouble();
+    public void setVersionName(String versionName) {
+        this.versionName = versionName;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getVersionName() {
+        return versionName;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(name);
-        dest.writeString(apkUri);
-        dest.writeDouble(fileSize);
-    }
-
-    public static final Parcelable.Creator<AppModel> CREATOR
-            = new Parcelable.Creator<AppModel>() {
-        public AppModel createFromParcel(Parcel in) {
-            return new AppModel(in);
-        }
-
-        public AppModel[] newArray(int size) {
-            return new AppModel[size];
-        }
-    };
 
     public void setIcon(Drawable icon) {
         this.icon = icon;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public Drawable getIcon() {
         return icon;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public double getSize() {
@@ -71,4 +51,35 @@ public class AppModel implements Parcelable {
     }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeDouble(this.fileSize);
+        dest.writeString(this.apkUri);
+        dest.writeString(this.versionName);
+    }
+
+    protected AppModel(Parcel in) {
+        this.name = in.readString();
+        this.fileSize = in.readDouble();
+        this.apkUri = in.readString();
+        this.versionName = in.readString();
+    }
+
+    public static final Creator<AppModel> CREATOR = new Creator<AppModel>() {
+        @Override
+        public AppModel createFromParcel(Parcel source) {
+            return new AppModel(source);
+        }
+
+        @Override
+        public AppModel[] newArray(int size) {
+            return new AppModel[size];
+        }
+    };
 }
