@@ -5,4 +5,5 @@ package pl.alphabox.scenes.profile;
  */
 
 public interface IProfilePresenter {
+    void logoutAction();
 }
