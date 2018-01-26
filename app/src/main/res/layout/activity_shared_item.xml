@@ -31,6 +31,7 @@
                 android:layout_alignParentStart="true"
                 android:padding="10dp"
                 android:text="Application name:"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -42,6 +43,7 @@
                 android:layout_below="@+id/tv_name_label"
                 android:gravity="end"
                 android:padding="10dp"
+                android:textColor="@color/white"
                 tools:text="Just name" />
 
             <TextView
@@ -53,6 +55,7 @@
                 android:layout_below="@+id/tv_app_name"
                 android:padding="10dp"
                 android:text="Size:"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -64,6 +67,7 @@
                 android:layout_below="@+id/tv_size_label"
                 android:gravity="end"
                 android:padding="10dp"
+                android:textColor="@color/white"
                 tools:text="20 Mb" />
 
             <TextView
@@ -75,6 +79,7 @@
                 android:layout_below="@+id/tv_app_size"
                 android:padding="10dp"
                 android:text="Shared by:"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -86,6 +91,7 @@
                 android:layout_below="@+id/tv_shared_by_label"
                 android:gravity="end"
                 android:padding="10dp"
+                android:textColor="@color/white"
                 tools:text="Bob" />
 
             <TextView
@@ -97,6 +103,7 @@
                 android:layout_below="@+id/tv_user_name"
                 android:padding="10dp"
                 android:text="Sharing time"
+                android:textColor="@color/white"
                 android:textStyle="bold" />
 
             <TextView
@@ -108,6 +115,7 @@
                 android:layout_below="@+id/tv_time_label"
                 android:gravity="end"
                 android:padding="10dp"
+                android:textColor="@color/white"
                 tools:text="00.00.0000 00:00" />
 
             <RelativeLayout
@@ -116,25 +124,7 @@
                 android:layout_height="150dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@id/tv_share_time">
-
-                <!--<TextView-->
-                    <!--android:id="@+id/btn_download_file"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentEnd="true"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:layout_centerInParent="true"-->
-                    <!--android:layout_margin="10dp"-->
-                    <!--android:background="@drawable/button_rounded_background"-->
-                    <!--android:clickable="true"-->
-                    <!--android:focusable="true"-->
-                    <!--android:gravity="center"-->
-                    <!--android:padding="10dp"-->
-                    <!--android:text="Download"-->
-                    <!--android:textColor="@android:color/white"-->
-                    <!--android:textStyle="bold" />-->
-            </RelativeLayout>
+                android:layout_below="@id/tv_share_time"></RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

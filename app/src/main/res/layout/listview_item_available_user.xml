@@ -12,12 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.9"
         android:padding="10dp"
+        android:textColor="@color/white"
         tools:text="test@test.pl" />
 
     <ImageView
-        android:padding="5dp"
         android:id="@+id/iv_select"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.1"/>
+        android:layout_weight="0.1"
+        android:padding="5dp" />
 </LinearLayout>

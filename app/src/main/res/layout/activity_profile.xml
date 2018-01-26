@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_margin="10dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/round_background"
         android:padding="15dp">
 
         <ImageView

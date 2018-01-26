@@ -17,5 +17,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/progress_bar"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         tools:text="Downloading: 0%" />
 </RelativeLayout>
