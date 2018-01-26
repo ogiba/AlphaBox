@@ -22,6 +22,7 @@ import butterknife.OnClick;
 import pl.alphabox.R;
 import pl.alphabox.models.AppModel;
 import pl.alphabox.scenes.login.LoginActivity;
+import pl.alphabox.scenes.profile.ProfileActivity;
 import pl.alphabox.scenes.share.ShareActivity;
 import pl.alphabox.scenes.shared.SharedItemsActivity;
 import pl.alphabox.utils.BaseToolbarActivity;
@@ -73,7 +74,7 @@ public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.logout_user:
-                showLogoutWarningDialog();
+                navigateToProfilePage();
                 break;
             case R.id.menu_apk_list:
                 navigateToSharedItems();
@@ -238,21 +239,15 @@ public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements
         this.appSizeContainer.setVisibility(isDataProvided ? View.VISIBLE : View.GONE);
     }
 
-    private void showLogoutWarningDialog() {
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(R.string.activity_main_dialog_logout_title)
-                .setMessage(R.string.activity_main_dialog_logout_message)
-                .setPositiveButton(R.string.dialog_positive_action, (alertDialog, which) -> {
-                    alertDialog.dismiss();
-                    presenter.logoutUser();
-                })
-                .setNegativeButton(R.string.dialog_negative_action, (alertDialog, which) -> alertDialog.dismiss())
-                .create();
-        dialog.show();
-    }
-
     private void navigateToSharedItems() {
         Intent intent = new Intent(this, SharedItemsActivity.class);
+        startActivity(intent);
+
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+    }
+
+    private void navigateToProfilePage() {
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
 
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
