@@ -23,6 +23,7 @@
             android:id="@+id/lv_shared_items"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:divider="@drawable/shared_list_item_divider"
             tools:listitem="@layout/item_list_shared_item" />
     </android.support.v4.widget.SwipeRefreshLayout>
 

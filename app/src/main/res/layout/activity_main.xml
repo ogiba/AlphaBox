@@ -103,10 +103,12 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:background="@drawable/round_background"
+        android:elevation="6dp"
         android:text="Load APK"
         android:textColor="@color/white" />
 
     <LinearLayout
+        android:elevation="6dp"
         android:id="@+id/btn_remove_current_file"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -127,6 +129,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:elevation="6dp"
         android:id="@+id/btn_send_file"
         android:layout_width="50dp"
         android:layout_height="50dp"

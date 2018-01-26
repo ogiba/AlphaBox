@@ -13,6 +13,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/button_rounded_background"
         android:clickable="true"
+        android:elevation="6dp"
         android:focusable="true"
         android:gravity="center"
         android:padding="10dp"

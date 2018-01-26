@@ -15,6 +15,7 @@
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
+        android:elevation="6dp"
         android:padding="10dp"
         android:text="Download"
         android:textColor="@android:color/white"
