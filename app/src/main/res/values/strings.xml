@@ -33,6 +33,7 @@
     <string name="activity_main_dialog_logout_title">Warning</string>
     <string name="activity_main_dialog_logout_message">Are you sure you want to login out?</string>
 
+    <string name="activity_profile_scene_title">Profile</string>
     <string name="activity_profile_button_logout">Logout</string>
 
     <string name="connection_problem_message">No Internet connection</string>

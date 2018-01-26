@@ -1,7 +1,10 @@
 package pl.alphabox.scenes.profile;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import butterknife.BindView;
@@ -24,6 +27,34 @@ public class ProfileActivity extends BaseToolbarActivity<IProfilePresenter>
     @Override
     protected IProfilePresenter providePresenter() {
         return new ProfilePresenter(this);
+    }
+
+    @Override
+    protected void setupToolbar() throws Exception {
+        super.setupToolbar();
+
+        ActionBar toolbar = getSupportActionBar();
+
+        if (toolbar == null) {
+            return;
+        }
+
+        toolbar.setTitle(R.string.activity_profile_scene_title);
+        toolbar.setHomeButtonEnabled(true);
+        toolbar.setDisplayHomeAsUpEnabled(true);
+        toolbar.setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
