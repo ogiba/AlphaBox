@@ -49,7 +49,7 @@ public class ProfileActivity extends BaseToolbarActivity<IProfilePresenter>
     }
 
     private void showLogoutWarningDialog() {
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this, R.style.BlackTextDialog)
                 .setTitle(R.string.activity_main_dialog_logout_title)
                 .setMessage(R.string.activity_main_dialog_logout_message)
                 .setPositiveButton(R.string.dialog_positive_action, (alertDialog, which) -> {
