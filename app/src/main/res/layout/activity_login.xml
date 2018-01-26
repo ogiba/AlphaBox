@@ -99,6 +99,7 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_rounded_background"
+            android:elevation="6dp"
             android:text="@string/activity_login_button_login_label"
             android:textColor="@color/white" />
 
