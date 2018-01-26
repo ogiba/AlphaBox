@@ -14,6 +14,4 @@ public interface ISharedItemDetailsPresenter {
     void saveInstance(Bundle outState);
 
     void restoreSavedInstance(Bundle savedState);
-
-    void downloadButtonClicked();
 }

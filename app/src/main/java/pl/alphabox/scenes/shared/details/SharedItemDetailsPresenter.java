@@ -18,7 +18,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import pl.alphabox.models.User;
 import pl.alphabox.models.UserFile;
@@ -30,14 +33,10 @@ import pl.alphabox.models.UserFile;
 public class SharedItemDetailsPresenter
         implements ISharedItemDetailsPresenter, ValueEventListener {
     private static final String TAG = ISharedItemDetailsPresenter.class.getSimpleName();
-    private static final String STATE_STORAGE_REFERENCE = "storageReferenceState";
-    private static final String STATE_DOWNLOAD_FILE = "downloadFileState";
 
     private final ISharedItemDetailsView itemView;
 
     private UserFile userFile;
-    private StorageReference storageReference;
-    private String downloadedFilePath;
 
     public SharedItemDetailsPresenter(ISharedItemDetailsView itemView) {
         this.itemView = itemView;
@@ -57,32 +56,12 @@ public class SharedItemDetailsPresenter
 
     @Override
     public void saveInstance(Bundle outState) {
-        if (storageReference != null) {
-            outState.putString(STATE_STORAGE_REFERENCE, storageReference.toString());
-        }
-
-        if (downloadedFilePath != null) {
-            outState.putString(STATE_DOWNLOAD_FILE, downloadedFilePath);
-        }
+        Log.d(TAG, "Save instance called");
     }
 
     @Override
     public void restoreSavedInstance(Bundle savedState) {
-        if (savedState == null) {
-            return;
-        }
-        this.downloadedFilePath = savedState.getString(STATE_DOWNLOAD_FILE);
-        final String stringStorageRef = savedState.getString(STATE_STORAGE_REFERENCE);
-//        restoreStorageReference(stringStorageRef);
-    }
-
-    @Override
-    public void downloadButtonClicked() {
-//        try {
-//            downloadFile();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        Log.d(TAG, "Restoring saved instance");
     }
 
     private void retrieveUserEmail() {
@@ -99,17 +78,24 @@ public class SharedItemDetailsPresenter
         if (dataSnapshot.exists()) {
             User user = dataSnapshot.getValue(User.class);
 
+            String formattedShareTime = formatDate(userFile.shareTime);
+
             if (user != null) {
                 itemView.onDataResoled(String.format("%s v%s", userFile.appName, userFile.versionName != null
                                 ? userFile.versionName : "0.0.0"),
                         "" + userFile.apkSize, user.email,
-                        "" + userFile.shareTime);
+                        formattedShareTime);
             }
         }
     }
 
     @Override
     public void onCancelled(DatabaseError databaseError) {
+        Log.e(TAG, databaseError.getMessage());
+    }
 
+    private String formatDate(long shareTime) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(shareTime);
     }
 }
