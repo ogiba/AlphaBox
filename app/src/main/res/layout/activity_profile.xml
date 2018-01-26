@@ -11,15 +11,30 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary" />
 
-    <TextView
+    <RelativeLayout
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
         android:layout_margin="10dp"
         android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:padding="15dp"
-        android:text="Log out"
-        android:textColor="@color/white" />
+        android:padding="15dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/btn_logout_label"
+            android:src="@drawable/ic_logout_white_24dp" />
+
+        <TextView
+            android:id="@+id/btn_logout_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="@string/activity_profile_button_logout"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 </RelativeLayout>

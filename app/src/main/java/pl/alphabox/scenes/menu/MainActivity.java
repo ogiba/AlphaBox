@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -73,7 +72,7 @@ public class MainActivity extends BaseToolbarActivity<IMainPresenter> implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.logout_user:
+            case R.id.menu_user_profile:
                 navigateToProfilePage();
                 break;
             case R.id.menu_apk_list:

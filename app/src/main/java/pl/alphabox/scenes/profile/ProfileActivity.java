@@ -26,9 +26,11 @@ public class ProfileActivity extends BaseToolbarActivity<IProfilePresenter>
         return new ProfilePresenter(this);
     }
 
-    @OnClick(R.id.btn_logout)
-    protected void logoutAction() {
-        showLogoutWarningDialog();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
     }
 
     @Override
@@ -39,6 +41,11 @@ public class ProfileActivity extends BaseToolbarActivity<IProfilePresenter>
             startActivity(intent);
             finish();
         });
+    }
+
+    @OnClick(R.id.btn_logout)
+    protected void logoutAction() {
+        showLogoutWarningDialog();
     }
 
     private void showLogoutWarningDialog() {
